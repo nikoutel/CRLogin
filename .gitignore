@@ -1,0 +1,8 @@
+test*.php
+0*.php
+*0.php
+_info*
+_todo*
+~*
+*.sh
+*.orig
