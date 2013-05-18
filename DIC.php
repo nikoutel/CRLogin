@@ -3,6 +3,7 @@
 class DIC {
 
     private $_db;
+    private $_utils;
     private $_configReader;
     private $_dbConfigArray;
     private $_configArray;
@@ -11,6 +12,7 @@ class DIC {
 
     public function __construct() {
         $this->_configReader = new ConfigReader();
+        $this->_utils = new Utils();
 
         $this->getConfig($this->_configFile);
         $this->_dbConfigFile = $this->_configArray['dbConfigFile'];
@@ -30,6 +32,7 @@ class DIC {
     public function getDb() {
         if (!isset($this->_db)) {
             $this->_db = new Database(
+                    $this->_utils,
                     $this->_dbConfigArray['dsn'], 
                     $this->_dbConfigArray['username'], 
                     $this->_dbConfigArray['password'], 
