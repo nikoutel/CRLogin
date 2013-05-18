@@ -4,14 +4,28 @@ class Database extends PDO {
 
     public $error;
     private $_utils;
+    private $_dsn;
+    private $_user;
+    private $_password;
+    private $_options;
 
     public function __construct($utils, $dsn, $user, $passwd, array $options) { //@todo connect method
         $this->_utils = $utils;
+        $this->_dsn = $dsn;
+        $this->_user = $user;
+        $this->_password = $passwd;
+        $this->_options = $options;
+        
+        $this->connect($this->_dsn, $this->_user, $this->_password ,$this->_options);
+    }
+    
+    public function connect($dsn, $username, $passwd, $options){
         try {
-            parent::__construct($dsn, $user, $passwd, $options);
+            parent::__construct($dsn, $username, $passwd, $options);
         } catch (PDOException $e) {
-            $this->error = $e->getMessage();
-        }
+            $this->error = $e->getMessage(); //@ FIXME
+            Debugr::edbg($e->getMessage(), '$e->getMessage()');
+                }
     }
 
     public function create($table,  $values) {
