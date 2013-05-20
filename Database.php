@@ -15,54 +15,61 @@ class Database extends PDO {
         $this->_user = $user;
         $this->_password = $passwd;
         $this->_options = $options;
-        
-        $this->connect($this->_dsn, $this->_user, $this->_password ,$this->_options);
+
+        $this->connect($this->_dsn, $this->_user, $this->_password, $this->_options);
     }
-    
-    public function connect($dsn, $username, $passwd, $options){
+
+    public function connect($dsn, $username, $passwd, $options) {
         try {
             parent::__construct($dsn, $username, $passwd, $options);
         } catch (PDOException $e) {
             $this->error = $e->getMessage(); //@ FIXME
-            Debugr::edbg($e->getMessage(), '$e->getMessage()');
-                }
+            Debugr::edbg($this, '$this');
+
+            Debugr::edbg($e->getMessage(), '$e->getMessage()', 'v');
+            Debugr::edbg($this->error, '$this->error');
+            return FALSE;
+        }
     }
 
-    public function create($table,  $values) {
+    public function create($table, $values) {
         if ($this->_utils->isAssociative($values)) {
             $columns = array_keys($values);
             $bind = array_values($values);
-            $columns_str = '(' . implode(",", $columns) . ')';
         } else {
+            $columns = $this->_getColumns($table);
             $bind = $values;
-            $columns_str = ''; //@FIXME
+            if (count($columns) != (count($bind)))
+                return FALSE;
         }
-
+        $columns_str = '(' . implode(",", $columns) . ')';
         $sql = 'INSERT INTO ' . $table . ' ' . $columns_str;
         $sql .= 'VALUES (';
-        $n =count($values);
+        $n = count($values);
         for ($index = 1; $index <= $n; $index++) {
             $sql .= '?';
-            if ($index != $n) $sql .= ', ';
+            if ($index != $n)
+                $sql .= ', ';
         };
         $sql .= ');';
-        Debugr::edbg($sql, '$sql');
-        Debugr::edbg($bind, '$bind', 'r');
         $result = $this->execute($sql, $bind);
         return $result;
-        }
+    }
 
     public function read(array $columns, $table, array $conditions = array()) {
         $columns_str = implode(",", $columns);
         if (strtolower($columns_str) == 'all') {
             $columns_str = '*';
         }
-        $conditions = $this->getConditions($conditions);
-        $sqlWhere = $conditions['sqlWhere'];
-        $bind = $conditions['bind'];
+        $bind = array();
         $sql = 'SELECT ' . $columns_str . ' FROM ' . $table;
-        if (!empty($sqlWhere)) {
-            $sql .= ' WHERE ' . $sqlWhere;
+        if (!empty($conditions)) {
+            $conditions = $this->getConditions($conditions);
+            $sqlWhere = $conditions['sqlWhere'];
+            $bind = $conditions['bind'];
+            if (!empty($sqlWhere)) {
+                $sql .= ' WHERE ' . $sqlWhere;
+            }
         }
         $sql .= ";";
         $result = $this->execute($sql, $bind);
@@ -83,11 +90,38 @@ class Database extends PDO {
         try {
             $stmt = $this->prepare($sql);
             $stmt->execute($bind);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); //FIXME
+            if ($stmt) {
+                if ($this->_isDataRetrievalOperation($sql)) {
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                } else {
+                    return $stmt->rowCount();
+                }
+            }
+            else
+                return FALSE;
         } catch (Exception $exc) {
             $this->error = $exc->getTraceAsString();
             Debugr::edbg($this->error, '$this->error');
 
+            return FALSE;
+        }
+    }
+
+    public function runQuery($query) {
+
+        try {
+            if ($this->_isDataRetrievalOperation($query)) {
+                $stmt = $this->query($query);
+                if ($stmt) {
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                else
+                    return FALSE;
+            } else {
+                return $this->exec($query);
+            }
+        } catch (Exception $exc) {
+            $this->error = $exc->getTraceAsString();
             return FALSE;
         }
     }
@@ -127,6 +161,16 @@ class Database extends PDO {
             'sqlWhere' => $sqlWhere,
             'bind' => $bind
         );
+    }
+
+    private function _isDataRetrievalOperation($query) {
+        echo
+        $is = FALSE;
+        $dataRetrievalQuerySet = array('SELECT', 'SHOW', 'DESCRIBE', 'PRAGMA');
+        foreach ($dataRetrievalQuerySet as $value) {
+            $is = ($is or $this->_utils->startsWith($query, $value));
+        }
+        return $is;
     }
 
 }
