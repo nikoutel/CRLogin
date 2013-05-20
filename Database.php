@@ -80,10 +80,20 @@ class Database extends PDO {
         
     }
 
-    //delete from chre where sess_id = '" . session_id() . "'")
-    //DELETE FROM chre WHERE sess_id = "' . session_id() . '" or timestamp <' . time();
-    public function delete($param) {
-        
+    public function delete($table, array $conditions = array()) {
+        $bind = array();
+        $sql='DELETE FROM ' . $table;
+        if (!empty($conditions)) {
+            $conditions = $this->getConditions($conditions);
+            $sqlWhere = $conditions['sqlWhere'];
+            $bind = $conditions['bind'];
+            if (!empty($sqlWhere)) {
+                $sql .= ' WHERE ' . $sqlWhere;
+            }
+        }
+        $sql .= ";";
+        $result = $this->execute($sql, $bind);
+        return $result;
     }
 
     public function execute($sql, array $bind) {
