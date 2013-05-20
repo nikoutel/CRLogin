@@ -76,7 +76,30 @@ class Database extends PDO {
         return $result;
     }
 
-    public function update($param) {
+    public function update(array $values, $table, array $conditions = array()) {
+        
+        $columns = array_keys($values);
+        $bindSet = array_values($values);
+        $sql = 'UPDATE ' . $table . ' SET ';
+        
+        foreach ($columns as $key => $value) {
+            $sql .= $value . '=?';
+            if ($key != (count($columns)-1)){
+                $sql .= ', ';
+            }
+        }
+        if (!empty($conditions)) {
+            $conditions = $this->getConditions($conditions);
+            $sqlWhere = $conditions['sqlWhere'];
+            $bindConditions = $conditions['bind'];
+            if (!empty($sqlWhere)) {
+                $sql .= ' WHERE ' . $sqlWhere;
+            }
+        }
+        $sql .= ";";
+        $bind = array_merge($bindSet, $bindConditions);
+        $result = $this->execute($sql, $bind);
+        return $result;
         
     }
 
@@ -163,7 +186,11 @@ class Database extends PDO {
                 $sqlWhere .= '? ';
                 $bind[] = $leaf;
             } else {
-                $sqlWhere .= $leaf . ' ';
+                if ($key == 0) {
+                    $sqlWhere .= $leaf . ' ';
+                }  else {
+                    $sqlWhere .= $leaf;
+                }
             }
             $leafprev = $leaf;
         }
