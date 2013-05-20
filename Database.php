@@ -1,8 +1,10 @@
 <?php
 
-class Database extends PDO {
+class Database {
 
-    public $error;
+    public $errorMessage;
+    public $errorTraceAsString;
+    public $pdo;
     private $_utils;
     private $_dsn;
     private $_user;
@@ -21,13 +23,10 @@ class Database extends PDO {
 
     public function connect($dsn, $username, $passwd, $options) {
         try {
-            parent::__construct($dsn, $username, $passwd, $options);
-        } catch (PDOException $e) {
-            $this->error = $e->getMessage(); //@ FIXME
-            Debugr::edbg($this, '$this');
-
-            Debugr::edbg($e->getMessage(), '$e->getMessage()', 'v');
-            Debugr::edbg($this->error, '$this->error');
+            $this->pdo = new PDO($dsn, $username, $passwd, $options);
+        } catch (PDOException $exc) {
+            $this->errorMessage = $exc->getMessage();
+            $this->errorTraceAsString = $exc->getTraceAsString();
             return FALSE;
         }
     }
@@ -77,14 +76,14 @@ class Database extends PDO {
     }
 
     public function update(array $values, $table, array $conditions = array()) {
-        
+
         $columns = array_keys($values);
         $bindSet = array_values($values);
         $sql = 'UPDATE ' . $table . ' SET ';
-        
+
         foreach ($columns as $key => $value) {
             $sql .= $value . '=?';
-            if ($key != (count($columns)-1)){
+            if ($key != (count($columns) - 1)) {
                 $sql .= ', ';
             }
         }
@@ -100,12 +99,11 @@ class Database extends PDO {
         $bind = array_merge($bindSet, $bindConditions);
         $result = $this->execute($sql, $bind);
         return $result;
-        
     }
 
     public function delete($table, array $conditions = array()) {
         $bind = array();
-        $sql='DELETE FROM ' . $table;
+        $sql = 'DELETE FROM ' . $table;
         if (!empty($conditions)) {
             $conditions = $this->getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
@@ -120,43 +118,50 @@ class Database extends PDO {
     }
 
     public function execute($sql, array $bind) {
-        try {
-            $stmt = $this->prepare($sql);
-            $stmt->execute($bind);
-            if ($stmt) {
-                if ($this->_isDataRetrievalOperation($sql)) {
-                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-                } else {
-                    return $stmt->rowCount();
-                }
-            }
-            else
-                return FALSE;
-        } catch (Exception $exc) {
-            $this->error = $exc->getTraceAsString();
-            Debugr::edbg($this->error, '$this->error');
-
-            return FALSE;
-        }
-    }
-
-    public function runQuery($query) {
-
-        try {
-            if ($this->_isDataRetrievalOperation($query)) {
-                $stmt = $this->query($query);
+        if ($this->pdo != null) {
+            try {
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute($bind);
                 if ($stmt) {
-                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    if ($this->_isDataRetrievalOperation($sql)) {
+                        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    } else {
+                        return $stmt->rowCount();
+                    }
                 }
                 else
                     return FALSE;
-            } else {
-                return $this->exec($query);
+            } catch (PDOException $exc) {
+                $this->errorMessage = $exc->getMessage();
+                $this->errorTraceAsString = $exc->getTraceAsString();
+                return FALSE;
             }
-        } catch (Exception $exc) {
-            $this->error = $exc->getTraceAsString();
-            return FALSE;
         }
+        else
+            return FALSE;
+    }
+
+    public function runQuery($query) {
+        if ($this->pdo != null) {
+            try {
+                if ($this->_isDataRetrievalOperation($query)) {
+                    $stmt = $this->pdo->query($query);
+                    if ($stmt) {
+                        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    }
+                    else
+                        return FALSE;
+                } else {
+                    return $this->pdo->exec($query);
+                }
+            } catch (PDOException $exc) {
+                $this->errorMessage = $exc->getMessage();
+                $this->errorTraceAsString = $exc->getTraceAsString();
+                return FALSE;
+            }
+        }
+        else
+            return FALSE;
     }
 
     public function getConditions(array $conditions) {
@@ -188,7 +193,7 @@ class Database extends PDO {
             } else {
                 if ($key == 0) {
                     $sqlWhere .= $leaf . ' ';
-                }  else {
+                } else {
                     $sqlWhere .= $leaf;
                 }
             }
