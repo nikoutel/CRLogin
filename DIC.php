@@ -3,7 +3,8 @@
 class DIC {
 
     private $_db;
-    private $_utils;
+    public $utils;
+    private $_session;
     private $_configReader;
     private $_dbConfigArray;
     private $_configArray;
@@ -12,7 +13,7 @@ class DIC {
 
     public function __construct() {
         $this->_configReader = new ConfigReader();
-        $this->_utils = new Utils();
+        $this->utils = new Utils();
 
         $this->getConfig($this->_configFile);
         $this->_dbConfigFile = $this->_configArray['dbConfigFile'];
@@ -33,7 +34,7 @@ class DIC {
         if (!isset($this->_db)) {
             $database = $this->_dbConfigArray['databaseDriver'].'Database';
             $this->_db = new  $database(
-                    $this->_utils,
+                    $this->utils,
                     $this->_dbConfigArray['dsn'], 
                     $this->_dbConfigArray['username'], 
                     $this->_dbConfigArray['password'], 
@@ -42,6 +43,10 @@ class DIC {
         }
 
         return $this->_db;
+    }
+    
+    public function startSession(){
+        $this->_session = new Session($this->_db, $this->utils);
     }
 
 }
