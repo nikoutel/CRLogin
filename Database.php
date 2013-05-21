@@ -165,11 +165,16 @@ class Database {
     }
 
     public function getConditions(array $conditions) {
-        $depth = 1;
+
         $leafprev = '';
         $bind = array();
         $sqlWhere = '';
-        $conditions = array_merge($conditions, array(array(''))); // adds a empty array at the end so the dept is counted until the end
+        if (count($conditions) != count($conditions, 1)) { // if conditions array is multidimensional
+            $depth = 1;
+            $conditions = array_merge($conditions, array(array(''))); // adds a empty array at the end so the dept is counted until the end
+        } else {
+            $depth = 0;
+        }
         $iterator = new RecursiveIteratorIterator(
                 new RecursiveArrayIterator($conditions), RecursiveIteratorIterator::LEAVES_ONLY
         );
