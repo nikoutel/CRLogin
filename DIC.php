@@ -31,7 +31,8 @@ class DIC {
 
     public function getDb() {
         if (!isset($this->_db)) {
-            $this->_db = new Database(
+            $database = $this->_dbConfigArray['databaseDriver'].'Database';
+            $this->_db = new  $database(
                     $this->_utils,
                     $this->_dbConfigArray['dsn'], 
                     $this->_dbConfigArray['username'], 
