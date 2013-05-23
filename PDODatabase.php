@@ -1,6 +1,6 @@
 <?php
 
-class Database {
+abstract class PDODatabase implements DataAccessor{
 
     public $errorMessage;
     public $errorTraceAsString;
@@ -30,8 +30,11 @@ class Database {
             return FALSE;
         }
     }
+    
+    abstract protected function _getTables();
+    abstract protected function _getColumns($tableName, $showPrimaryKey);
 
-    public function create($table, $values) {
+    public function create(array $values, $table) {
         if ($this->_utils->isAssociative($values)) {
             $columns = array_keys($values);
             $bind = array_values($values);
