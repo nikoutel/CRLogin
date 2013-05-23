@@ -30,14 +30,14 @@ session_start();
 
     function read($id) {
         $conditions = array('', 'id', '=', $id);
-        $data = array('data');
-        return $this->_db->read($data, 'sessions', $conditions);
+        $field = array('data');
+        return $this->_db->read($field, 'sessions', $conditions);
     }
 
     function write($id, $data) {
 
-        $datar = array('id');
-        $id_arr = $this->_db->read($datar, 'sessions');
+        $field = array('id');
+        $id_arr = $this->_db->read($field, 'sessions');
         $access = time();
         $values = array('id' => $id, 'access' => $access, 'data' => $data);
 
@@ -46,7 +46,7 @@ session_start();
             $conditions = array('', 'id', '=', $id);
             return $this->_db->update($values, 'sessions', $conditions);
         } else {
-            return $this->_db->create('sessions', $values);
+            return $this->_db->create($values, 'sessions');
         }
     }
 
@@ -55,9 +55,8 @@ session_start();
         return $this->_db->delete('sessions', $conditions);
     }
 
-    function gc($maxlifetime) {
-        $old = time();
-//        $old = time() - $maxlifetime;
+    function garbageCollector($maxlifetime) {
+        $old = time() - $maxlifetime;
         $conditions = array('', 'access', '<', $old);
         return $this->_db->delete('sessions', $conditions);
     }
