@@ -2,8 +2,8 @@
 
 class MySQLDatabase extends PDODatabase {
 
-    function __construct($utils, $dsn, $user, $passwd, array $options) {
-        parent::__construct($utils, $dsn, $user, $passwd, $options);
+    function __construct(array $dbParameters, $utils) {
+        parent::__construct($dbParameters, $utils);
     }
 
     protected function _getTables() {
