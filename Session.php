@@ -10,14 +10,9 @@ class Session {
         $this->_utils = $utils;
         register_shutdown_function('session_write_close');
         session_set_save_handler(
-                array($this, "open"),
-                array($this, "close"),
-                array($this, "read"),
-                array($this, "write"),
-                array($this, "destroy"),
-                array($this, "garbageCollector")
+                array($this, "open"), array($this, "close"), array($this, "read"), array($this, "write"), array($this, "destroy"), array($this, "garbageCollector")
         );
-session_start();
+        session_start();
     }
 
     function open($save_path, $session_name) {
@@ -31,11 +26,14 @@ session_start();
     function read($id) {
         $conditions = array('', 'id', '=', $id);
         $field = array('data');
-        return $this->_db->read($field, 'sessions', $conditions);
+        $return = $this->_db->read($field, 'sessions', $conditions);
+        if (!empty($return))
+            return $return[0]['data'];
+        else
+            return '';
     }
 
     function write($id, $data) {
-
         $field = array('id');
         $id_arr = $this->_db->read($field, 'sessions');
         $access = time();
