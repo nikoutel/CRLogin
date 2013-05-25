@@ -1,24 +1,51 @@
 <?php
 
-abstract class PDODatabase implements DataAccessor{
+abstract class PDODatabase implements DataAccessor {
 
     public $errorMessage;
     public $errorTraceAsString;
     public $pdo;
     private $_utils;
     private $_dsn;
+    private $_databaseDriver;
     private $_user;
     private $_password;
+    private $_host;
+    private $_port;
+    private $_dbName;
     private $_options;
+    private $_dbPath;
 
-    public function __construct($utils, $dsn, $user, $passwd, array $options) { //@todo connect method
+    public function __construct(array $dbParameters, $utils) {
         $this->_utils = $utils;
-        $this->_dsn = $dsn;
-        $this->_user = $user;
-        $this->_password = $passwd;
-        $this->_options = $options;
+        $this->setParameters($dbParameters);
 
         $this->connect($this->_dsn, $this->_user, $this->_password, $this->_options);
+    }
+
+    public function setParameters($dbParameters) {
+        $this->_options = $dbParameters['dbOptions'];
+
+        $this->_databaseDriver = strtolower($dbParameters['databaseDriver']);
+        if ($this->_databaseDriver == 'mysql') {
+            $this->_user = $dbParameters['username'];
+            $this->_password = $dbParameters['password'];
+
+
+            $this->_host = $dbParameters['host'];
+            $this->_dbName = $dbParameters['dbName'];
+            if ($dbParameters['port'] != '') {
+                $this->_port = $dbParameters['port'];
+            } else {
+                $this->_port = '3306';
+            }
+
+            $this->_dsn = 'mysql:host=' . $this->_host . ';port=' . $this->_port . ';dbname=' . $this->_dbName;
+        }
+        if ($this->_databaseDriver == 'sqlite') {
+            $this->_dbPath = $dbParameters['dbPath'];
+            $this->_dsn = 'sqlite:' . $this->_dbPath;
+        }
     }
 
     public function connect($dsn, $username, $passwd, $options) {
@@ -27,10 +54,11 @@ abstract class PDODatabase implements DataAccessor{
         } catch (PDOException $exc) {
             $this->errorMessage = $exc->getMessage();
             $this->errorTraceAsString = $exc->getTraceAsString();
+            echo $this->errorMessage; // delme
             return FALSE;
         }
     }
-    
+
     abstract protected function _getTables();
     abstract protected function _getColumns($tableName, $showPrimaryKey);
 
@@ -137,9 +165,10 @@ abstract class PDODatabase implements DataAccessor{
             } catch (PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
+                echo $this->errorMessage; // delme
                 return FALSE;
-            }
-        }
+            }   
+                }
         else
             return FALSE;
     }
@@ -160,6 +189,7 @@ abstract class PDODatabase implements DataAccessor{
             } catch (PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
+                echo $this->errorMessage; // delme
                 return FALSE;
             }
         }

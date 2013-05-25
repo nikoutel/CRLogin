@@ -15,7 +15,7 @@ class Session {
                 array($this, "read"),
                 array($this, "write"),
                 array($this, "destroy"),
-                array($this, "gc")
+                array($this, "garbageCollector")
         );
 session_start();
     }

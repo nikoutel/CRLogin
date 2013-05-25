@@ -3,50 +3,43 @@
 class DIC {
 
     private $_db;
-    public $utils;
+    private $_utils;
     private $_session;
-    private $_configReader;
-    private $_dbConfigArray;
-    private $_configArray;
-    private $_dbConfigFile;
-    private $_configFile = 'config.php';
+    private $_configuration;
 
     public function __construct() {
-        $this->_configReader = new ConfigReader();
-        $this->utils = new Utils();
-
-        $this->getConfig($this->_configFile);
-        $this->_dbConfigFile = $this->_configArray['dbConfigFile'];
-        $this->getDbConfig($this->_dbConfigFile);
+        
     }
 
-    public function getDbConfig($configFile) {
-        $this->_dbConfigArray = $this->_configReader->readFile($configFile);
-        return $this->_dbConfigArray;
-    }
-
-    public function getConfig($configFile) {
-        $this->_configArray = $this->_configReader->readFile($configFile);
-        return $this->_configArray;
+    public function getConfiguration($cat) {
+        $this->_configuration = new Configuration();
+        return $this->_configuration->getConfigArray($cat);
     }
 
     public function getDb() {
         if (!isset($this->_db)) {
-            $database = $this->_dbConfigArray['databaseDriver'].'Database';
-            $this->_db = new  $database(
-                    $this->utils,
-                    $this->_dbConfigArray['dsn'], 
-                    $this->_dbConfigArray['username'], 
-                    $this->_dbConfigArray['password'], 
-                   array_merge($this->_configArray['dbOptions'],  $this->_dbConfigArray['driverOptions'])
-            );
+            $dbConfig = $this->getConfiguration('db');
+            $utility = $this->getUtility();
+            $database = $dbConfig['databaseDriver'] . 'Database';
+            $this->_db = new $database($dbConfig, $utility);
         }
-
         return $this->_db;
     }
-    
-    public function startSession(){
-        $this->_session = new Session($this->_db, $this->utils);
+
+    public function startSession() {
+        if (!isset($this->_session)) {
+            $utility = $this->getUtility();
+            $db = $this->getDb();
+            $this->_session = new Session($db, $utility);
+        }
+        return $this->_session;
+    }
+
+    public function getUtility() {
+        if (!isset($this->_utils)) {
+            $this->_utils = new Utils();
+        }
+        return $this->_utils;
     }
 
 }
