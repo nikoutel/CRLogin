@@ -4,13 +4,13 @@ class Challenge {
 
     private $_challenge;
     private $_container;
-    private $_db;
+    private $_dataStore;
 
     public function __construct($container) {
 
         session_start();
         $this->_container = $container;
-        $this->_db = $this->_container->getDb();
+        $this->_dataStore = $this->_container->getDataStore();
     }
 
     public function getChallenge() {
@@ -42,7 +42,7 @@ class Challenge {
             'sessionid' => session_id(),
             'timestamp' => (time() + 15) //@todo  make dalay var //may make problem with firebug
         );
-        return $this->_db->create($values, $dataset);
+        return $this->_dataStore->create($values, $dataset);
     }
 
     private function _deleteOldChallenge() {
@@ -52,7 +52,7 @@ class Challenge {
             array('', 'sessionid', '=', session_id()),
             array('OR', 'timestamp', '<', time())
         );
-        return $this->_db->delete($dataset, $conditions);
+        return $this->_dataStore->delete($dataset, $conditions);
     }
 
     public function fechChallenge() {
@@ -62,7 +62,7 @@ class Challenge {
             array('', 'sessionid', '=', session_id()),
             array('AND', 'timestamp', '>', time()),
         );
-        $challengeArray = $this->_db->read(array($field), $dataset, $conditions);
+        $challengeArray = $this->_dataStore->read(array($field), $dataset, $conditions);
         if (!empty($challengeArray)) {
             $this->_challenge = $challengeArray[0][$field];
             return TRUE;

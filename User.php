@@ -6,11 +6,11 @@ class User {
     private $_saltedPass;
     private $_userSalt;
     private $_container;
-    private $_db;
+    private $_dataStore;
 
     public function __construct($container) {
         $this->_container = $container;
-        $this->_db = $this->_container->getDb();
+        $this->_dataStore = $this->_container->getDataStore();
     }
 
     public function setUserName($username) {
@@ -21,7 +21,7 @@ class User {
         $field = 'usersalt';
         $dataset = 'user';
         $conditions = array('', 'username', '=', $this->_username);
-        $this->_userSalt = $this->_db->read(array($field), $dataset, $conditions);
+        $this->_userSalt = $this->_dataStore->read(array($field), $dataset, $conditions);
 
         if (!empty($this->_userSalt)) {
             return $this->_userSalt[0][$field];
@@ -34,7 +34,7 @@ class User {
         $field = 'spass';
         $dataset = 'user';
         $conditions = array('', 'username', '=', $this->_username);
-        $spassAraray = $this->_db->read(array($field), $dataset, $conditions);
+        $spassAraray = $this->_dataStore->read(array($field), $dataset, $conditions);
         if (!empty($spassAraray)) {
             $this->_saltedPass = $spassAraray[0][$field];
             return $this->_saltedPass;

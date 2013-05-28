@@ -2,7 +2,7 @@
 
 class DIC {
 
-    private $_db;
+    private $_dataStore;
     private $_utils;
     private $_session;
     private $_configuration;
@@ -16,21 +16,21 @@ class DIC {
         return $this->_configuration->getConfigArray($cat);
     }
 
-    public function getDb() {
-        if (!isset($this->_db)) {
+    public function getDataStore() {
+        if (!isset($this->_dataStore)) {
             $dbConfig = $this->getConfiguration('db');
             $utility = $this->getUtility();
             $database = $dbConfig['databaseDriver'] . 'Database';
-            $this->_db = new $database($dbConfig, $utility);
+            $this->_dataStore = new $database($dbConfig, $utility);
         }
-        return $this->_db;
+        return $this->_dataStore;
     }
 
     public function startSession() {
         if (!isset($this->_session)) {
             $utility = $this->getUtility();
-            $db = $this->getDb();
-            $this->_session = new Session($db, $utility);
+            $ds = $this->getDataStore();
+            $this->_session = new Session($ds, $utility);
         }
         return $this->_session;
     }
