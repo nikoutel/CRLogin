@@ -18,10 +18,13 @@ class DIC {
 
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
-            $dbConfig = $this->getConfiguration('db');
-            $utility = $this->getUtility();
-            $database = $dbConfig['databaseDriver'] . 'Database';
-            $this->_dataStore = new $database($dbConfig, $utility);
+            $config= $this->getConfiguration('general');
+            if ($config['datastore'] == 'database') {
+                $dbConfig = $this->getConfiguration('db');
+                $utility = $this->getUtility();
+                $database = $dbConfig['databaseDriver'] . 'Database';
+                $this->_dataStore = new $database($dbConfig, $utility);
+            }
         }
         return $this->_dataStore;
     }
