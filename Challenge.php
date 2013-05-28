@@ -40,7 +40,7 @@ class Challenge {
         $values = array(
             'challenge' => $challenge,
             'sessionid' => session_id(),
-            'timestamp' => (time() + 5) // make 5 var
+            'timestamp' => (time() + 15) //@todo  make dalay var //may make problem with firebug
         );
         return $this->_db->create($values, $dataset);
     }

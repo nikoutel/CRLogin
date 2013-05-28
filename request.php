@@ -47,19 +47,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
         $challenge = new Challenge($dic);
         if ($challenge->fechChallenge()) {
             $challengeId = $challenge->getChallenge();
-            
-            $clientResponse = new Response($dic);
-            $clientResponse->setResponse($response); 
-            
-            $serverResponse = new Response($dic);
-            $serverResponse->calculateResponse($saltedPassword, $challengeId); 
-            
-            $cr = $clientResponse->getResponse();// @todo rename vars
+
+            $clientResponse = new Response();
+            $clientResponse->setResponse($response);
+
+            $serverResponse = new Response();
+            $serverResponse->calculateResponse($saltedPassword, $challengeId);
+
+            $cr = $clientResponse->getResponse(); // @todo rename vars
 
             $sr = $serverResponse->getResponse();
-                } else {
+            $authentication = new Authentication($cr, $sr);
+            if ($authentication->isAuthenticated()) {
+                logIn();
+            } else {
+                //@todo else
+                echo json_encode(array(
+                    'end' => 'not ok'));
+            }
+        } else {
             //@todo else
         }
     }
 }
+
+function logIn() {
+    echo json_encode(array(
+        'end' => 'ok'));
+}
+
 ?>

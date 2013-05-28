@@ -2,23 +2,21 @@ $(document).ready(function() {
     $("#lgsubmit").click(function() {
         var username = $('#username').val();
         var password = $('#password').val();
-        console.log(username); //delme
-        console.log(password); //delme
         //validate
         $.post(
                 'request.php',
                 {action: 'getchallenge',
-                username: username},
+                    username: username},
         function(data) {
-            console.log('dat:' + data); //delme
-            console.log('dat.us:' + data.usersalt); //delme
 
             if (!data.error) {
                 cryptpass();
-
             }
 
             function cryptpass() {
+                if (window.console && (window.console.firebug || window.console.exception)) {
+                    $('#msg').html('firebug');
+                }
                 bcrypt = new bCrypt();
                 bcrypt.hashpw(password, data.usersalt, getresponse);
 
@@ -36,10 +34,10 @@ $(document).ready(function() {
             $.post(
                     'request.php',
                     {action: 'login',
-                     username: username,
-                     response: response},
+                        username: username,
+                        response: response},
             function(data) {
-                
+                alert(data.end);
             }, "json");
 
         }

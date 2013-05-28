@@ -38,6 +38,7 @@
                     <input type="submit" name="submit" value="Login" class="subm" id="lgsubmit"/>
                 </fieldset>	
             </form>
+            <div id="msg" ></div>
         </div>
     </body>
 </html>
