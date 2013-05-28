@@ -7,13 +7,10 @@ class Challenge {
     private $_db;
 
     public function __construct($container) {
+
         session_start();
         $this->_container = $container;
         $this->_db = $this->_container->getDb();
-
-        $this->_createChallenge();
-        $this->_deleteOldChallenge();// first delete older (if any)
-        $this->_storeChallenge();
     }
 
     public function getChallenge() {
@@ -21,16 +18,27 @@ class Challenge {
         return $this->_challenge;
     }
 
-    private function _createChallenge() {
+    public function createChallenge() {
 
-        $this->_challenge = sha1(uniqid(mt_rand()));
+        $challenge = sha1(uniqid(mt_rand()));
+
+        $delete = $this->_deleteOldChallenge(); // first delete older (if any)
+
+        $store = $this->_storeChallenge($challenge);
+        if (($delete !== FALSE) && ($store !== FALSE)) {
+            $this->_challenge = $challenge;
+            return TRUE;
+        } else {
+            //@todo else
+            return FALSE;
+        }
     }
 
-    private function _storeChallenge() {
-        
+    private function _storeChallenge($challenge) {
+
         $dataset = 'challenge';
         $values = array(
-            'challenge' => $this->_challenge,
+            'challenge' => $challenge,
             'sessionid' => session_id(),
             'timestamp' => (time() + 5) // make 5 var
         );
@@ -38,13 +46,29 @@ class Challenge {
     }
 
     private function _deleteOldChallenge() {
-        
+
         $dataset = 'challenge';
         $conditions = array(
             array('', 'sessionid', '=', session_id()),
             array('OR', 'timestamp', '<', time())
         );
         return $this->_db->delete($dataset, $conditions);
+    }
+
+    public function fechChallenge() {
+        $field = 'challenge';
+        $dataset = 'challenge';
+        $conditions = array(
+            array('', 'sessionid', '=', session_id()),
+            array('AND', 'timestamp', '>', time()),
+        );
+        $challengeArray = $this->_db->read(array($field), $dataset, $conditions);
+        if (!empty($challengeArray)) {
+            $this->_challenge = $challengeArray[0][$field];
+            return TRUE;
+        }
+        else
+            return FALSE;
     }
 
 }

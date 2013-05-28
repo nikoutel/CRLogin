@@ -19,11 +19,10 @@ class User {
 
     public function getUserSalt() {
         $field = 'usersalt';
-        $dataset = 'username';
-        $conditions = array('', $dataset, '=', $this->username);
-        $this->userSalt = $this->_db->read(array($field), 'user', $conditions);
+        $dataset = 'user';
+        $conditions = array('', 'username', '=', $this->username);
+        $this->userSalt = $this->_db->read(array($field), $dataset, $conditions);
 
-        Debugr::edbgLog($this->userSalt, '$this->userSalt');
         if (!empty($this->userSalt)) {
             return $this->userSalt[0][$field];
         }
@@ -32,8 +31,17 @@ class User {
     }
 
     public function getSaltedPass() {
-
-        return $this->saltedPass;
+        $field = 'spass';
+        $dataset = 'user';
+        $conditions = array('', 'username', '=', $this->username);
+        $spassAraray = $this->_db->read(array($field), $dataset, $conditions);
+        if (!empty($spassAraray)) {
+            $this->saltedPass = $spassAraray[0][$field];
+            return $this->saltedPass;
+        }
+        else
+            return FALSE;
+        
     }
 
 }

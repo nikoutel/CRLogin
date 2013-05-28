@@ -7,7 +7,8 @@ $(document).ready(function() {
         //validate
         $.post(
                 'request.php',
-                {username: username},
+                {action: 'getchallenge',
+                username: username},
         function(data) {
             console.log('dat:' + data); //delme
             console.log('dat.us:' + data.usersalt); //delme
@@ -34,7 +35,8 @@ $(document).ready(function() {
         function send(response) {
             $.post(
                     'request.php',
-                    {username: username,
+                    {action: 'login',
+                     username: username,
                      response: response},
             function(data) {
                 
