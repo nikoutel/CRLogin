@@ -2,9 +2,9 @@
 
 class User {
 
-    public $username;
-    public $saltedPass;
-    public $userSalt;
+    private $_username;
+    private $_saltedPass;
+    private $_userSalt;
     private $_container;
     private $_db;
 
@@ -14,17 +14,17 @@ class User {
     }
 
     public function setUserName($username) {
-        $this->username = $username;
+        $this->_username = $username;
     }
 
     public function getUserSalt() {
         $field = 'usersalt';
         $dataset = 'user';
-        $conditions = array('', 'username', '=', $this->username);
-        $this->userSalt = $this->_db->read(array($field), $dataset, $conditions);
+        $conditions = array('', 'username', '=', $this->_username);
+        $this->_userSalt = $this->_db->read(array($field), $dataset, $conditions);
 
-        if (!empty($this->userSalt)) {
-            return $this->userSalt[0][$field];
+        if (!empty($this->_userSalt)) {
+            return $this->_userSalt[0][$field];
         }
         else
             return FALSE;
@@ -33,15 +33,14 @@ class User {
     public function getSaltedPass() {
         $field = 'spass';
         $dataset = 'user';
-        $conditions = array('', 'username', '=', $this->username);
+        $conditions = array('', 'username', '=', $this->_username);
         $spassAraray = $this->_db->read(array($field), $dataset, $conditions);
         if (!empty($spassAraray)) {
-            $this->saltedPass = $spassAraray[0][$field];
-            return $this->saltedPass;
+            $this->_saltedPass = $spassAraray[0][$field];
+            return $this->_saltedPass;
         }
         else
             return FALSE;
-        
     }
 
 }

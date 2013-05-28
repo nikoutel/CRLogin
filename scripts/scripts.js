@@ -11,6 +11,8 @@ $(document).ready(function() {
 
             if (!data.error) {
                 cryptpass();
+            } else {
+                //@todo js else
             }
 
             function cryptpass() {

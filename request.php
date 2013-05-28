@@ -9,32 +9,37 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
 
         $username = $_POST['username'];
         //@todo validate?
-        //@todo if un not empty
+        $username = trim($username);
+        if (!empty($username)) {
 
-        $user = new User($dic);
-        $user->setUserName($username);
-        $userSalt = $user->getUserSalt();
-        if ($userSalt) {
-            $challenge = new Challenge($dic);
-            if ($challenge->createChallenge()) {
-                $challengeId = $challenge->getChallenge();
-            } else {
+            $user = new User($dic);
+            $user->setUserName($username);
+            $userSalt = $user->getUserSalt();
+            if ($userSalt !== FALSE) {
+                $challenge = new Challenge($dic);
+                if ($challenge->createChallenge()) {
+                    $challengeId = $challenge->getChallenge();
+                } else {
+                    //@todo else
+                    echo json_encode(array(
+                        'error' => TRUE));
+                }
                 echo json_encode(array(
-                    'error' => TRUE));
+                    'error' => FALSE,
+                    'usersalt' => $userSalt,
+                    'challenge' => $challengeId));
+            } else {
+                //@todo unknown username
+                // send dummy challenge ?
             }
-            echo json_encode(array(
-                'error' => FALSE,
-                'usersalt' => $userSalt,
-                'challenge' => $challengeId));
         } else {
-            //@todo unknown username
-            // send dummy challenge ?
+            //@todo else
+            echo json_encode(array(
+            'error' => TRUE));
         }
-//    Debugr::edbg($user->getUserSalt(), '$user->getUserSalt()');
     }
 }
 if (isset($_POST['action']) && $_POST['action'] == 'login') {
-    //@todo check user
     $username = $_POST['username'];
     $response = $_POST['response'];
     if ((!empty($username)) && (!empty($response))) {
