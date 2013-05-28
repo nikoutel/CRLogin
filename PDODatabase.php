@@ -149,6 +149,10 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     public function execute($sql, array $bind) {
+//        Debugr::edbgLog($sql, '$sql');
+
+//        Debugr::edbgLog($bind, '$bind');
+
         if ($this->pdo != null) {
             try {
                 $stmt = $this->pdo->prepare($sql);
