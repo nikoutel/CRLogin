@@ -1,4 +1,10 @@
-<?php ?>
+<?php 
+require 'CRLoginAutoloader.php';
+require 'Debugr/DebugrLoad.php';
+$dic = new DIC;
+$session = $dic->startSession();
+//session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +16,7 @@
                 document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
             }
         </script>
-        <script src="/scripts/jBCrypt/isaac.js" type="text/javascript"></script>
+<!--        <script src="/scripts/jBCrypt/isaac.js" type="text/javascript"></script>-->
         <script src="/scripts/jBCrypt/bCrypt.js" type="text/javascript"></script>
         <script type="text/javascript" src="/scripts/sha256.js"></script>
         <script type="text/javascript" src="scripts/scripts.js"></script>

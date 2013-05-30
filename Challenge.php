@@ -8,7 +8,7 @@ class Challenge {
 
     public function __construct($container) {
 
-        session_start();
+//        session_start();
         $this->_container = $container;
         $this->_dataStore = $this->_container->getDataStore();
     }
