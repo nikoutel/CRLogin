@@ -10,6 +10,7 @@ $session = $dic->startSession();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
+        <link href="login.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
         <script type="text/javascript">
             if (typeof jQuery === 'undefined') {
@@ -22,17 +23,13 @@ $session = $dic->startSession();
         <script type="text/javascript" src="scripts/scripts.js"></script>
     </head>
     <body>
-        <div align="center" >
-            <?php
-            if (isset($_POST['submit'])) {
-                ?>  
-                <noscript>
+        <div id="top" align="center" >
+
+                <div id="noscript">
                 Ενεργοποιήστε την JavaScript για να συνδεθείτε 
-                </noscript>
-                <?php
-            }
-            ?>
-            <div style="color:red; height:20px" id="lgerror"></div> 
+                </div>
+
+            <div id="lgerror"></div> 
             <form action="login.php" method="post" id="lg">
                 <fieldset ><br /><br />
                     <label for="username">User Name:</label> 

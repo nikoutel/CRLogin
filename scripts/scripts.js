@@ -1,8 +1,13 @@
 $(document).ready(function() {
-    $("#lgsubmit").click(function() {
+    $('#noscript').hide();
+    $('#lgsubmit').click(function() {
+        $('#lgerror').html('');
         var username = $('#username').val();
         var password = $('#password').val();
-        //validate
+        if ($.trim(username) === ''){
+            $('#lgerror').html('Empty username');
+            return false;
+        }
         $.post(
                 'request.php',
                 {action: 'getchallenge',
@@ -12,7 +17,8 @@ $(document).ready(function() {
             if (!data.error) {
                 cryptpass();
             } else {
-                //@todo js else
+                $('#lgerror').html(data.errorMsg);
+                return false;
             }
 
             function cryptpass() {
@@ -42,7 +48,7 @@ $(document).ready(function() {
                         response: response},
             function(data) {
                 if (data.error){
-                    $('#msg').html(data.erroMsg);
+                    $('#lgerror').html(data.errorMsg);
                 }
                 if (data.redirect){
                     $(location).attr('href',data.redirectURL);

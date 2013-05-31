@@ -36,9 +36,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
                 // send dummy challenge ?
             }
         } else {
-            //@todo else
             echo json_encode(array(
-                'error' => TRUE));
+                'error' => TRUE,
+                'errorMsg' => 'Empty Username'
+            ));
         }
     }
 }
@@ -98,7 +99,8 @@ function isNotLoggedIn() {
     $_SESSION['username'] = FALSE;
     echo json_encode(array(
         'error' => TRUE,
-        'erroMsg' => 'wrong'));
+        'errorMsg' => 'wrong'
+    ));
 }
 
 ?>
