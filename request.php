@@ -67,10 +67,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
             $sr = $serverResponse->getResponse();
             $authentication = new Authentication($cr, $sr);
             if ($authentication->isAuthenticated()) {
-                loggedIn($username);
+                isLoggedIn($username);
             } else {
                 //@todo else
-                notLoggedIn();
+                isNotLoggedIn();
             }
         } else {
             //@todo else
@@ -78,15 +78,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
     }
 }
 
-function loggedIn($username) {
+function isLoggedIn($username) {
     if (isset($_SESSION['redirectURL'])) {
         $redirectUrl = $_SESSION['redirectURL'];
         unset($_SESSION['redirectURL']);
     } else {
         $redirectUrl = 'index.php';
     }
-
-    
     session_regenerate_id(true);
     $_SESSION['logged'] = TRUE;
     $_SESSION['username'] = $username;
@@ -95,7 +93,7 @@ function loggedIn($username) {
         'redirectURL' => $redirectUrl));
 }
 
-function notLoggedIn() {
+function isNotLoggedIn() {
     $_SESSION['logged'] = FALSE;
     $_SESSION['username'] = FALSE;
     echo json_encode(array(
