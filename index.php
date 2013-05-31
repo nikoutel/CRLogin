@@ -14,9 +14,9 @@ if (isset($_GET['s'])) {
             include 'changepassword.php';
             break;
         default:
-            include 'login.php';
+            include 'main.php';
     }
 } else {
-    include 'login.php';
+    include 'main.php';
 }
 ?>

@@ -5,9 +5,7 @@ require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
 //session_start();
-$_SESSION['redirectUrl'] = 'index.php?s=members';
-
-
+//$_SESSION['redirectUrl'] = 'index.php?s=members';
 //$_POST['username'] = 'nikos'; // ugly debug mode
 if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
     if (isset($_POST['username'])) {
@@ -81,8 +79,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
 }
 
 function loggedIn($username) {
-    $redirectUrl = $_SESSION['redirectUrl'];
-    unset($_SESSION['redirectUrl']);
+    if (isset($_SESSION['redirectURL'])) {
+        $redirectUrl = $_SESSION['redirectURL'];
+        unset($_SESSION['redirectURL']);
+    } else {
+        $redirectUrl = 'index.php';
+    }
+
+    
     session_regenerate_id(true);
     $_SESSION['logged'] = TRUE;
     $_SESSION['username'] = $username;
@@ -98,4 +102,5 @@ function notLoggedIn() {
         'error' => TRUE,
         'erroMsg' => 'wrong'));
 }
+
 ?>

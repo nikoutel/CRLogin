@@ -1,12 +1,5 @@
 <?php
-require 'CRLoginAutoloader.php';
-require 'Debugr/DebugrLoad.php';
-$dic = new DIC;
-$session = $dic->startSession();
-if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)){
-    header('Location:index.php?s=login');
-    die();
-}
+require 'members_area.inc.php';
 echo 'hello member ';
 echo $_SESSION['username'];
 ?>
