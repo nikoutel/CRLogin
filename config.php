@@ -6,7 +6,8 @@ $config = array(
         'datastore' => 'database',
         'dbConfigFile' => 'db_config0.php',
         'challengeTimedelay' => 15, //number of seconds the challenge is stored in the database
-        'sessionInDB' => TRUE
+        'sessionInDB' => TRUE,
+        'language' => 'en'
     ),
     'db' => array(
         'dbOptions' => array(

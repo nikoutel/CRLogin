@@ -4,9 +4,6 @@ require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
-//session_start();
-//$_SESSION['redirectUrl'] = 'index.php?s=members';
-//$_POST['username'] = 'nikos'; // ugly debug mode
 if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
     if (isset($_POST['username'])) {
 
@@ -71,7 +68,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
                 isLoggedIn($username);
             } else {
                 //@todo else
-                isNotLoggedIn();
+                isNotLoggedIn($l);
             }
         } else {
             //@todo else
@@ -94,12 +91,12 @@ function isLoggedIn($username) {
         'redirectURL' => $redirectUrl));
 }
 
-function isNotLoggedIn() {
+function isNotLoggedIn($l) {
     $_SESSION['logged'] = FALSE;
     $_SESSION['username'] = FALSE;
     echo json_encode(array(
         'error' => TRUE,
-        'errorMsg' => 'wrong'
+        'errorMsg' => $l['LOGIN_FAIL']
     ));
 }
 
