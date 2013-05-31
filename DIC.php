@@ -33,7 +33,8 @@ class DIC {
         if (!isset($this->_session)) {
             $utility = $this->getUtility();
             $ds = $this->getDataStore();
-            $this->_session = new Session($ds, $utility);
+            $config = $this->getConfiguration('general');
+            $this->_session = new Session($ds, $config, $utility);
         }
         return $this->_session;
     }

@@ -5,13 +5,15 @@ class Session {
     protected $_dataStore;
     protected $_utils;
 
-    public function __construct($dataStore, $utils) {
+    public function __construct($dataStore, $configuration, $utils) {
         $this->_dataStore = $dataStore;
         $this->_utils = $utils;
-        register_shutdown_function('session_write_close');
-        session_set_save_handler(
-                array($this, "open"), array($this, "close"), array($this, "read"), array($this, "write"), array($this, "destroy"), array($this, "garbageCollector")
-        );
+        if ($configuration['sessionInDB']) {
+            register_shutdown_function('session_write_close');
+            session_set_save_handler(
+                    array($this, "open"), array($this, "close"), array($this, "read"), array($this, "write"), array($this, "destroy"), array($this, "garbageCollector")
+            );
+        }
         session_start();
     }
 
