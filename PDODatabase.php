@@ -60,7 +60,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     abstract protected function _getTables();
-    abstract protected function _getColumns($tableName, $showPrimaryKey);
+    abstract protected function _getColumns($tableName, $withPrimaryKey);
 
     public function create(array $values, $table) {
         if ($this->_utils->isAssociative($values)) {
@@ -94,7 +94,7 @@ abstract class PDODatabase implements DataAccessor {
         $bind = array();
         $sql = 'SELECT ' . $columns_str . ' FROM ' . $table;
         if (!empty($conditions)) {
-            $conditions = $this->getConditions($conditions);
+            $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
             $bind = $conditions['bind'];
             if (!empty($sqlWhere)) {
@@ -119,7 +119,7 @@ abstract class PDODatabase implements DataAccessor {
             }
         }
         if (!empty($conditions)) {
-            $conditions = $this->getConditions($conditions);
+            $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
             $bindConditions = $conditions['bind'];
             if (!empty($sqlWhere)) {
@@ -136,7 +136,7 @@ abstract class PDODatabase implements DataAccessor {
         $bind = array();
         $sql = 'DELETE FROM ' . $table;
         if (!empty($conditions)) {
-            $conditions = $this->getConditions($conditions);
+            $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
             $bind = $conditions['bind'];
             if (!empty($sqlWhere)) {
@@ -201,7 +201,7 @@ abstract class PDODatabase implements DataAccessor {
             return FALSE;
     }
 
-    public function getConditions(array $conditions) {
+    protected function _getConditions(array $conditions) {
 
         $leafprev = '';
         $bind = array();
@@ -247,7 +247,7 @@ abstract class PDODatabase implements DataAccessor {
         );
     }
 
-    private function _isDataRetrievalOperation($query) {
+    protected function _isDataRetrievalOperation($query) {
         echo
         $is = FALSE;
         $dataRetrievalQuerySet = array('SELECT', 'SHOW', 'DESCRIBE', 'PRAGMA');

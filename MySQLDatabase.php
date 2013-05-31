@@ -16,13 +16,13 @@ class MySQLDatabase extends PDODatabase {
         return $tables;
     }
 
-    protected function _getColumns($tableName, $showPrimaryKey = FALSE) {
+    protected function _getColumns($tableName, $withPrimaryKey = FALSE) {
         if (in_array($tableName, $this->_getTables())) {
             $sqlQuery = "SHOW COLUMNS FROM " . $tableName;
             
             $array = $this->runQuery($sqlQuery);
             foreach ($array as $value) {
-                if (($showPrimaryKey) || ($value['Key']) != 'PRI') {
+                if (($withPrimaryKey) || ($value['Key']) != 'PRI') {
                     reset($value);
                     $columns[] = $value[key($value)];
                 }
