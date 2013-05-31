@@ -14,8 +14,6 @@ class Authentication {
     }
 
     private function _compareResponse() {
-        Debugr::edbgLog($this->_clientResponse, '$this->_clientResponse');
-        Debugr::edbgLog($this->_serverResponse, '$this->_serverResponse');
 
         if ($this->_clientResponse === $this->_serverResponse)
             $this->_isAuthenticated = TRUE;

@@ -17,7 +17,8 @@ $(document).ready(function() {
 
             function cryptpass() {
                 if (window.console && (window.console.firebug || window.console.exception)) {
-                    $('#msg').html('firebug');
+                    var mesg = 'It seems you have firebug enabled. This will deley things...<br /><br /><br /><br />';
+                    $('#msg').html('<img src="_info/firebug.gif" width="128" height="64" alt="firebug"/><br />'+mesg);
                 }
                 bcrypt = new bCrypt();
                 bcrypt.hashpw(password, data.usersalt, getresponse);
@@ -25,6 +26,7 @@ $(document).ready(function() {
             }
 
             function getresponse(cpass) {
+                $('#msg').html('');
                 $str = cpass + data.challenge;
                 var shaObj = new jsSHA($str);
                 response = shaObj.getHash("SHA-256", "HEX");
@@ -39,7 +41,12 @@ $(document).ready(function() {
                         username: username,
                         response: response},
             function(data) {
-                alert(data.end);
+                if (data.error){
+                    $('#msg').html(data.erroMsg);
+                }
+                if (data.redirect){
+                    $(location).attr('href',data.redirectURL);
+                }
             }, "json");
 
         }

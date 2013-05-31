@@ -3,6 +3,11 @@
 require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
+$session = $dic->startSession();
+//session_start();
+$_SESSION['redirectUrl'] = 'index.php?s=members';
+
+
 //$_POST['username'] = 'nikos'; // ugly debug mode
 if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
     if (isset($_POST['username'])) {
@@ -35,7 +40,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
         } else {
             //@todo else
             echo json_encode(array(
-            'error' => TRUE));
+                'error' => TRUE));
         }
     }
 }
@@ -64,11 +69,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
             $sr = $serverResponse->getResponse();
             $authentication = new Authentication($cr, $sr);
             if ($authentication->isAuthenticated()) {
-                logIn();
+                loggedIn($username);
             } else {
                 //@todo else
-                echo json_encode(array(
-                    'end' => 'not ok'));
+                notLoggedIn();
             }
         } else {
             //@todo else
@@ -76,9 +80,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
     }
 }
 
-function logIn() {
+function loggedIn($username) {
+    $redirectUrl = $_SESSION['redirectUrl'];
+    unset($_SESSION['redirectUrl']);
+    session_regenerate_id(true);
+    $_SESSION['logged'] = TRUE;
+    $_SESSION['username'] = $username;
     echo json_encode(array(
-        'end' => 'ok'));
+        'redirect' => TRUE,
+        'redirectURL' => $redirectUrl));
 }
 
+function notLoggedIn() {
+    $_SESSION['logged'] = FALSE;
+    $_SESSION['username'] = FALSE;
+    echo json_encode(array(
+        'error' => TRUE,
+        'erroMsg' => 'wrong'));
+}
 ?>
