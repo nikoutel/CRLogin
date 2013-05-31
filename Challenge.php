@@ -5,12 +5,14 @@ class Challenge {
     private $_challenge;
     private $_container;
     private $_dataStore;
+    private $_configArray;
 
     public function __construct($container) {
 
-//        session_start();
         $this->_container = $container;
         $this->_dataStore = $this->_container->getDataStore();
+        $this->_configArray = $this->_container->getConfiguration('general');
+        
     }
 
     public function getChallenge() {
@@ -29,18 +31,17 @@ class Challenge {
             $this->_challenge = $challenge;
             return TRUE;
         } else {
-            //@todo else
             return FALSE;
         }
     }
 
     private function _storeChallenge($challenge) {
-
+        
         $dataset = 'challenge';
         $values = array(
             'challenge' => $challenge,
             'sessionid' => session_id(),
-            'timestamp' => (time() + 15) //@todo  make dalay var //may make problem with firebug
+            'timestamp' => (time() + $this->_configArray['challengeTimedelay']) //@todo  make dalay var //may make problem with firebug
         );
         return $this->_dataStore->create($values, $dataset);
     }
