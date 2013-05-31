@@ -3,7 +3,7 @@ require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
-//session_start();
+$l=$dic->getLanguage();
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,15 +26,15 @@ $session = $dic->startSession();
         <div id="top" align="center" >
 
                 <div id="noscript">
-                Ενεργοποιήστε την JavaScript για να συνδεθείτε 
+                <?php echo $l['NO_SCRIPT'] ?> 
                 </div>
 
             <div id="lgerror"></div> 
             <form action="login.php" method="post" id="lg">
                 <fieldset ><br /><br />
-                    <label for="username">User Name:</label> 
+                    <label for="username"><?php echo $l['USERNAME'] ?>:</label> 
                     <input type="text" name="username" class="txt" id="username"/><br />
-                    <label for="password">Password:</label> 
+                    <label for="password"><?php echo $l['PASSWORD'] ?>:</label> 
                     <input type="password" name="password" class="txt" id="password"/><br />	
                     <input type="hidden" name="redirect" id="redirect" value="<? echo $_SERVER['HTTP_REFERER'] ?>" /><br />
                     <label for="lgsubmit"></label>	

@@ -6,6 +6,7 @@ class DIC {
     private $_utils;
     private $_session;
     private $_configuration;
+    private $_languageFile;
 
     public function __construct() {
         
@@ -14,6 +15,14 @@ class DIC {
     public function getConfiguration($cat) {
         $this->_configuration = new Configuration();
         return $this->_configuration->getConfigArray($cat);
+    }
+    
+    public function getLanguage() {
+        $config= $this->getConfiguration('general');
+        $langCode = $config['language'];
+        $this->_languageFile = new LanguageFile;
+        return $this->_languageFile->getLanguageArray($langCode);
+        
     }
 
     public function getDataStore() {
