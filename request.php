@@ -3,7 +3,7 @@
 require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
-$l=$dic->getLanguage();
+$l = $dic->getLanguage();
 $session = $dic->startSession();
 if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
     if (isset($_POST['username'])) {
@@ -44,6 +44,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
 if (isset($_POST['action']) && $_POST['action'] == 'login') {
     $username = $_POST['username'];
     $response = $_POST['response'];
+    if($_POST['newpassword'] == 'false'){
+        $newpassword = FALSE;
+    } else {
+         $newpassword =$_POST['newpassword'];
+    }
+    Debugr::edbgLog($newpassword, '$newpassword','v');
+
     if ((!empty($username)) && (!empty($response))) {
 
         $user = new User($dic);
@@ -66,7 +73,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
             $sr = $serverResponse->getResponse();
             $authentication = new Authentication($cr, $sr);
             if ($authentication->isAuthenticated()) {
-                isLoggedIn($username);
+                if (!$newpassword) {
+                    isLoggedIn($username);
+                } else {
+                    changePassword($newpassword);
+                }
             } else {
                 //@todo else
                 isNotLoggedIn($l);
@@ -100,5 +111,12 @@ function isNotLoggedIn($l) {
         'errorMsg' => $l['LOGIN_FAIL']
     ));
 }
-
+function changePassword($newpassword){
+    
+    
+    echo json_encode(array(
+        'msg' => TRUE,
+        'msgtxt' => $newpassword
+    ));
+}
 ?>

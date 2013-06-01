@@ -7,7 +7,8 @@ $config = array(
         'dbConfigFile' => 'db_config0.php',
         'challengeTimedelay' => 15, //number of seconds the challenge is stored in the database
         'sessionInDB' => TRUE,
-        'language' => 'en'
+        'language' => 'en',
+        'cryptCostParameter' => '10'
     ),
     'db' => array(
         'dbOptions' => array(

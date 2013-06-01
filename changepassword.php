@@ -84,7 +84,7 @@ require 'members_area.inc.php';
 
                             </td>
                             <td>
-                                <input type="hidden" name="user" class="nkod" id="user" value="<?php echo $_SESSION['user'] ?>"/>
+                                <input type="hidden" name="username" class="nkod" id="username" value="<?php echo $_SESSION['username'] ?>"/>
                             </td>
                             <td>
 

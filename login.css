@@ -108,3 +108,6 @@ form input, form textarea {
     height:20px; 
     color:green;
 }
+.error{
+    color: red;
+}
