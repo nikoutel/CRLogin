@@ -3,6 +3,7 @@
 require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
+$l=$dic->getLanguage();
 $session = $dic->startSession();
 if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
     if (isset($_POST['username'])) {

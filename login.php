@@ -38,7 +38,7 @@ $l=$dic->getLanguage();
                     <input type="password" name="password" class="txt" id="password"/><br />	
                     <input type="hidden" name="redirect" id="redirect" value="<? echo $_SERVER['HTTP_REFERER'] ?>" /><br />
                     <label for="lgsubmit"></label>	
-                    <input type="submit" name="submit" value="Login" class="subm" id="lgsubmit"/>
+                    <input type="submit" name="submit" value="<?php echo $l['LOGIN'] ?>" class="subm" id="lgsubmit" disabled="disabled"/>
                 </fieldset>	
             </form>
             <div id="msg" ></div>

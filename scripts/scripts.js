@@ -1,7 +1,8 @@
 $(document).ready(function() {
+    $('#noscript').hide();
+    $('#lgsubmit').removeAttr('disabled');
     $.getJSON('languageArrayToJSON.php', function(data) {
         msg = data;
-        $('#noscript').hide();
         $('#lgsubmit').click(function() {
             $('#lgerror').html('');
             var username = $('#username').val();
@@ -26,7 +27,7 @@ $(document).ready(function() {
                 function cryptpass() {
                     if (window.console && (window.console.firebug || window.console.exception)) {
                         var mesg = msg.FIREBUG_DELAY;
-                        $('#msg').html('<img src="_info/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
+                        $('#msg').html('<img src="images/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
                     }
                     bcrypt = new bCrypt();
                     bcrypt.hashpw(password, data.usersalt, getresponse);
