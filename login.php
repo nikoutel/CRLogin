@@ -1,9 +1,9 @@
-<?php 
+<?php
 require 'CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
-$l=$dic->getLanguage();
+$l = $dic->getLanguage();
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,11 +23,11 @@ $l=$dic->getLanguage();
         <script type="text/javascript" src="scripts/scripts.js"></script>
     </head>
     <body>
-        <div id="top" align="center" >
+        <div id="top">
 
-                <div id="noscript">
+            <div id="noscript">
                 <?php echo $l['NO_SCRIPT'] ?> 
-                </div>
+            </div>
 
             <div id="lgerror"></div> 
             <form action="login.php" method="post" id="lg">
