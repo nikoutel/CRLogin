@@ -1,5 +1,6 @@
 <?php
 $lang = array(
+    'HELLO' =>  'Hello',
     'USERNAME' =>  'Username',
     'PASSWORD' =>  'Password',
     'LOGIN' =>  'Login',
@@ -14,7 +15,17 @@ $lang = array(
     'EMPTY_USERNAME' =>  'Enter your username',
     'LOGIN_FAIL' =>  'Invalid username or password',
     'FIREBUG_DELAY' => 'It seems that you are using Firebug. This will slow down the process. <br />
-        If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' 
+        If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' ,
+    // Demo specific
+    'DEMO_MAIN_H1' => 'This is main',
+    'DEMO_MAIN_TXT' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    'DEMO_MEMBERS_H1' => 'Welcome to the members section.',
+    'DEMO_MEMBERS_TXT' => 'Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat',
+    'LOGIN_LINK' => 'Login',
+    'LOGOUT_LINK' => 'Logout',
+    'CHANGE_PASS_LINK' => 'Change Password',
+    'MEMBERS_LINK' => 'Members area',
+    'MAIN_LINK' => 'Main',
 );
 return $lang;
 ?>

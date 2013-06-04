@@ -9,7 +9,7 @@ $l = $dic->getLanguage();
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title><?php echo $l['LOGIN_LINK'] ?></title>
         <link href="login.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
         <script type="text/javascript">
