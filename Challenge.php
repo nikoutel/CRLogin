@@ -12,7 +12,6 @@ class Challenge {
         $this->_container = $container;
         $this->_dataStore = $this->_container->getDataStore();
         $this->_configArray = $this->_container->getConfiguration('general');
-        
     }
 
     public function getChallenge() {
@@ -22,21 +21,26 @@ class Challenge {
 
     public function createChallenge() {
 
-        $challenge = sha1(uniqid(mt_rand()));
+        $crypt = new Crypt($this->_container);
 
-        $delete = $this->_deleteOldChallenge(); // first delete older (if any)
+        $challenge = $crypt->getRandom('challenge');
 
-        $store = $this->_storeChallenge($challenge);
-        if (($delete !== FALSE) && ($store !== FALSE)) {
-            $this->_challenge = $challenge;
-            return TRUE;
-        } else {
-            return FALSE;
+        if ($challenge !== FALSE) {
+
+            $delete = $this->_deleteOldChallenge(); // first delete older (if any)
+
+            $store = $this->_storeChallenge($challenge);
+            if (($delete !== FALSE) && ($store !== FALSE)) {
+                $this->_challenge = $challenge;
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         }
     }
 
     private function _storeChallenge($challenge) {
-        
+
         $dataset = 'challenge';
         $values = array(
             'challenge' => $challenge,
