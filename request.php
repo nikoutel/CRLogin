@@ -32,6 +32,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
             } else {
                 //@todo unknown username
                 // send dummy challenge ?
+                $crypt = new Crypt($dic);
+                $dummySalt = $crypt->getNewSalt();
+                $challenge = new Challenge($dic);
+                if ($challenge->createChallenge()) {
+                    $challengeId = $challenge->getChallenge();
+                }
+                echo json_encode(array(
+                    'error' => FALSE,
+                    'usersalt' => $dummySalt,
+                    'challenge' => $challengeId));
             }
         } else {
             echo json_encode(array(

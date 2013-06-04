@@ -29,7 +29,8 @@ class Crypt {
             $prefix = '$2a$';
         }
         $innerSalt = $this->getRandom($encode = 'salt');
-        if (!$innerSalt) {
+
+        if ($innerSalt !== FALSE) {
             $this->_salt = $prefix . $costParameter . '$' . $innerSalt . '$';
         }
         else
