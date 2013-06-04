@@ -101,24 +101,24 @@ $(document).ready(function() {
             var hasError = false;
 
             if (newpassword !== newpassword2) {
-                $("#newpasserror2").html('Οι κωδικοί δεν ταυτίζονται');
+                $("#newpasserror2").html(msg.PASSWORDS_NOT_MATCH);
                 hasError = true;
             }
             if (newpassword.length < 6) {
-                $("#newpasserror").html('Τουλάχιστον 6 χαρακτήρες');
+                $("#newpasserror").html(msg.PASSWORD_TO_SHORT);
                 hasError = true;
             }
             if ($.trim(newpassword) === '') {
-                $("#newpasserror").html('Πληκτρολογήστε τον κωδικό');
+                $("#newpasserror").html(msg.EMPTY_PASSWORD);
                 hasError = true;
             }
             if ($.trim(newpassword2) === '') {
-                $("#newpasserror2").html('Πληκτρολογήστε τον κωδικό');
+                $("#newpasserror2").html(msg.EMPTY_PASSWORD);
                 hasError = true;
             }
 
             if ($.trim(oldpassword) === '') {
-                $("#oldpasserror").html('Πληκτρολογήστε τον κωδικό');
+                $("#oldpasserror").html(msg.EMPTY_PASSWORD);
                 hasError = true;
             }
             if (hasError === false) {
@@ -142,5 +142,61 @@ $(document).ready(function() {
 
             return false;
         });
+        
+        $("#registersubmit").click(function() {
+            $(".error").html('');
+            $('#lgerror').html('');
+            $("#changemsg").html('');
+
+            username = $('#username').val();
+            password = $('#password').val();
+            password2 = $('#password2').val();
+            token = $('#token').val();
+            
+            if ($.trim(username) === '') {
+                $('#usernameerror').html(msg.EMPTY_USERNAME);
+                hasError = true;
+            }
+            if ($.trim(password) === '') {
+                $("#passworderror").html(msg.EMPTY_PASSWORD);
+                hasError = true;
+            }
+            if ($.trim(password2) === '') {
+                $("#passworderror2").html(msg.EMPTY_PASSWORD);
+                hasError = true;
+            }
+            if (password !== password2) {
+                $("#passworderror2").html(msg.PASSWORDS_NOT_MATCH);
+                hasError = true;
+            }
+            if (password.length < 6) {
+                $("#newpasserror").html(msg.PASSWORD_TO_SHORT);
+                hasError = true;
+            }
+            var hasError = false;
+            if (hasError === false) {
+                $.post(
+                        formaction,
+                        {
+                            action: 'register',
+                            username: username,
+                            password:password,
+                            password2:password2,
+                            token:token
+
+                        },
+                function(data) {
+                    if (!data.error) {
+                       
+                    } else {
+                        $('#lgerror').html(data.errorMsg);
+                        return false;
+                    }
+                }, "json");
+            }
+
+            return false;
+        });
+        
     });
 });

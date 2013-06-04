@@ -13,6 +13,9 @@ if (isset($_GET['s'])) {
         case 'changepassword':
             include 'changepassword.php';
             break;
+        case 'register':
+            include 'register.php';
+            break;
         default:
             include 'main.php';
     }

@@ -3,7 +3,9 @@ $lang = array(
     'HELLO' =>  'Hello',
     'USERNAME' =>  'Username',
     'PASSWORD' =>  'Password',
+    'PASSWORD2' =>  'Re-enter Password',
     'LOGIN' =>  'Login',
+    'REGISTER' =>  'Register',
     'OLD_PASS' =>  'Old Password',
     'NEW_PASS' =>  'New Password',
     'NEW_PASS_2' =>  'Re-enter new Password',
@@ -13,6 +15,9 @@ $lang = array(
     'PASS_FORMAT_MSG' =>  'Ο κωδικός πρόσβασης πρέπει να είναι μεγαλύτερος από 6 χαρακτήρες και να περιέχει γράμματα, αριθμούς και σύμβολα 	',
     'NO_SCRIPT' =>  'Please enable JavaScript to login',
     'EMPTY_USERNAME' =>  'Enter your username',
+    'EMPTY_PASSWORD' =>  'Enter Password',
+    'PASSWORDS_NOT_MATCH' =>  'Passwords do not match',
+    'PASSWORD_TO_SHORT' =>  'Must be at least 6 charakters long',
     'LOGIN_FAIL' =>  'Invalid username or password',
     'FIREBUG_DELAY' => 'It seems that you are using Firebug. This will slow down the process. <br />
         If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' ,
@@ -26,6 +31,7 @@ $lang = array(
     'CHANGE_PASS_LINK' => 'Change Password',
     'MEMBERS_LINK' => 'Members area',
     'MAIN_LINK' => 'Main',
+    'REGISTER_LINK' => 'Register new user',
 );
 return $lang;
 ?>

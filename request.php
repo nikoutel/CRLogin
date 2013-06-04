@@ -59,7 +59,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
     } else {
         $newpassword = $_POST['newpassword'];
     }
-    Debugr::edbgLog($newpassword, '$newpassword', 'v');
 
     if ((!empty($username)) && (!empty($response))) {
 
