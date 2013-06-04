@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    function cr(passw){
+    function cr(passw) {
         passcr = passw;
         return passcr
     }
@@ -15,6 +15,10 @@ $(document).ready(function() {
 
     function getresponse(cpass) {
         $('#msg').html('');
+        $('#password').val('');
+        $('#newpass').val('');
+        $('#newpass2').val('');
+        $('#oldpass').val('');
         $str = cpass + challenge;
         var shaObj = new jsSHA($str);
         response = shaObj.getHash("SHA-256", "HEX");
@@ -27,7 +31,7 @@ $(document).ready(function() {
                     action: 'login',
                     username: username,
                     response: response,
-                    newpassword:newpasswordcr
+                    newpassword: newpasswordcr
                 },
         function(data) {
             if (data.error) {
@@ -36,7 +40,7 @@ $(document).ready(function() {
             if (data.redirect) {
                 $(location).attr('href', data.redirectURL);
             }
-            if (data.msg){
+            if (data.msg) {
                 $('#changemsg').html(data.msgtxt);
             }
         }, "json");
@@ -77,10 +81,10 @@ $(document).ready(function() {
         });
         /*
          * debug mode
-         */
-        $('#oldpass').val('123');
-        $('#newpass').val('123123');
-        $('#newpass2').val('123123');
+//         */
+//        $('#oldpass').val('123');
+//        $('#newpass').val('123123');
+//        $('#newpass2').val('123123');
         /*
          * 
          */
