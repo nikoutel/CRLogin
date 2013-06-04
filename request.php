@@ -85,7 +85,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
                 if (!$newpassword) {
                     isLoggedIn($username);
                 } else {
-                    changePassword($newpassword, $dic, $user ,$l);
+                    changePassword($newpassword, $dic, $user, $l);
                 }
             } else {
                 if (!$newpassword) {
@@ -136,7 +136,7 @@ function changePassword($newPassword, $dic, $user, $l) {
     $newSalt = $crypt->getNewSalt();
     $spass = $crypt->encrypt($newPassword, $newSalt);
     $update = $user->updateUserPass($spass, $newSalt);
-     session_regenerate_id(true);
+    session_regenerate_id(true);
     $_SESSION['logged'] = TRUE;
     $_SESSION['username'] = $user->getUsername();
     if ($update !== FALSE) {
@@ -151,4 +151,29 @@ function changePassword($newPassword, $dic, $user, $l) {
     }
 }
 
+if (isset($_POST['action']) && $_POST['action'] == 'getSalt') {
+    if ($_POST['token'] == $_SESSION['token']) {// universal 
+        $crypt = new Crypt($dic);
+        $newSalt = $crypt->getNewSalt();
+        $_SESSION['newsalt'] = $newSalt;
+        echo json_encode(array(
+            'newsalt' => $newSalt
+        ));
+    }
+}
+if (isset($_POST['action']) && $_POST['action'] == 'register') {
+    $username = $_POST['username'];
+    //@todo validate?
+    $saltedPassword = $_POST['cpass'];
+    $salt = $_SESSION['newsalt'];
+    $user = new User($dic);
+    $create = $user->createUser($username, $saltedPassword, $salt);
+    if ($create !== FALSE){
+        echo json_encode(array(
+            'msg' => TRUE,
+            'msgtxt' => $l['REGISTER_SUCCESS']
+        ));
+    //login ?
+    }
+}
 ?>

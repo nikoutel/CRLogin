@@ -56,7 +56,17 @@ class User {
         $update = $this->_dataStore->update($values, $dataset, $conditions);
         return $update;
     }
-
+    public function createUser($username, $saltedPassword, $salt){
+        $values = array(
+            'username' => $username,
+            'spass' => $saltedPassword,
+            'usersalt' => $salt
+        );
+        $dataset = 'user';
+        $create = $this->_dataStore->create($values, $dataset);
+        return $create;
+        
+    }
 }
 
 ?>

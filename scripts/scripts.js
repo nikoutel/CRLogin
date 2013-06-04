@@ -9,12 +9,35 @@ $(document).ready(function() {
             $('#msg').html('<img src="images/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
         }
         bcrypt = new bCrypt();
-        bcrypt.hashpw(password, usersalt, getresponse);
+        bcrypt.hashpw(password, usersalt, crossRoad);
 
     }
-
-    function getresponse(cpass) {
+    function crossRoad(callBackVar) {
         $('#msg').html('');
+        if (action === 'register') {
+            register(callBackVar);
+        } else {
+            getresponse(callBackVar);
+        }
+    }
+    function register(cpass){
+        // empty inputs
+        $.post(
+                formaction,
+        {
+            action : 'register',
+            username : username,
+            cpass : cpass
+        },
+        function(data) {
+            //
+            if (data.msg) {
+                $('#changemsg').html(data.msgtxt);
+            }
+        }, "json");
+    }
+    function getresponse(cpass) {
+        
         $('#password').val('');
         $('#newpass').val('');
         $('#newpass2').val('');
@@ -26,7 +49,7 @@ $(document).ready(function() {
     }
     function send(response) {
         $.post(
-                'request.php',
+                formaction,
                 {
                     action: 'login',
                     username: username,
@@ -52,6 +75,7 @@ $(document).ready(function() {
     $.getJSON('languageArrayToJSON.php', function(data) {
         msg = data;
         $('#lgsubmit').click(function() {
+            action = 'getchallenge';
             $('#lgerror').html('');
             username = $('#username').val();
             password = $('#password').val();
@@ -62,7 +86,7 @@ $(document).ready(function() {
             $.post(
                     formaction,
                     {
-                        action: 'getchallenge',
+                        action: action,
                         username: username
                     },
             function(data) {
@@ -81,7 +105,7 @@ $(document).ready(function() {
         });
         /*
          * debug mode
-//         */
+         //         */
 //        $('#oldpass').val('123');
 //        $('#newpass').val('123123');
 //        $('#newpass2').val('123123');
@@ -90,6 +114,7 @@ $(document).ready(function() {
          */
 
         $("#changesubmit").click(function() {
+            action = 'getchallenge';
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
@@ -125,7 +150,7 @@ $(document).ready(function() {
                 $.post(
                         formaction,
                         {
-                            action: 'getchallenge',
+                            action: action,
                             username: username
                         },
                 function(data) {
@@ -142,8 +167,9 @@ $(document).ready(function() {
 
             return false;
         });
-        
+
         $("#registersubmit").click(function() {
+
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
@@ -152,7 +178,7 @@ $(document).ready(function() {
             password = $('#password').val();
             password2 = $('#password2').val();
             token = $('#token').val();
-            
+
             if ($.trim(username) === '') {
                 $('#usernameerror').html(msg.EMPTY_USERNAME);
                 hasError = true;
@@ -175,19 +201,18 @@ $(document).ready(function() {
             }
             var hasError = false;
             if (hasError === false) {
+               
                 $.post(
                         formaction,
                         {
-                            action: 'register',
-                            username: username,
-                            password:password,
-                            password2:password2,
-                            token:token
+                            action: 'getSalt',
+                            token: token
 
                         },
                 function(data) {
                     if (!data.error) {
-                       
+                         action = 'register';
+                        cryptpass(password, data.newsalt);
                     } else {
                         $('#lgerror').html(data.errorMsg);
                         return false;
@@ -197,6 +222,6 @@ $(document).ready(function() {
 
             return false;
         });
-        
+
     });
 });
