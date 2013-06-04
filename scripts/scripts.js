@@ -87,6 +87,7 @@ $(document).ready(function() {
 
         $("#changesubmit").click(function() {
             $(".error").html('');
+            $('#lgerror').html('');
             $("#changemsg").html('');
 
             username = $('#username').val();

@@ -16,6 +16,9 @@ class User {
     public function setUserName($username) {
         $this->_username = $username;
     }
+    public function getUserName() {
+       return $this->_username;
+    }
 
     public function getUserSalt() {
         $field = 'usersalt';
@@ -34,13 +37,24 @@ class User {
         $field = 'spass';
         $dataset = 'user';
         $conditions = array('', 'username', '=', $this->_username);
-        $spassAraray = $this->_dataStore->read(array($field), $dataset, $conditions);
-        if (!empty($spassAraray)) {
-            $this->_saltedPass = $spassAraray[0][$field];
+        $spassArray = $this->_dataStore->read(array($field), $dataset, $conditions);
+        if (!empty($spassArray)) {
+            $this->_saltedPass = $spassArray[0][$field];
             return $this->_saltedPass;
         }
         else
             return FALSE;
+    }
+
+    public function updateUserPass($newPassword, $newSalt) {
+        $values = array(
+            'spass' => $newPassword,
+            'usersalt' => $newSalt
+        );
+        $dataset = 'user';
+        $conditions = array('', 'username', '=', $this->_username);
+        $update = $this->_dataStore->update($values, $dataset, $conditions);
+        return $update;
     }
 
 }

@@ -54,12 +54,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
 if (isset($_POST['action']) && $_POST['action'] == 'login') {
     $username = $_POST['username'];
     $response = $_POST['response'];
-    if($_POST['newpassword'] == 'false'){
+    if ($_POST['newpassword'] == 'false') {
         $newpassword = FALSE;
     } else {
-         $newpassword =$_POST['newpassword'];
+        $newpassword = $_POST['newpassword'];
     }
-    Debugr::edbgLog($newpassword, '$newpassword','v');
+    Debugr::edbgLog($newpassword, '$newpassword', 'v');
 
     if ((!empty($username)) && (!empty($response))) {
 
@@ -86,11 +86,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'login') {
                 if (!$newpassword) {
                     isLoggedIn($username);
                 } else {
-                    changePassword($newpassword);
+                    changePassword($newpassword, $dic, $user ,$l);
                 }
             } else {
-                //@todo else
-                isNotLoggedIn($l);
+                if (!$newpassword) {
+                    isNotLoggedIn($l);
+                } else {
+                    isNotLoggedIn($l, $newpassword);
+                }
             }
         } else {
             //@todo else
@@ -116,17 +119,37 @@ function isLoggedIn($username) {
 function isNotLoggedIn($l) {
     $_SESSION['logged'] = FALSE;
     $_SESSION['username'] = FALSE;
-    echo json_encode(array(
-        'error' => TRUE,
-        'errorMsg' => $l['LOGIN_FAIL']
-    ));
+    if (!isset($newpassword)) {
+        echo json_encode(array(
+            'error' => TRUE,
+            'errorMsg' => $l['LOGIN_FAIL']
+        ));
+    } else {
+        echo json_encode(array(
+            'error' => TRUE,
+            'errorMsg' => $l['LOGIN_CONFIRM_FAIL']
+        ));
+    }
 }
-function changePassword($newpassword){
-    
-    
-    echo json_encode(array(
-        'msg' => TRUE,
-        'msgtxt' => $newpassword
-    ));
+
+function changePassword($newPassword, $dic, $user, $l) {
+    $crypt = new Crypt($dic);
+    $newSalt = $crypt->getNewSalt();
+    $spass = $crypt->encrypt($newPassword, $newSalt);
+    $update = $user->updateUserPass($spass, $newSalt);
+     session_regenerate_id(true);
+    $_SESSION['logged'] = TRUE;
+    $_SESSION['username'] = $user->getUsername();
+    if ($update !== FALSE) {
+        echo json_encode(array(
+            'msg' => TRUE,
+            'msgtxt' => $l['CHANGE_PASS_SUCCESS']
+        ));
+    } else {
+        echo json_encode(array(
+            'error' => TRUE
+        ));
+    }
 }
+
 ?>
