@@ -4,6 +4,9 @@ require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
 $l = $dic->getLanguage();
+$crypt = new Crypt($dic);
+$token = $crypt->getRandom('challenge');
+$_SESSION['token'] = $token;
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +39,7 @@ $l = $dic->getLanguage();
                     <input type="text" name="username" class="txt" id="username"/><br />
                     <label for="password"><?php echo $l['PASSWORD'] ?>:</label> 
                     <input type="password" name="password" class="txt" id="password"/><br />	
-                    <input type="hidden" name="redirect" id="redirect" value="<? echo $_SERVER['HTTP_REFERER'] ?>" /><br />
+                    <input type="hidden" name="token" id="token" value="<?php echo $token ?>"/><br />
                     <label for="lgsubmit"></label>	
                     <input type="submit" name="submit" value="<?php echo $l['LOGIN'] ?>" class="subm" id="lgsubmit" disabled="disabled"/>
                 </fieldset>	

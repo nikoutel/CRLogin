@@ -93,13 +93,11 @@ $_SESSION['token'] = $token;
                         </tr>
                         <tr>
                             <td>
-
                             </td>
                             <td>
                                 <input type="hidden" name="token" class="nkod" id="token" value="<?php echo $token ?>"/>
                             </td>
                             <td>
-
                             </td>
                         </tr>
                         <tr>

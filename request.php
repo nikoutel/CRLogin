@@ -5,7 +5,7 @@ require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $l = $dic->getLanguage();
 $session = $dic->startSession();
-if (isset($_POST['action']) && $_POST['action'] == 'getchallenge') {
+if (isset($_POST['action']) && $_POST['action'] == 'get_challenge') {
     if (isset($_POST['username'])) {
 
         $username = $_POST['username'];
@@ -151,7 +151,7 @@ function changePassword($newPassword, $dic, $user, $l) {
     }
 }
 
-if (isset($_POST['action']) && $_POST['action'] == 'getSalt') {
+if (isset($_POST['action']) && $_POST['action'] == 'get_Salt') {
     if ($_POST['token'] == $_SESSION['token']) {// universal 
         $crypt = new Crypt($dic);
         $newSalt = $crypt->getNewSalt();
