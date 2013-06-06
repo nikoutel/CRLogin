@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     }
     function crossRoad(callBackVar) {
-        $('#msg').html('');
+        
         if (action === 'register') {
             register(callBackVar);
         } else {
@@ -31,23 +31,18 @@ $(document).ready(function() {
                     token: token
                 },
         function(data) {
-            //
+            $('#msg').html('');
             if (data !== null) {
                 if (data.error) {
                     $('#lgerror').html(data.errorMsg);
                 }
                 if (data.msg) {
-                    $('#changemsg').html('data.msgtxt');
+                    $('#changemsg').html(data.msgtxt);
                 }
             }
         }, "json");
     }
     function getresponse(cpass) {
-
-        $('#password').val('');
-        $('#newpass').val('');
-        $('#newpass2').val('');
-        $('#oldpass').val('');
         $str = cpass + challenge;
         var shaObj = new jsSHA($str);
         response = shaObj.getHash("SHA-256", "HEX");
@@ -64,6 +59,11 @@ $(document).ready(function() {
                     token: token
                 },
         function(data) {
+            $('#password').val('');
+            $('#newpass').val('');
+            $('#newpass2').val('');
+            $('#oldpass').val('');
+            $('#msg').html('');
             if (data !== null) {
                 if (data.error) {
                     $('#lgerror').html(data.errorMsg);
@@ -93,6 +93,7 @@ $(document).ready(function() {
                 return false;
             }
             action = 'get_challenge';
+            $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
             $.post(
                     formaction,
                     {
@@ -130,7 +131,7 @@ $(document).ready(function() {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
-
+            
             username = $('#username').val();
             newpassword = $('#newpass').val();
             newpassword2 = $('#newpass2').val();
@@ -162,6 +163,7 @@ $(document).ready(function() {
             }
             if (hasError === false) {
                 action = 'get_challenge';
+                $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
                 $.post(
                         formaction,
                         {
@@ -197,7 +199,9 @@ $(document).ready(function() {
             password = $('#password').val();
             password2 = $('#password2').val();
             token = $('#token').val();
-
+            
+            var hasError = false;
+            
             if ($.trim(username) === '') {
                 $('#usernameerror').html(msg.EMPTY_USERNAME);
                 hasError = true;
@@ -215,12 +219,13 @@ $(document).ready(function() {
                 hasError = true;
             }
             if (password.length < 6) {
-                $("#newpasserror").html(msg.PASSWORD_TO_SHORT);
+                $("#passworderror").html(msg.PASSWORD_TO_SHORT);
                 hasError = true;
             }
-            var hasError = false;
+            
             if (hasError === false) {
                 action = 'get_salt';
+                $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
                 $.post(
                         formaction,
                         {
