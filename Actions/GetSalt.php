@@ -1,6 +1,6 @@
 <?php
 
-class Actions_GetSalt {
+class Actions_GetSalt implements Actions_Actions {
 
     private $_container;
 

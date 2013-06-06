@@ -1,6 +1,6 @@
 <?php
 
-class Actions_Login {
+class Actions_Login implements Actions_Actions {
 
     private $_container;
     private $_username;

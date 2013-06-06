@@ -1,6 +1,6 @@
 <?php
 
-class Actions_ChangePassword {
+class Actions_ChangePassword implements Actions_Actions {
 
     private $_container;
     private $_newPassword;
@@ -29,11 +29,11 @@ class Actions_ChangePassword {
         $crypt = new Crypt($this->_container);
         $newSalt = $crypt->getNewSalt();
         $spass = $crypt->encrypt($this->_newPassword, $newSalt);
-        
+
         $user = new User($this->_container);
         $user->setUserName($this->_username);
         $update = $user->updateUserPass($spass, $newSalt);
-        
+
         session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;
         $_SESSION['username'] = $this->_username;
@@ -43,7 +43,7 @@ class Actions_ChangePassword {
                 'msgtxt' => $this->_l['CHANGE_PASS_SUCCESS']
             );
         } else {
-             return array(
+            return array(
                 'error' => TRUE
             );
         }

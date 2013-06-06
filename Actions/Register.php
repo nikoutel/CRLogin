@@ -1,6 +1,6 @@
 <?php
 
-class Actions_Register {
+class Actions_Register implements Actions_Actions {
 
     private $_container;
     private $_username;

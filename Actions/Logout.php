@@ -1,6 +1,6 @@
 <?php
 
-class Actions_Logout {
+class Actions_Logout implements Actions_Actions {
 
     private $_container;
 

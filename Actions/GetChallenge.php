@@ -1,6 +1,6 @@
 <?php
 
-class Actions_GetChallenge {
+class Actions_GetChallenge implements Actions_Actions {
 
     private $_container;
     private $_username;
