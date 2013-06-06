@@ -2,7 +2,7 @@
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include 'login.php';
+            include 'demo/login.php';
             break;
         case 'logout':
           //  js handles logout
