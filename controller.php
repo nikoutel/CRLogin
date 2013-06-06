@@ -6,7 +6,7 @@ require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $session = $dic->startSession();
 if (isset($_POST['action'])) {
-    if ($_POST['token'] == $_SESSION['token']) {
+    if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {
             $action = strtolower($_POST['action']);
             $className = 'Actions_' . implode("", array_map('ucfirst', explode('_', $action)));

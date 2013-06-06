@@ -7,6 +7,12 @@ require 'members_area.inc.php';
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['MEMBERS_LINK'] ?></title>
         <link href="login.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            if (typeof jQuery === 'undefined') {
+                document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+            }
+        </script>
+        <script type="text/javascript" src="scripts/scripts.js"></script>
     </head>
     <body>
 

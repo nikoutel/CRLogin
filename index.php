@@ -5,7 +5,7 @@ if (isset($_GET['s'])) {
             include 'login.php';
             break;
         case 'logout':
-            include 'logout.php';
+          //  js handles logout
             break;
         case 'members':
             include 'members_area.php';

@@ -243,6 +243,20 @@ $(document).ready(function() {
 
             return false;
         });
+        $('a[href$="logout"]').click(function() {
+            action = 'logout';
+            $.post(
+                    formaction,
+                    {action: action},
+            function(data) {
+                if (data !== null) {
+                    if (data.redirect) {
+                        $(location).attr('href', data.redirectURL);
+                    }
+                }
+            }, "json");
+            return false;
+        });
 
     });
 });
