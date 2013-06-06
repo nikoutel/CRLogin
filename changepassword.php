@@ -1,5 +1,8 @@
 <?php
 require 'members_area.inc.php';
+$crypt = new Crypt($dic);
+$token = $crypt->getRandom('challenge');
+$_SESSION['token'] = $token;
 ?>
 <!DOCTYPE html>
 <html>
@@ -97,6 +100,15 @@ require 'members_area.inc.php';
                             </td>
                             <td>
 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="hidden" name="token" class="nkod" id="token" value="<?php echo $token ?>"/>
+                            </td>
+                            <td>
                             </td>
                         </tr>
                         <tr>

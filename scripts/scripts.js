@@ -1,7 +1,7 @@
 $(document).ready(function() {
     function cr(passw) {
         passcr = passw;
-        return passcr
+        return passcr;
     }
     function cryptpass(password, usersalt) {
         if (window.console && (window.console.firebug || window.console.exception)) {
@@ -20,24 +20,30 @@ $(document).ready(function() {
             getresponse(callBackVar);
         }
     }
-    function register(cpass){
+    function register(cpass) {
         // empty inputs
         $.post(
                 formaction,
-        {
-            action : 'register',
-            username : username,
-            cpass : cpass
-        },
+                {
+                    action: action,
+                    username: username,
+                    cpass: cpass,
+                    token: token
+                },
         function(data) {
             //
-            if (data.msg) {
-                $('#changemsg').html(data.msgtxt);
+            if (data !== null) {
+                if (data.error) {
+                    $('#lgerror').html(data.errorMsg);
+                }
+                if (data.msg) {
+                    $('#changemsg').html('data.msgtxt');
+                }
             }
         }, "json");
     }
     function getresponse(cpass) {
-        
+
         $('#password').val('');
         $('#newpass').val('');
         $('#newpass2').val('');
@@ -51,53 +57,60 @@ $(document).ready(function() {
         $.post(
                 formaction,
                 {
-                    action: 'login',
+                    action: action,
                     username: username,
                     response: response,
-                    newpassword: newpasswordcr
+                    newpassword: newpasswordcr,
+                    token: token
                 },
         function(data) {
-            if (data.error) {
-                $('#lgerror').html(data.errorMsg);
-            }
-            if (data.redirect) {
-                $(location).attr('href', data.redirectURL);
-            }
-            if (data.msg) {
-                $('#changemsg').html(data.msgtxt);
+            if (data !== null) {
+                if (data.error) {
+                    $('#lgerror').html(data.errorMsg);
+                }
+                if (data.redirect) {
+                    $(location).attr('href', data.redirectURL);
+                }
+                if (data.msg) {
+                    $('#changemsg').html(data.msgtxt);
+                }
             }
         }, "json");
 
     }
-    formaction = 'request.php';
+    formaction = 'controller.php';
     $('#noscript').hide();
     $('#lgsubmit').removeAttr('disabled');
     $.getJSON('languageArrayToJSON.php', function(data) {
         msg = data;
         $('#lgsubmit').click(function() {
-            action = 'getchallenge';
             $('#lgerror').html('');
             username = $('#username').val();
             password = $('#password').val();
+            token = $('#token').val();
             if ($.trim(username) === '') {
                 $('#lgerror').html(msg.EMPTY_USERNAME);
                 return false;
             }
+            action = 'get_challenge';
             $.post(
                     formaction,
                     {
                         action: action,
-                        username: username
+                        username: username,
+                        token: token
                     },
             function(data) {
-
-                if (!data.error) {
-                    challenge = data.challenge;
-                    newpasswordcr = false;
-                    cryptpass(password, data.usersalt);
-                } else {
-                    $('#lgerror').html(data.errorMsg);
-                    return false;
+                if (data !== null) {
+                    if (!data.error) {
+                        challenge = data.challenge;
+                        newpasswordcr = false;
+                        action = 'login';
+                        cryptpass(password, data.usersalt);
+                    } else {
+                        $('#lgerror').html(data.errorMsg);
+                        return false;
+                    }
                 }
             }, "json");
 
@@ -114,7 +127,6 @@ $(document).ready(function() {
          */
 
         $("#changesubmit").click(function() {
-            action = 'getchallenge';
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
@@ -123,6 +135,8 @@ $(document).ready(function() {
             newpassword = $('#newpass').val();
             newpassword2 = $('#newpass2').val();
             oldpassword = $('#oldpass').val();
+            token = $('#token').val();
+
             var hasError = false;
 
             if (newpassword !== newpassword2) {
@@ -147,20 +161,25 @@ $(document).ready(function() {
                 hasError = true;
             }
             if (hasError === false) {
+                action = 'get_challenge';
                 $.post(
                         formaction,
                         {
                             action: action,
-                            username: username
+                            username: username,
+                            token: token
                         },
                 function(data) {
-                    if (!data.error) {
-                        challenge = data.challenge;
-                        newpasswordcr = cr(newpassword);
-                        cryptpass(oldpassword, data.usersalt);
-                    } else {
-                        $('#lgerror').html(data.errorMsg);
-                        return false;
+                    if (data !== null) {
+                        if (!data.error) {
+                            challenge = data.challenge;
+                            newpasswordcr = cr(newpassword);
+                            action = 'change_password';
+                            cryptpass(oldpassword, data.usersalt);
+                        } else {
+                            $('#lgerror').html(data.errorMsg);
+                            return false;
+                        }
                     }
                 }, "json");
             }
@@ -201,21 +220,23 @@ $(document).ready(function() {
             }
             var hasError = false;
             if (hasError === false) {
-               
+                action = 'get_salt';
                 $.post(
                         formaction,
                         {
-                            action: 'getSalt',
+                            action: action,
                             token: token
 
                         },
                 function(data) {
-                    if (!data.error) {
-                         action = 'register';
-                        cryptpass(password, data.newsalt);
-                    } else {
-                        $('#lgerror').html(data.errorMsg);
-                        return false;
+                    if (data !== null) {
+                        if (!data.error) {
+                            action = 'register';
+                            cryptpass(password, data.newsalt);
+                        } else {
+                            $('#lgerror').html(data.errorMsg);
+                            return false;
+                        }
                     }
                 }, "json");
             }

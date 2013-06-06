@@ -12,7 +12,9 @@ $lang = array(
     'CHANGE_PASS' =>  'Change',
     'LOGIN_CONFIRM_FAIL' =>  'Invalid password',
     'CHANGE_PASS_SUCCESS' =>  'Password changed Successfully',
-    'REGISTER_SUCCESS' =>  'User created Successfully',
+    'REGISTER_SUCCESS' =>  'User created Successfully - <a href="index.php?s=login">Login</a>',
+    'USER_EXISTS' =>  'This User already exists',
+    'WRONG_USERNAME_FORM' =>  'allowed chars: a-z A-Z 0-9 -', // FIXME
     'PASS_FORMAT_MSG' =>  'Ο κωδικός πρόσβασης πρέπει να είναι μεγαλύτερος από 6 χαρακτήρες και να περιέχει γράμματα, αριθμούς και σύμβολα 	',
     'NO_SCRIPT' =>  'Please enable JavaScript to login',
     'EMPTY_USERNAME' =>  'Enter your username',
