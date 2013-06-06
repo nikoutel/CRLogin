@@ -17,15 +17,18 @@ require 'members_area.inc.php';
     <body>
 
         <div id ="login">
+            <a href="index.php?s=main">Main</a> | 
             <?php
+            
             if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
-                echo '<a href="index.php?s=login">Login</a>';
+                echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
             } else {
                 echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
-                echo ' | <a href="index.php?s=logout">Logout</a>';
+                echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
             }
             ?>
-        </div><div id="top">
+        </div>
+        <div id="top">
 
             <div id="content">
                 <h1><?php echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES) . '. ' . $l['DEMO_MEMBERS_H1'] ?></h1>
