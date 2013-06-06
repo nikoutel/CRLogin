@@ -3,26 +3,30 @@
 class Configuration {
 
     private $_configFile = 'config.php';
-    private $_dbConfigFile;
+    private $_installConfigFile;
     private $_configReader;
-    public $_dbConfigFileArray;
+    private $_installConfigFileArray;
     private $_configFileArray;
     private $_configArray;
-    public $_dbConfigArray;
+    private $_installConfigArray;
 
     public function __construct() {
         $this->_configReader = new ConfigReader();
         $this->getConfigFromFile($this->_configFile);
-        $this->_dbConfigFile = $this->_configFileArray['general']['dbConfigFile'];
-        $this->getDbConfigFromFile($this->_dbConfigFile);
+        $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
+        Debugr::edbgLog($this->_installConfigFile, '$this->_dbConfigFile');
+
+        $a =$this->getDbConfigFromFile($this->_installConfigFile);
+        Debugr::edbgLog($a, '$a*********');
+
         $this->setConfigArray();
         $this->setDbConfigArray();
     }
 
     public function getDbConfigFromFile($configFile) {
 
-        $this->_dbConfigFileArray = $this->_configReader->readFile($configFile);
-        return $this->_dbConfigFileArray;
+        $this->_installConfigFileArray = $this->_configReader->readFile($configFile);
+        return $this->_installConfigFileArray;
     }
 
     public function getConfigFromFile($configFile) {
@@ -32,14 +36,14 @@ class Configuration {
     }
 
     public function setDbConfigArray() {
-        $this->_dbConfigArray = $this->_dbConfigFileArray;
-        foreach ($this->_dbConfigArray as $dbConfigKey => $dbConfigValue) {
+        $this->_installConfigArray = $this->_installConfigFileArray['db'];
+        foreach ($this->_installConfigArray as $dbConfigKey => $dbConfigValue) {
             foreach ($this->_configFileArray['db'] as $configFileKey => $configFileValue) {
                 if ($dbConfigKey != $configFileKey) {
-                    $this->_dbConfigArray[$configFileKey] = $configFileValue;
+                    $this->_installConfigArray[$configFileKey] = $configFileValue;
                 } else {
                     if (is_array($configFileValue)) {
-                        $this->_dbConfigArray[$dbConfigKey] = ($dbConfigValue + $configFileValue);
+                        $this->_installConfigArray[$dbConfigKey] = ($dbConfigValue + $configFileValue);
                     }
                 }
             }
@@ -47,7 +51,7 @@ class Configuration {
     }
 
     public function setConfigArray() {
-        $this->_configArray = $this->_configFileArray['general'];
+        $this->_configArray = array_merge($this->_configFileArray['general'], $this->_installConfigFileArray['general']);
     }
 
     public function getConfigArray($cat){
@@ -57,7 +61,7 @@ class Configuration {
     }
 
     public function getDbConfigArray() {
-        return $this->_dbConfigArray;
+        return $this->_installConfigArray;
     }
 
     public function getGeneralConfigArray() {
