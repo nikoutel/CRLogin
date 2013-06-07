@@ -41,83 +41,39 @@ require $base . '/CRLogin/inc/members_area.inc.php';
                 <fieldset ><br /><br /> 
                     <table>
                         <tr>
-                            <td>	 
-                                <label for="oldpass"><?php echo $l['OLD_PASS'] ?>:</label> 
-                            </td>
-                            <td> 
-                                <input type="password" name="oldpass"  id="oldpass"/>
-                            </td>
-                            <td id="oldpasserror" class="error">
-
-                            </td>
+                            <td><label for="oldpass"><?php echo $l['OLD_PASS'] ?>:</label></td>
+                            <td><input type="password" name="oldpass"  id="oldpass"/></td>
+                            <td id="oldpasserror" class="error"></td>
                         </tr>
                         <tr>
-                            <td> 
-                                <label for="newpass"><?php echo $l['NEW_PASS'] ?>:</label> 
-                            </td>
-                            <td>
-                                <input type="password" name="newpass"  id="newpass"/>
-                            </td>
-                            <td>
-                                <span id="newpasserror"  class="error">
-                                    <!--style="margin-top:5px"-->
-
-                                </span>
-                            </td>
+                            <td><label for="newpass"><?php echo $l['NEW_PASS'] ?>:</label></td>
+                            <td><input type="password" name="newpass"  id="newpass"/></td>
+                            <td><span id="newpasserror"  class="error"></span></td>
                         </tr>
                         <tr>
-                            <td>
-
-                            </td>
-                            <td  >
-                                <!--style=" margin-left:40px"-->
-                                <span id="passstr"> <?php echo $l['PASS_FORMAT_MSG'] ?> </span>
-                            </td>
-                            <td>
-
-                            </td>
+                            <td></td>
+                            <td><span id="passstr"> <?php echo $l['PASS_FORMAT_MSG'] ?> </span></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>
-                                <label for="newpass2"><?php echo $l['NEW_PASS_2'] ?>:</label> 
-                            </td>
-                            <td>
-                                <input type="password" name="newpass2"  id="newpass2"/>
-                            </td>
-                            <td id="newpasserror2"  class="error">
-
-                            </td>
+                            <td><label for="newpass2"><?php echo $l['NEW_PASS_2'] ?>:</label></td>
+                            <td><input type="password" name="newpass2"  id="newpass2"/></td>
+                            <td id="newpasserror2"  class="error"></td>
                         </tr>
                         <tr>
-                            <td>
-
-                            </td>
-                            <td>
-                                <input type="hidden" name="username" class="nkod" id="username" value="<?php echo $_SESSION['username'] ?>"/>
-                            </td>
-                            <td>
-
-                            </td>
+                            <td></td>
+                            <td><input type="hidden" name="username" class="nkod" id="username" value="<?php echo $_SESSION['username'] ?>"/></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <input type="hidden" name="token" class="nkod" id="token" value="<?php echo getToken($dic) ?>"/>
-                            </td>
-                            <td>
-                            </td>
+                            <td></td>
+                            <td><input type="hidden" name="token" class="nkod" id="token" value="<?php echo getToken($dic) ?>"/></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>
-                                <label for="changesubmit"></label>	
-                            </td>
-                            <td>
-                                <input type="submit" name="changesubmit" value="<?php echo $l['CHANGE_PASS'] ?>" class="changesubmit" id="changesubmit"/>
-                            </td>
-                            <td>
-
-                            </td>
+                            <td><label for="changesubmit"></label></td>
+                            <td><input type="submit" name="changesubmit" value="<?php echo $l['CHANGE_PASS'] ?>" class="changesubmit" id="changesubmit"/></td>
+                            <td></td>
                         </tr>
                     </table>
                 </fieldset>	

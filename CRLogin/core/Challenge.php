@@ -47,7 +47,7 @@ class Challenge {
         $values = array(
             'challenge' => $challenge,
             'sessionid' => session_id(),
-            'timestamp' => (time() + $this->_configArray['challengeTimedelay']) //@todo  make dalay var //may make problem with firebug
+            'timestamp' => (time() + $this->_configArray['challengeTimedelay'])
         );
         return $this->_dataStore->create($values, $dataset);
     }

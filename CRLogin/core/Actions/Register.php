@@ -39,7 +39,6 @@ class Register implements Actions {
                     'msg' => TRUE,
                     'msgtxt' => $this->_l['REGISTER_SUCCESS']
                 );
-                //login ?
             }
         } else {
             return array(

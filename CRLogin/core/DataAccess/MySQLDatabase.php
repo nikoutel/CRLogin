@@ -10,7 +10,7 @@ class MySQLDatabase extends PDODatabase {
 
     protected function _getTables() {
         $sqlQuery = "SHOW TABLES";
-        
+
         $array = $this->runQuery($sqlQuery);
         foreach ($array as $value) {
             $tables[] = $value[key($value)];
@@ -21,7 +21,7 @@ class MySQLDatabase extends PDODatabase {
     protected function _getColumns($tableName, $withPrimaryKey = FALSE) {
         if (in_array($tableName, $this->_getTables())) {
             $sqlQuery = "SHOW COLUMNS FROM " . $tableName;
-            
+
             $array = $this->runQuery($sqlQuery);
             foreach ($array as $value) {
                 if (($withPrimaryKey) || ($value['Key']) != 'PRI') {
@@ -29,7 +29,8 @@ class MySQLDatabase extends PDODatabase {
                     $columns[] = $value[key($value)];
                 }
             } return $columns;
-        } else
+        }
+        else
             return FALSE;
     }
 

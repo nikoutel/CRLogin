@@ -3,6 +3,7 @@
 namespace CRLogin;
 
 use CRLogin\core\DIC;
+
 require 'Debugr/DebugrLoad.php';
 require '../CRLoginAutoloader.php';
 

@@ -14,7 +14,7 @@ function CRLoginAutoloader($className) {
     $fileName = explode(DIRECTORY_SEPARATOR, $fileName);
     $basedir = array_shift($fileName);
     $fileName = implode(DIRECTORY_SEPARATOR, $fileName);
-    
+
     if (true === file_exists($fileName)) {
         require_once($fileName);
         return true;

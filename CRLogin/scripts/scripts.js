@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     }
     function crossRoad(callBackVar) {
-        
+
         if (action === 'register') {
             register(callBackVar);
         } else {
@@ -32,6 +32,9 @@ $(document).ready(function() {
                 },
         function(data) {
             $('#msg').html('');
+            $('#password').val('');
+            $('#password2').val('');
+
             if (data !== null) {
                 if (data.error) {
                     $('#lgerror').html(data.errorMsg);
@@ -117,21 +120,12 @@ $(document).ready(function() {
 
             return false;
         });
-        /*
-         * debug mode
-         //         */
-//        $('#oldpass').val('123');
-//        $('#newpass').val('123123');
-//        $('#newpass2').val('123123');
-        /*
-         * 
-         */
 
         $("#changesubmit").click(function() {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
-            
+
             username = $('#username').val();
             newpassword = $('#newpass').val();
             newpassword2 = $('#newpass2').val();
@@ -199,9 +193,9 @@ $(document).ready(function() {
             password = $('#password').val();
             password2 = $('#password2').val();
             token = $('#token').val();
-            
+
             var hasError = false;
-            
+
             if ($.trim(username) === '') {
                 $('#usernameerror').html(msg.EMPTY_USERNAME);
                 hasError = true;
@@ -222,7 +216,7 @@ $(document).ready(function() {
                 $("#passworderror").html(msg.PASSWORD_TO_SHORT);
                 hasError = true;
             }
-            
+
             if (hasError === false) {
                 action = 'get_salt';
                 $('#msg').html('<br /><img src="CRLogin/demo-views/images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');

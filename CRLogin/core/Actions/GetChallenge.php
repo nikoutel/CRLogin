@@ -16,7 +16,6 @@ class GetChallenge implements Actions {
         $this->_container = $container;
         $this->_l = $this->_container->getLanguageFile();
         $this->_username = $_POST['username'];
-        //@todo validate?
     }
 
     public function executeAction() {
@@ -59,7 +58,7 @@ class GetChallenge implements Actions {
         if ($challenge->createChallenge()) {
             return $challenge->getChallenge();
         } else {
-            return FALSE; //array('error' => TRUE);
+            return FALSE;
         }
     }
 

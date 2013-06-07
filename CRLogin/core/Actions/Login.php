@@ -19,7 +19,6 @@ class Login implements Actions {
         $this->_l = $this->_container->getLanguageFile();
         $this->_username = $_POST['username'];
         $this->_clienResponse = $_POST['response'];
-//@todo validate?
     }
 
     public function executeAction() {

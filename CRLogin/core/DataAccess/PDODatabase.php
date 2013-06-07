@@ -1,6 +1,7 @@
 <?php
 
 namespace CRLogin\core\DataAccess;
+
 use \PDO;
 
 abstract class PDODatabase implements DataAccessor {
@@ -63,6 +64,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     abstract protected function _getTables();
+
     abstract protected function _getColumns($tableName, $withPrimaryKey);
 
     public function create(array $values, $table) {
@@ -152,9 +154,6 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     public function execute($sql, array $bind) {
-//        Debugr::edbgLog($sql, '$sql');
-
-//        Debugr::edbgLog($bind, '$bind');
 
         if ($this->pdo != null) {
             try {
@@ -174,8 +173,8 @@ abstract class PDODatabase implements DataAccessor {
                 $this->errorTraceAsString = $exc->getTraceAsString();
                 echo $this->errorMessage; // delme
                 return FALSE;
-            }   
-                }
+            }
+        }
         else
             return FALSE;
     }

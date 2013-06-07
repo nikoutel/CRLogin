@@ -36,7 +36,7 @@ require $base . '/CRLogin/inc/public_area.inc.php';
                     <li><a href="index.php?s=login"><?php echo $l['LOGIN_LINK'] ?></a></li>
                     <li><a href="index.php?s=members"><?php echo $l['MEMBERS_LINK'] ?></a></li>
                     <li><a href="index.php?s=register"><?php echo $l['REGISTER_LINK'] ?></a></li>
-
+                    <li><a href="index.php?s=changepassword"><?php echo $l['CHANGE_PASS_LINK'] ?></a></li>
                 </ul>
 
             </div>
