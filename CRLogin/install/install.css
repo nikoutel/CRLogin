@@ -1,0 +1,136 @@
+
+body{
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    background-color: #f6fcfd;
+    text-align:center;
+
+}
+
+h1{
+    
+    font-size: 20px;
+    margin: 0 0 0 30px;
+    color:#1E1E1E;
+}
+
+h2{
+    
+    font-size: 14px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+fieldset{
+
+    border: 1px solid #000066;
+    padding: 0 0 20px 0;
+    margin: 0 auto;
+    background: #DDDDFF;
+}
+
+label{
+
+    width: 100px;
+    display: block;
+    text-align: right;
+    float: left;
+    padding: 0;
+    margin: 7px 0 0 0;
+    color: #000066;
+}
+
+legend{
+
+    padding: 0px 6px
+} 
+
+form {
+
+    margin: 0 auto;
+    padding: 0;
+    width: 780px;
+
+}
+#container{
+    
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align:left;
+}
+table#check{
+    
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:15px;
+    margin: 50px; 
+}
+
+table#check > tbody > tr > td{
+    
+    height: 20px;
+    min-width: 60px;
+    text-align: left;
+}
+
+table#check > tbody > tr > td:first-child{
+    
+    text-align: left;
+    border-right:solid #000;
+    border-width: 1px;
+    width: 240px;
+}
+
+table#installformt{
+    
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:45px 15px;
+    margin: 50px 50px 20px 20px; 
+    text-align: left;
+}
+
+table#installformt > tbody > tr > td{
+    
+    height: 20px;
+    vertical-align: top;
+    min-width: 130px;
+}
+
+table#installformt > tbody > tr > td:first-child+td+td{
+    
+    color: red;
+}
+#forma{
+    
+    margin: 0 0 20px 0;
+}
+#msg{
+    
+    padding: 20px 0 0 0;
+}
+#errormsg{
+    
+    padding: 0 0 40px 0;
+}
+#returnlink{
+    
+    padding: 0 0 40px 0;
+}
+.text{
+    
+    text-align: left;
+}
+.text p{
+    
+    margin: 0 0 0 30px;
+}
+
+#formdiv{
+    border:1px solid black; 
+    text-align:center;
+    padding-top:20px;
+    margin:0 auto;
+    width: 780px;
+    background: #DDDDFF;
+}
