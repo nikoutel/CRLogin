@@ -10,7 +10,7 @@ class Actions_GetChallenge implements Actions_Actions {
 
     public function __construct($container) {
         $this->_container = $container;
-        $this->_l = $this->_container->getLanguage();
+        $this->_l = $this->_container->getLanguageFile();
         $this->_username = $_POST['username'];
         //@todo validate?
     }

@@ -2,12 +2,12 @@
 
 use CRLogin\core\DIC;
 use CRLogin\core\Crypt;
-
-require $base . '/CRLoginAutoloader.php';
 require 'Debugr/DebugrLoad.php';
+require $base . '/CRLoginAutoloader.php';
+
 
 $dic = new DIC;
-$l = $dic->getLanguage();
+$l = $dic->getLanguageFile();
 $session = $dic->startSession();
 $_SESSION ['members'] = FALSE;
 $_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];

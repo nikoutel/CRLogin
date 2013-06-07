@@ -10,7 +10,7 @@ class Actions_Register implements Actions_Actions {
 
     public function __construct($container) {
         $this->_container = $container;
-        $this->_l = $this->_container->getLanguage();
+        $this->_l = $this->_container->getLanguageFile();
         $this->_username = $_POST['username'];
         $this->_saltedPassword = $_POST['cpass'];
     }

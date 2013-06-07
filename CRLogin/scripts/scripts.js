@@ -6,7 +6,7 @@ $(document).ready(function() {
     function cryptpass(password, usersalt) {
         if (window.console && (window.console.firebug || window.console.exception)) {
             var mesg = msg.FIREBUG_DELAY;
-            $('#msg').html('<img src="images/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
+            $('#msg').html('<img src="CRLogin/demo-views/images/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
         }
         bcrypt = new bCrypt();
         bcrypt.hashpw(password, usersalt, crossRoad);
@@ -78,7 +78,7 @@ $(document).ready(function() {
         }, "json");
 
     }
-    formaction = 'controller.php';
+    formaction = 'CRLogin/controller.php';
     $('#noscript').hide();
     $('#lgsubmit').removeAttr('disabled');
     $.getJSON('CRLogin/languageArrayToJSON.php', function(data) {
@@ -93,7 +93,7 @@ $(document).ready(function() {
                 return false;
             }
             action = 'get_challenge';
-            $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
+            $('#msg').html('<br /><img src="CRLogin/demo-views/images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
             $.post(
                     formaction,
                     {

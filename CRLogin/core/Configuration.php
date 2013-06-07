@@ -4,7 +4,8 @@ namespace CRLogin\core;
 
 class Configuration {
 
-    private $_configFile = 'CRLogin/config/config.php';
+    private $_configFileScript = 'config/config.php';
+    private $_configFile;
     private $_installConfigFile;
     private $_configReader;
     private $_installConfigFileArray;
@@ -12,14 +13,15 @@ class Configuration {
     private $_configArray;
     private $_installConfigArray;
 
-    public function __construct() {
+    public function __construct() {    
+        $this->_configFile = realpath($_SERVER["DOCUMENT_ROOT"].'/CRLogin/' . $this->_configFileScript);
         $this->_configReader = new ConfigReader();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
         $this->getDbConfigFromFile($this->_installConfigFile);
         $this->setConfigArray();
         $this->setDbConfigArray();
-    }
+        }
 
     public function getDbConfigFromFile($configFile) {
 

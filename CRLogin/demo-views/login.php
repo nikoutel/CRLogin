@@ -22,7 +22,7 @@ require $base . '/CRLogin/inc/public_area.inc.php';
             </div>
 
             <div id="lgerror"></div> 
-            <form action="login.php" method="post" id="lg">
+            <form action="" method="post" id="lg">
                 <fieldset ><br /><br />
                     <label for="username"><?php echo $l['USERNAME'] ?>:</label> 
                     <input type="text" name="username" class="txt" id="username"/><br />

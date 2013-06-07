@@ -12,11 +12,13 @@ class LanguageFile {
     }
 
     public function getLanguageArray($langCode) {
-        $langFile = 'CRLogin/lang/lang.' . $langCode . '.php';
+        $langFile = realpath($_SERVER["DOCUMENT_ROOT"]) . '/CRLogin/lang/lang.' . $langCode . '.php';
         if (file_exists($langFile)) {
             $this->_languageArray = $this->_configReader->readFile($langFile);
-                } else {
-            $this->_languageArray = $this->_configReader->readFile('lang/lang.eng.php');
+        } else {
+            $langCode = 'en';
+            $langFile = realpath($_SERVER["DOCUMENT_ROOT"]) . '/CRLogin/lang/lang.' . $langCode . '.php';
+            $this->_languageArray = $this->_configReader->readFile($langFile);
         }
         return $this->_languageArray;
     }
