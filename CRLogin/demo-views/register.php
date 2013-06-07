@@ -1,0 +1,115 @@
+<?php
+if (count(get_included_files()) == 1) {
+    header("location: /index.php?s=register");
+    die();
+}
+$base = realpath($_SERVER["DOCUMENT_ROOT"]);
+require $base . '/CRLogin/inc/members_area.inc.php';
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><?php echo $l['REGISTER_LINK'] ?></title>
+        <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
+        <?php require $base . '/CRLogin/inc/head.inc.php'; ?>
+    </head>
+    <body>
+
+        <div id ="login">
+            <a href="index.php?s=main">Main</a> | 
+            <?php
+            if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
+                echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
+            } else {
+                echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
+                echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
+            }
+            ?>
+        </div>
+        <div id="top">
+            <div id="noscript">
+                <?php echo $l['NO_SCRIPT'] ?> 
+            </div>
+
+            <div id="lgerror"></div> 
+            <div id="changemsg"></div> 
+
+            <form action="" method="post" id="change">
+                <fieldset ><br /><br /> 
+                    <table>
+                        <tr>
+                            <td>	 
+                                <label for="username"><?php echo $l['USERNAME'] ?>:</label> 
+                            </td>
+                            <td> 
+                                <input type="text" name="username"  id="username"/>
+                            </td>
+                            <td id="usernameerror" class="error">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 
+                                <label for="password"><?php echo $l['PASSWORD'] ?>:</label> 
+                            </td>
+                            <td>
+                                <input type="password" name="password"  id="password"/>
+                            </td>
+                            <td>
+                                <span id="passworderror"  class="error">
+                                    <!--style="margin-top:5px"-->
+
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td  >
+                                <!--style=" margin-left:40px"-->
+                                <span id="passstr"> <?php echo $l['PASS_FORMAT_MSG'] ?> </span>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="password2"><?php echo $l['PASSWORD2'] ?>:</label> 
+                            </td>
+                            <td>
+                                <input type="password" name="password2"  id="password2"/>
+                            </td>
+                            <td id="passworderror2"  class="error">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="hidden" name="token" class="nkod" id="token" value="<?php echo getToken($dic) ?>"/>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="registersubmit"></label>	
+                            </td>
+                            <td>
+                                <input type="submit" name="registersubmit" value="<?php echo $l['REGISTER'] ?>" class="registersubmit" id="registersubmit"/>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>	
+            </form>
+            <div id="msg" ></div>
+        </div>
+    </body>
+</html>
