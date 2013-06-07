@@ -2,7 +2,11 @@
 
 namespace CRLogin\core\Actions;
 
-class Actions_GetChallenge implements Actions_Actions {
+use CRLogin\core\User;
+use CRLogin\core\Crypt;
+use CRLogin\core\Challenge;
+
+class GetChallenge implements Actions {
 
     private $_container;
     private $_username;

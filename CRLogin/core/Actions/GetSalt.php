@@ -1,8 +1,9 @@
 <?php
 
 namespace CRLogin\core\Actions;
+use CRLogin\core\Crypt;
 
-class Actions_GetSalt implements Actions_Actions {
+class GetSalt implements Actions {
 
     private $_container;
 

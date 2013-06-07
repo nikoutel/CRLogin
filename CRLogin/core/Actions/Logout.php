@@ -2,7 +2,7 @@
 
 namespace CRLogin\core\Actions;
 
-class Actions_Logout implements Actions_Actions {
+class Logout implements Actions {
 
     private $_container;
 

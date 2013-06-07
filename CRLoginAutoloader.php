@@ -10,26 +10,17 @@ function CRLoginAutoloader($className) {
         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-//    echo realpath('.');
-//    echo ' : ';
-//    echo $fileName;
-//    echo '<br />';
-//    \Debugr::edbgLog($fileName, '$fileName');
 
-    req($fileName);
-}
-
-function req($fileName) {
+    $fileName = explode(DIRECTORY_SEPARATOR, $fileName);
+    $basedir = array_shift($fileName);
+    $fileName = implode(DIRECTORY_SEPARATOR, $fileName);
+    
     if (true === file_exists($fileName)) {
         require_once($fileName);
         return true;
-    } else {
-        $fileName = explode(DIRECTORY_SEPARATOR, $fileName);
-        array_shift($fileName);
-        if ($fileName !== NULL) {
-            $fileName = implode(DIRECTORY_SEPARATOR, $fileName);
-            req($fileName);
-        }
+    } elseif (true === file_exists($basedir . DIRECTORY_SEPARATOR . $fileName)) {
+        require_once($basedir . DIRECTORY_SEPARATOR . $fileName);
+        return true;
     }
 }
 

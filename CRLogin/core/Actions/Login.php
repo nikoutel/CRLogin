@@ -2,7 +2,12 @@
 
 namespace CRLogin\core\Actions;
 
-class Actions_Login implements Actions_Actions {
+use CRLogin\core\User;
+use CRLogin\core\Challenge;
+use CRLogin\core\Response;
+use CRLogin\core\Authentication;
+
+class Login implements Actions {
 
     private $_container;
     private $_username;

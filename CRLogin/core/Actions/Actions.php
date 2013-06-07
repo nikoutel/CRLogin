@@ -2,7 +2,7 @@
 
 namespace CRLogin\core\Actions;
 
-interface Actions_Actions {
+interface Actions {
 
     public function executeAction();
 }

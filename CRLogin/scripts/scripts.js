@@ -163,7 +163,7 @@ $(document).ready(function() {
             }
             if (hasError === false) {
                 action = 'get_challenge';
-                $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
+                $('#msg').html('<br /><img src="CRLogin/demo-views/images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
                 $.post(
                         formaction,
                         {
@@ -225,7 +225,7 @@ $(document).ready(function() {
             
             if (hasError === false) {
                 action = 'get_salt';
-                $('#msg').html('<br /><img src="images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
+                $('#msg').html('<br /><img src="CRLogin/demo-views/images/ajax-loader.gif" width="16" height="11" alt="ajax-loader"/>');
                 $.post(
                         formaction,
                         {

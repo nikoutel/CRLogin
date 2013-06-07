@@ -2,7 +2,9 @@
 
 namespace CRLogin\core\Actions;
 
-class Actions_Register implements Actions_Actions {
+use CRLogin\core\User;
+
+class Register implements Actions {
 
     private $_container;
     private $_username;
@@ -17,11 +19,11 @@ class Actions_Register implements Actions_Actions {
 
     public function executeAction() {
         $salt = $_SESSION['newsalt'];
-        if (!$this->_validUsername($this->_username)){
+        if (!$this->_validUsername($this->_username)) {
             return array(
-                    'error' => TRUE,
-                    'errorMsg' => $this->_l['WRONG_USERNAME_FORM']
-                );
+                'error' => TRUE,
+                'errorMsg' => $this->_l['WRONG_USERNAME_FORM']
+            );
         }
         $user = new User($this->_container);
         $user->setUserName($this->_username);
@@ -46,11 +48,12 @@ class Actions_Register implements Actions_Actions {
             );
         }
     }
-    
-    private function _validUsername($username){
+
+    private function _validUsername($username) {
         if (preg_match('/^[a-zA-Z0-9-_]+$/D', $username)) {
             return TRUE;
-        } else 
+        }
+        else
             return FALSE;
     }
 

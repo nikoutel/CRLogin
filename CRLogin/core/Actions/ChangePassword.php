@@ -2,7 +2,10 @@
 
 namespace CRLogin\core\Actions;
 
-class Actions_ChangePassword implements Actions_Actions {
+use CRLogin\core\User;
+use CRLogin\core\Crypt;
+
+class ChangePassword implements Actions {
 
     private $_container;
     private $_newPassword;
@@ -15,7 +18,7 @@ class Actions_ChangePassword implements Actions_Actions {
     }
 
     public function executeAction() {
-        $login = new actions_Login($this->_container);
+        $login = new Login($this->_container);
         $loginResponse = $login->executeAction();
         if (isset($loginResponse['error']) && $loginResponse['error'] == TRUE) {
             return array(

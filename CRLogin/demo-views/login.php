@@ -5,6 +5,7 @@ if (count(get_included_files()) == 1) {
 }
 $base = realpath($_SERVER["DOCUMENT_ROOT"]);
 require $base . '/CRLogin/inc/public_area.inc.php';
+$_SESSION['redirectURL'] = 'index.php'
 ?>
 <!DOCTYPE html>
 <html>
