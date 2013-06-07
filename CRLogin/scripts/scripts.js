@@ -81,7 +81,7 @@ $(document).ready(function() {
         }, "json");
 
     }
-    formaction = 'CRLogin/controller.php';
+    formaction = 'CRLogin/requestController.php';
     $('#noscript').hide();
     $('#lgsubmit').removeAttr('disabled');
     $.getJSON('CRLogin/languageArrayToJSON.php', function(data) {
