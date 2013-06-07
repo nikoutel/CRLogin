@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class LanguageFile {
 
     private $_configReader;
@@ -10,7 +12,7 @@ class LanguageFile {
     }
 
     public function getLanguageArray($langCode) {
-        $langFile = 'lang/lang.' . $langCode . '.php';
+        $langFile = 'CRLogin/lang/lang.' . $langCode . '.php';
         if (file_exists($langFile)) {
             $this->_languageArray = $this->_configReader->readFile($langFile);
                 } else {

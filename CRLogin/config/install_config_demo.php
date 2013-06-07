@@ -1,5 +1,7 @@
 <?php
 
+use CRLogin\core\DataAccess\DatabaseDrivers;
+
 $db_config = array(
     'db' => array(
         'databaseDriver' => DatabaseDrivers::MySQL,

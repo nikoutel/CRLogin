@@ -1,32 +1,24 @@
 <?php
-require 'members_area.inc.php';
-$crypt = new Crypt($dic);
-$token = $crypt->getRandom('challenge');
-$_SESSION['token'] = $token;
+if (count(get_included_files()) == 1) {
+    header("location: /index.php?s=register");
+    die();
+}
+$base = realpath($_SERVER["DOCUMENT_ROOT"]);
+require $base . '/CRLogin/inc/members_area.inc.php';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['REGISTER_LINK'] ?></title>
-        <link href="login.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
-        <script type="text/javascript">
-            if (typeof jQuery === 'undefined') {
-                document.write(unescape("%3Cscript src='/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
-            }
-        </script>
-<!--        <script src="/scripts/jBCrypt/isaac.js" type="text/javascript"></script>-->
-        <script src="/scripts/jBCrypt/bCrypt.js" type="text/javascript"></script>
-        <script type="text/javascript" src="/scripts/sha256.js"></script>
-        <script type="text/javascript" src="scripts/scripts.js"></script>
+        <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
+        <?php require $base . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>
 
         <div id ="login">
             <a href="index.php?s=main">Main</a> | 
             <?php
-            
             if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
                 echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
             } else {
@@ -98,7 +90,7 @@ $_SESSION['token'] = $token;
                             <td>
                             </td>
                             <td>
-                                <input type="hidden" name="token" class="nkod" id="token" value="<?php echo $token ?>"/>
+                                <input type="hidden" name="token" class="nkod" id="token" value="<?php echo getToken($dic) ?>"/>
                             </td>
                             <td>
                             </td>

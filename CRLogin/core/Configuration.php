@@ -1,8 +1,10 @@
 <?php
 
+namespace CRLogin\core;
+
 class Configuration {
 
-    private $_configFile = 'config.php';
+    private $_configFile = 'CRLogin/config/config.php';
     private $_installConfigFile;
     private $_configReader;
     private $_installConfigFileArray;
@@ -14,11 +16,7 @@ class Configuration {
         $this->_configReader = new ConfigReader();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
-        Debugr::edbgLog($this->_installConfigFile, '$this->_dbConfigFile');
-
-        $a =$this->getDbConfigFromFile($this->_installConfigFile);
-        Debugr::edbgLog($a, '$a*********');
-
+        $this->getDbConfigFromFile($this->_installConfigFile);
         $this->setConfigArray();
         $this->setDbConfigArray();
     }

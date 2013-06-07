@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class Challenge {
 
     private $_challenge;

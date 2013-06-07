@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class ConfigReader {
 
     public function __construct() {

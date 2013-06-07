@@ -1,5 +1,8 @@
 <?php
 
+namespace CRLogin\core\DataAccess;
+use \PDO;
+
 abstract class PDODatabase implements DataAccessor {
 
     public $errorMessage;
@@ -212,8 +215,8 @@ abstract class PDODatabase implements DataAccessor {
         } else {
             $depth = 0;
         }
-        $iterator = new RecursiveIteratorIterator(
-                new RecursiveArrayIterator($conditions), RecursiveIteratorIterator::LEAVES_ONLY
+        $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveArrayIterator($conditions), \RecursiveIteratorIterator::LEAVES_ONLY
         );
         foreach ($iterator as $key => $leaf) {
             $depthold = $depth;

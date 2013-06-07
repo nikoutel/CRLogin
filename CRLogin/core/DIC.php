@@ -1,5 +1,10 @@
 <?php
 
+namespace CRLogin\core;
+
+use CRLogin\core\DataAccess\MySQLDatabase;
+use CRLogin\core\DataAccess\SQLiteDatabase;
+
 class DIC {
 
     private $_dataStore;
@@ -16,22 +21,21 @@ class DIC {
         $this->_configuration = new Configuration();
         return $this->_configuration->getConfigArray($cat);
     }
-    
+
     public function getLanguage() {
-        $config= $this->getConfiguration('general');
+        $config = $this->getConfiguration('general');
         $langCode = $config['language'];
         $this->_languageFile = new LanguageFile;
         return $this->_languageFile->getLanguageArray($langCode);
-        
     }
 
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
-            $config= $this->getConfiguration('general');
+            $config = $this->getConfiguration('general');
             if ($config['datastore'] == 'database') {
                 $dbConfig = $this->getConfiguration('db');
                 $utility = $this->getUtility();
-                $database = $dbConfig['databaseDriver'] . 'Database';
+                $database = 'CRLogin\core\DataAccess\\'.$dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
             }
         }

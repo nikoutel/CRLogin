@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class Authentication {
 
     private $_clientResponse;

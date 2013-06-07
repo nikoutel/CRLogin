@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class Utils {
 
     public function isAssociative($array) {

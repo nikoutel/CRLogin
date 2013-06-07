@@ -10,7 +10,9 @@ function CRLoginAutoloader($className)
         $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
     }
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-if(true === file_exists($fileName)){
+//    echo realpath('.');    echo ' : ';echo $fileName;
+//        echo '<br />';
+    if(true === file_exists($fileName)){
             require_once($fileName);
             return true;
         }

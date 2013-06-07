@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core\DataAccess;
+
 // !!! the folder the database resides in must have write permissions, as well as the actual database file.
 class SQLiteDatabase extends PDODatabase {
 

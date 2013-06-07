@@ -1,4 +1,7 @@
 <?php
+
+namespace CRLogin\core\DataAccess;
+
 interface DataAccessor{
     public function create(array $values, $dataSet);
     public function read(array $fields, $dataset, array $conditions);

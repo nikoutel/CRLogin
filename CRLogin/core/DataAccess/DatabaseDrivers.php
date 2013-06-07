@@ -1,4 +1,7 @@
 <?php
+
+namespace CRLogin\core\DataAccess;
+
 final Class DatabaseDrivers {
 
     const MySQL = 'MySQL';

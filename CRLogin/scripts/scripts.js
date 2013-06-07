@@ -81,7 +81,7 @@ $(document).ready(function() {
     formaction = 'controller.php';
     $('#noscript').hide();
     $('#lgsubmit').removeAttr('disabled');
-    $.getJSON('languageArrayToJSON.php', function(data) {
+    $.getJSON('CRLogin/languageArrayToJSON.php', function(data) {
         msg = data;
         $('#lgsubmit').click(function() {
             $('#lgerror').html('');

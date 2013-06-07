@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core;
+
 class User {
 
     private $_username;

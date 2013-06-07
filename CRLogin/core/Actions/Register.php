@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core\Actions;
+
 class Actions_Register implements Actions_Actions {
 
     private $_container;

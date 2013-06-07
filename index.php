@@ -2,24 +2,24 @@
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include 'demo/login.php';
+            include 'CRLogin/demo-views/login.php';
             break;
         case 'logout':
           //  js handles logout
             break;
         case 'members':
-            include 'members_area.php';
+            include 'CRLogin/demo-views/members_area.php';
             break;
         case 'changepassword':
-            include 'changepassword.php';
+            include 'CRLogin/demo-views/changepassword.php';
             break;
         case 'register':
-            include 'register.php';
+            include 'CRLogin/demo-views/register.php';
             break;
         default:
-            include 'main.php';
+            include 'CRLogin/demo-views/main.php';
     }
 } else {
-    include 'main.php';
+    include 'CRLogin/demo-views/main.php';
 }
 ?>

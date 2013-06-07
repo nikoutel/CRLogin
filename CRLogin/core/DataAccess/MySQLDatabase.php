@@ -1,5 +1,7 @@
 <?php
 
+namespace CRLogin\core\DataAccess;
+
 class MySQLDatabase extends PDODatabase {
 
     function __construct(array $dbParameters, $utils) {
