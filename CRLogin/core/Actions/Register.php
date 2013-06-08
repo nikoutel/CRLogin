@@ -1,22 +1,63 @@
 <?php
 
+/**
+ *
+ * Register: Executes and controls the 'register' action
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage core/Actions
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
+use CRLogin\core\DIC;
 
 class Register implements Actions {
 
+    /**
+     * @var DIC 
+     */
     private $_container;
+
+    /**
+     * @var string 
+     */
     private $_username;
+
+    /**
+     * @var string 
+     */
     private $_saltedPassword;
 
-    public function __construct($container) {
+    /**
+     * 
+     * @param DIC $container
+     */
+    public function __construct(DIC $container) {
         $this->_container = $container;
         $this->_l = $this->_container->getLanguageFile();
         $this->_username = $_POST['username'];
         $this->_saltedPassword = $_POST['cpass'];
     }
 
+    /**
+     * Executes the 'register' action
+     * Returns a control array for the client side script
+     * 
+     * @return array
+     */
     public function executeAction() {
         $salt = $_SESSION['newsalt'];
         if (!$this->_validUsername($this->_username)) {
@@ -48,6 +89,12 @@ class Register implements Actions {
         }
     }
 
+    /**
+     * Validates the username
+     * 
+     * @param string $username
+     * @return boolean
+     */
     private function _validUsername($username) {
         if (preg_match('/^[a-zA-Z0-9-_]+$/D', $username)) {
             return TRUE;
