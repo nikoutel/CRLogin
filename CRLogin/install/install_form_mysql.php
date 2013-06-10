@@ -157,6 +157,9 @@ if (isset($_SESSION['errormsg'])) {
 if ($noError && $done) {
     echo ' The installation is complete <br />';
     echo 'Please delete the install folder before continuing<br />';
+    echo 'A demo account has been created:<br />';
+    echo 'username: <b>user</b>,  password: <b>crlogin</b><br />';
+    echo 'You should change the password after <a href="../../index.php?s=login">login</a><br />';
     unset($_SESSION['done']);
     if (isset($_SESSION['returnScript'])) {
 

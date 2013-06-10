@@ -32,7 +32,7 @@ if (count(get_included_files()) == 1) {
  */
 $dir = realpath(dirname(__FILE__) . '/../config'); // consider putting this outside your document root for security
 $basedir = basename(realpath(dirname(__FILE__) . '/../config'));
-$file = 'install_config10.php';
+$file = 'install_config.php';
 $requirements = array(
     'phpMinVersion' => '5.3.0',
     'configFileBase' => $basedir . DIRECTORY_SEPARATOR . $file,

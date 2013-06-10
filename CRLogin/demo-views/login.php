@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * login.php
@@ -19,7 +18,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
 /*
  * Prevents the direct access of this file 
  */
@@ -29,7 +27,6 @@ if (count(get_included_files()) == 1) {
 }
 $base = realpath($_SERVER["DOCUMENT_ROOT"]);
 require $base . '/CRLogin/inc/public_area.inc.php';
-$_SESSION['redirectURL'] = 'index.php'
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,13 +34,13 @@ $_SESSION['redirectURL'] = 'index.php'
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['LOGIN_LINK'] ?></title>
         <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
-        <?php require $base . '/CRLogin/inc/head.inc.php'; ?>
+<?php require $base . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>
         <div id="top">
 
             <div id="noscript">
-                <?php echo $l['NO_SCRIPT'] ?> 
+<?php echo $l['NO_SCRIPT'] ?> 
             </div>
 
             <div id="lgerror"></div> 

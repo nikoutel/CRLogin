@@ -19,7 +19,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
 use CRLogin\core\DIC;
 use CRLogin\core\Crypt;
 
@@ -31,7 +30,15 @@ $dic = new DIC;
 $l = $dic->getLanguageFile();
 $session = $dic->startSession();
 $_SESSION ['members'] = FALSE;
-$_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
+$redirectURL = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+if (strpos($redirectURL, 's=login') === false) {
+    $_SESSION['redirectURL'] = $redirectURL;
+} else {
+    if (!isset($_SESSION['redirectURL'])) {
+        $_SESSION['redirectURL'] = 'index.php';
+    }
+}
 
 function getToken($dic) {
     $crypt = new Crypt($dic);

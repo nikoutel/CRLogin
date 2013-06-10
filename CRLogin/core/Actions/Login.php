@@ -122,7 +122,7 @@ class Login implements Actions {
             $redirectUrl = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectUrl = 'index.php';
+            $redirectUrl = 'index0.php';
         }
         session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;
