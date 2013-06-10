@@ -2,7 +2,8 @@
 
 /**
  *
- * SQLiteDatabase:
+ * SQLiteDatabase: An extension to the database class.
+ * Provides SQLite specific methods 
  *
  *
  * @package CRLogin

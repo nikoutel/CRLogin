@@ -2,7 +2,8 @@
 
 /**
  *
- * MySQLDatabase:
+ * MySQLDatabase: An extension to the database class.
+ * Provides MySQL specific methods 
  *
  *
  * @package CRLogin
