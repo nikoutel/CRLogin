@@ -1,0 +1,137 @@
+
+body{
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    background-color: #f6fcfd;
+    color: #555;
+    text-align:center;
+
+}
+
+#formdiv{
+    border: 1px solid black;
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+    width: 780px;
+    background: #DDDDFF;
+}
+
+.greenb {
+    
+    color: green;
+    font-weight: bold;
+}
+
+.green {
+    
+    color: green;;
+}
+
+.redb {
+    
+    color: red;
+    font-weight: bold;
+}
+
+.red {
+    
+    color: red;
+}
+.yellow{
+    color: #fe8605
+}
+
+h1{
+    
+    font-size: 20px;
+    margin: 0 0 0 30px;
+    color:#1E1E1E;
+}
+
+h2{
+    
+    font-size: 14px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+#container{
+    
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align:left;
+}
+
+table#check{
+    
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:15px;
+    margin: 50px; 
+}
+
+table#check > tbody > tr > td{
+    
+    height: 20px;
+    min-width: 60px;
+    text-align: left;
+}
+
+table#check > tbody > tr > td:first-child{
+    
+    text-align: left;
+    border-right:solid #000;
+    border-width: 1px;
+    width: 240px;
+}
+
+table#installformt{
+    
+    border-style:none;
+    border-collapse:separate;
+    border-spacing:45px 15px;
+    margin: 50px 50px 20px 20px; 
+    text-align: left;
+}
+
+table#installformt > tbody > tr > td{
+    
+    height: 20px;
+    vertical-align: top;
+    min-width: 130px;
+}
+
+table#installformt > tbody > tr > td:first-child+td+td{
+    
+    color: red;
+}
+
+#forma{
+    
+    margin: 0 0 20px 0;
+}
+#msg{
+    
+    padding: 20px 0 0 0;
+}
+#errormsg{
+    
+    padding: 0 0 40px 0;
+}
+#returnlink{
+    
+    padding: 0 0 40px 0;
+}
+.text{
+    
+    text-align: left;
+}
+.text p{
+    
+    margin: 0 0 0 30px;
+}
+#lang {
+    margin-left: 30px
+}
