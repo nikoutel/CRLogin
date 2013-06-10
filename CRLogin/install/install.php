@@ -165,7 +165,7 @@ if (!$requirementsTrue) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=100" />
-        <title>Das Board installation</title>
+        <title>CRLogin installation</title>
 
         <link href="install.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -178,9 +178,9 @@ if (!$requirementsTrue) {
     </head>
     <body>
         <div id="container" class="">
-            <div class="startOpacity" id="formdiv">
+            <div id="formdiv">
                 <div class="text">
-                    <h1>das board installation</h1>
+                    <h1>CRLogin installation</h1>
 
                     <h2>Language</h2>
                     <p>Choose the language for the login interface.
@@ -192,7 +192,7 @@ if (!$requirementsTrue) {
                     <br />
                     <br />
                     <h2>Pre-Installation checks</h2>
-                    <p>Checks are done to ensure that you are able to install and run 'Das Board'.</p>
+                    <p>Checks are done to ensure that you are able to install and run 'CRLogin'.</p>
                 </div>
                 <table id="check">
                     <tbody>
@@ -258,5 +258,12 @@ if (!$requirementsTrue) {
             <br />
             <input type="submit" value="Next"  id="next" <?php echo $isDisabled ?>/>
         </form>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
     </body>
 </html>

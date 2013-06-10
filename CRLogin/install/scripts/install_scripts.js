@@ -142,9 +142,12 @@ $(document).ready(function() {
             $('#returnlink').load('install_form_mysql.php #returnlink');
         }
 
-        )
+        );
         return false;
     });
-
+    $('#refresh').click(function() {
+        location.reload();
+        return false;
+    });
 });
 

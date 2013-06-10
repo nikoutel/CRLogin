@@ -35,7 +35,7 @@ $done = $_SESSION['done'];
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=100" /> <!--Tell Internet Explorer to use the highest compatibility mode, i.e not IE7 -->
-        <title>Das Board installation</title>
+        <title>CRLogin installation</title>
 
         <link href="install.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -48,9 +48,9 @@ $done = $_SESSION['done'];
     </head>
     <body>
         <div id="container" class="">
-            <div class="startOpacity" id="formdiv">
+            <div id="formdiv">
                 <div class="text">
-                    <h1 class="secheader">das board installation</h1>
+                    <h1 class="secheader">CRLogin installation</h1>
                     <h2>Database configuration</h2>
                     <p>You have everything you need! Now, enter your database connection details below.</p>
                 </div>
@@ -127,7 +127,7 @@ $done = $_SESSION['done'];
                             </tr>
                         </tbody>
                     </table>
-                    <p><b>Note:</b> The prefix for the tables in the database will be <i>notes_</i></p>
+                    
                     <input name="inform" value="inform" type="hidden" id="inform" /> 
                     <input value="Install" type="submit" id="forma" />    
 
