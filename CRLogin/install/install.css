@@ -4,8 +4,43 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
     background-color: #f6fcfd;
+    color: #555;
     text-align:center;
 
+}
+
+#formdiv{
+    border: 1px solid black;
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+    width: 780px;
+    background: #DDDDFF;
+}
+
+.greenb {
+    
+    color: green;
+    font-weight: bold;
+}
+
+.green {
+    
+    color: green;;
+}
+
+.redb {
+    
+    color: red;
+    font-weight: bold;
+}
+
+.red {
+    
+    color: red;
+}
+.yellow{
+    color: #fe8605
 }
 
 h1{
@@ -21,43 +56,14 @@ h2{
     margin-left: 30px;
     margin-bottom: 5px;
 }
-fieldset{
 
-    border: 1px solid #000066;
-    padding: 0 0 20px 0;
-    margin: 0 auto;
-    background: #DDDDFF;
-}
-
-label{
-
-    width: 100px;
-    display: block;
-    text-align: right;
-    float: left;
-    padding: 0;
-    margin: 7px 0 0 0;
-    color: #000066;
-}
-
-legend{
-
-    padding: 0px 6px
-} 
-
-form {
-
-    margin: 0 auto;
-    padding: 0;
-    width: 780px;
-
-}
 #container{
     
     margin-top: 50px;
     margin-bottom: 20px;
     text-align:left;
 }
+
 table#check{
     
     border-style:none;
@@ -101,6 +107,7 @@ table#installformt > tbody > tr > td:first-child+td+td{
     
     color: red;
 }
+
 #forma{
     
     margin: 0 0 20px 0;
@@ -125,12 +132,6 @@ table#installformt > tbody > tr > td:first-child+td+td{
     
     margin: 0 0 0 30px;
 }
-
-#formdiv{
-    border:1px solid black; 
-    text-align:center;
-    padding-top:20px;
-    margin:0 auto;
-    width: 780px;
-    background: #DDDDFF;
+#lang {
+    margin-left: 30px
 }
