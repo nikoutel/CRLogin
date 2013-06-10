@@ -1,4 +1,23 @@
 
+/**
+ *
+ * This is a TEMPORARY SCRIPT. Its just a quick install solution.
+ * A new, more dynamic and configurable application is on its way.
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage install
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
 
 $(document).ready(function() {
 
@@ -6,12 +25,12 @@ $(document).ready(function() {
     $('#jsEnabled').html('OK');
     $('#jsEnabled').attr('class', 'greenb');
     $('#choosedb').change(function() {
-    if ($(this).val() === 'sqlite3') {
-        $('#choosedbmsg').html('sqlite is not recommended');
-    } else {
-        $('#choosedbmsg').html('');
-    }
-});
+        if ($(this).val() === 'sqlite3') {
+            $('#choosedbmsg').html('sqlite is not recommended');
+        } else {
+            $('#choosedbmsg').html('');
+        }
+    });
     $("#create").click(function() {
         var filename = $("#filename").val();
         var inform = $("#inform").val();
@@ -30,7 +49,7 @@ $(document).ready(function() {
     });
     $("#next").click(function() {
 
-        $('#nexts').load('install_form.php', {db:$('#choosedb').val() ,lang:$('#lang').val()} ,function() {
+        $('#nexts').load('install_form.php', {db: $('#choosedb').val(), lang: $('#lang').val()}, function() {
             $(".secheader").hide();
         });
 
