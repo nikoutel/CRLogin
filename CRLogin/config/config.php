@@ -6,7 +6,7 @@ $config = array(
         'datastore' => 'database',
         'dbConfigFile' => realpath($_SERVER["DOCUMENT_ROOT"]) .'/CRLogin/config/install_config10.php',
         'challengeTimedelay' => 15, //number of seconds the challenge is stored in the database
-        'sessionInDB' => TRUE,
+        'sessionInDataStore' => TRUE,
         'cryptCostParameter' => '10'
     ),
     'db' => array(

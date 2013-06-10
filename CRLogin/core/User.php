@@ -1,29 +1,89 @@
 <?php
 
+/**
+ *
+ * User: Handles the users
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage core
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 namespace CRLogin\core;
 
 class User {
 
+    /**
+     * @var string 
+     */
     private $_username;
+
+    /**
+     * @var string 
+     */
     private $_saltedPass;
+
+    /**
+     * @var string 
+     */
     private $_userSalt;
+
+    /**
+     * @var DIC 
+     */
     private $_container;
+
+    /**
+     * @var resource 
+     */
     private $_dataStore;
+
+    /**
+     * @var string 
+     */
     private $_userId;
 
-    public function __construct($container) {
+    /**
+     * @param DIC $container
+     */
+    public function __construct(DIC $container) {
         $this->_container = $container;
         $this->_dataStore = $this->_container->getDataStore();
     }
 
+    /**
+     * Sets the username
+     * 
+     * @param string $username
+     */
     public function setUserName($username) {
         $this->_username = $username;
     }
 
+    /**
+     * Returns the username
+     * 
+     * @return string
+     */
     public function getUserName() {
         return $this->_username;
     }
 
+    /**
+     * Returns the user salt or false on failure
+     * 
+     * @return mixed
+     */
     public function getUserSalt() {
         $field = 'usersalt';
         $dataset = 'user';
@@ -37,6 +97,11 @@ class User {
             return FALSE;
     }
 
+    /**
+     * Returns the salted password or false on failure
+     * 
+     * @return mixed
+     */
     public function getSaltedPass() {
         $field = 'spass';
         $dataset = 'user';
@@ -50,6 +115,13 @@ class User {
             return FALSE;
     }
 
+    /**
+     * Updates the users salted password or false on failure
+     *  
+     * @param string $newPassword
+     * @param string $newSalt
+     * @return mixed
+     */
     public function updateUserPass($newPassword, $newSalt) {
         $values = array(
             'spass' => $newPassword,
@@ -61,6 +133,14 @@ class User {
         return $update;
     }
 
+    /**
+     * Creates new user
+     * 
+     * @param string $username
+     * @param string $saltedPassword
+     * @param string $salt
+     * @return mixed
+     */
     public function createUser($username, $saltedPassword, $salt) {
         $values = array(
             'username' => $username,
@@ -72,6 +152,11 @@ class User {
         return $create;
     }
 
+    /**
+     * Returns the users Id or false on failure 
+     * 
+     * @return mixed
+     */
     public function getId() {
         $field = 'userid';
         $dataset = 'user';
@@ -85,6 +170,11 @@ class User {
             return FALSE;
     }
 
+    /**
+     * Check for user existence
+     * 
+     * @return boolean
+     */
     public function userExists() {
         if ($this->getId() === FALSE) {
             return FALSE;

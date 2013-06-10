@@ -1,25 +1,100 @@
 <?php
 
+/**
+ *
+ * PDODatabase: abstract; A data access layer class
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage core/Data Access
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 namespace CRLogin\core\DataAccess;
 
 use \PDO;
 
 abstract class PDODatabase implements DataAccessor {
 
+    /**
+     * @var string 
+     */
     public $errorMessage;
+
+    /**
+     * @var string 
+     */
     public $errorTraceAsString;
+
+    /**
+     * @var PDO 
+     */
     public $pdo;
+
+    /**
+     * @var Utils 
+     */
     private $_utils;
+
+    /**
+     * @var string 
+     */
     private $_dsn;
+
+    /**
+     * @var string 
+     */
     private $_databaseDriver;
+
+    /**
+     * @var string 
+     */
     private $_user;
+
+    /**
+     * @var string 
+     */
     private $_password;
+
+    /**
+     * @var string 
+     */
     private $_host;
+
+    /**
+     * @var string 
+     */
     private $_port;
+
+    /**
+     * @var string 
+     */
     private $_dbName;
+
+    /**
+     * @var array 
+     */
     private $_options;
+
+    /**
+     * @var string 
+     */
     private $_dbPath;
 
+    /**
+     * 
+     * @param array $dbParameters
+     * @param Utils $utils
+     */
     public function __construct(array $dbParameters, $utils) {
         $this->_utils = $utils;
         $this->setParameters($dbParameters);
@@ -27,6 +102,12 @@ abstract class PDODatabase implements DataAccessor {
         $this->connect($this->_dsn, $this->_user, $this->_password, $this->_options);
     }
 
+    /**
+     * Sets the database driver, user, password, host, dbname, port, dppath
+     * Prepares the PDOs Data Source Name 
+     * 
+     * @param array $dbParameters
+     */
     public function setParameters($dbParameters) {
         $this->_options = $dbParameters['dbOptions'];
 
@@ -52,6 +133,15 @@ abstract class PDODatabase implements DataAccessor {
         }
     }
 
+    /**
+     * Instantiates a PHP Data Object and connects to the databasae
+     * 
+     * @param string $dsn
+     * @param string $username
+     * @param string $passwd
+     * @param array $options
+     * @return boolean
+     */
     public function connect($dsn, $username, $passwd, $options) {
         try {
             $this->pdo = new PDO($dsn, $username, $passwd, $options);
@@ -63,10 +153,30 @@ abstract class PDODatabase implements DataAccessor {
         }
     }
 
+    /**
+     * Abstract method for geting the database tables
+     * Database driver specific
+     */
     abstract protected function _getTables();
 
+    /**
+     * Abstract method for geting the database columns
+     * Database driver specific
+     */
     abstract protected function _getColumns($tableName, $withPrimaryKey);
 
+    /**
+     * Creates entries in the database
+     * 
+     * @param array $values 
+     *  If an associative array is given the keys will be the fields/columns, 
+     * and the array values the field values.
+     * If an numeric array is given, the method will try 
+     * to associate the array values to the field values
+     * in order of the fields/columns when the dataset/table was created
+     * 
+     * @param string $tables The dataset/table to store the values
+     */
     public function create(array $values, $table) {
         if ($this->_utils->isAssociative($values)) {
             $columns = array_keys($values);
@@ -91,6 +201,29 @@ abstract class PDODatabase implements DataAccessor {
         return $result;
     }
 
+    /**
+     * Reads entries from the database
+     * 
+     * @param array $columns An array with the fields/columns to read
+     * 
+     * @param string $table The dataset/table to read from
+     * 
+     * @param array $conditions
+     * An array representing the logical conditions. Each level is represented by an array with the form:
+     * array('LOGICAL_OPARATOR' , 'FIELD' , 'OPARATOR' , 'VALUE')
+     * On a simple condition like : (id = '10') 
+     * the array would be : array('' , 'id' , '=' , '10').
+     * A more complex example:  (Country = 'Germany' AND (city = 'Berlin' OR City = 'Muenchen'))
+     * array(
+     *      array('', 'Country', '=', 'Germany'),
+     *      array('AND',
+     *           array(
+     *                array('', 'city', '=', 'Berlin'),
+     *                array('OR', 'city', '=', 'Muenchen')
+     *           )
+     *      )
+     * )
+     */
     public function read(array $columns, $table, array $conditions = array()) {
         $columns_str = implode(",", $columns);
         if (strtolower($columns_str) == 'all') {
@@ -111,6 +244,34 @@ abstract class PDODatabase implements DataAccessor {
         return $result;
     }
 
+    /**
+     * Updates entries from the database
+     * 
+     * @param array $values
+     *  If an associative array is given the keys will be the fields/columns, 
+     * and the array values the field values.
+     * If an numeric array is given, the method will try 
+     * to associate the array values to the field values
+     * in order of the fields/columns when the dataset/table was created
+     * 
+     * @param string $table The dataset/table to be updated
+     * 
+     * @param array $conditions
+     *  An array representing the logical conditions. Each level is represented by an array with the form:
+     * array('LOGICAL_OPARATOR' , 'FIELD' , 'OPARATOR' , 'VALUE')
+     * On a simple condition like : (id = '10') 
+     * the array would be : array('' , 'id' , '=' , '10').
+     * A more complex example:  (Country = 'Germany' AND (city = 'Berlin' OR City = 'Muenchen'))
+     * array(
+     *      array('', 'Country', '=', 'Germany'),
+     *      array('AND',
+     *           array(
+     *                array('', 'city', '=', 'Berlin'),
+     *                array('OR', 'city', '=', 'Muenchen')
+     *           )
+     *      )
+     * )
+     */
     public function update(array $values, $table, array $conditions = array()) {
 
         $columns = array_keys($values);
@@ -137,6 +298,27 @@ abstract class PDODatabase implements DataAccessor {
         return $result;
     }
 
+    /**
+     * Deletes entries from the database
+     * 
+     * @param string $table The dataset/table to be deleted
+     * 
+     * @param array $conditions
+     *  An array representing the logical conditions. Each level is represented by an array with the form:
+     * array('LOGICAL_OPARATOR' , 'FIELD' , 'OPARATOR' , 'VALUE')
+     * On a simple condition like : (id = '10') 
+     * the array would be : array('' , 'id' , '=' , '10').
+     * A more complex example:  (Country = 'Germany' AND (city = 'Berlin' OR City = 'Muenchen'))
+     * array(
+     *      array('', 'Country', '=', 'Germany'),
+     *      array('AND',
+     *           array(
+     *                array('', 'city', '=', 'Berlin'),
+     *                array('OR', 'city', '=', 'Muenchen')
+     *           )
+     *      )
+     * )
+     */
     public function delete($table, array $conditions = array()) {
         $bind = array();
         $sql = 'DELETE FROM ' . $table;
@@ -153,6 +335,18 @@ abstract class PDODatabase implements DataAccessor {
         return $result;
     }
 
+    /**
+     * Executes the prepared statemend $sql with $bind parameters
+     * 
+     * Returns the values requested (in a two dimensinal array) for data 
+     * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
+     * the affected rows for all others,
+     * or false on failure
+     * 
+     * @param string $sql The sql statemend 
+     * @param array $bind The bind parameters array
+     * @return mixed
+     */
     public function execute($sql, array $bind) {
 
         if ($this->pdo != null) {
@@ -179,6 +373,20 @@ abstract class PDODatabase implements DataAccessor {
             return FALSE;
     }
 
+    /**
+     * Executes an sql query
+     * 
+     * This method does not add security measures, like escaping
+     * The caller should make sure that the query is safe
+     * 
+     * Returns the values requested (in a two dimensinal array) for data
+     * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
+     * the affected rows for all others,
+     * or false on failure
+     * 
+     * @param string $query The sql query
+     * @return mixed
+     */
     public function runQuery($query) {
         if ($this->pdo != null) {
             try {
@@ -203,6 +411,13 @@ abstract class PDODatabase implements DataAccessor {
             return FALSE;
     }
 
+    /**
+     * Forms the 'where' clause from a conditions array
+     * Returns the sql statement and the bind conditions in an array
+     * 
+     * @param array $conditions
+     * @return array
+     */
     protected function _getConditions(array $conditions) {
 
         $leafprev = '';
@@ -249,6 +464,13 @@ abstract class PDODatabase implements DataAccessor {
         );
     }
 
+    /**
+     * Checks if an oparation  is data retrieval i.e. if sql statements 
+     * start with one of {SELEC, SHOW, DESCRIBE, PRAGMA}
+     * 
+     * @param string $query
+     * @return boolean
+     */
     protected function _isDataRetrievalOperation($query) {
         echo
         $is = FALSE;
