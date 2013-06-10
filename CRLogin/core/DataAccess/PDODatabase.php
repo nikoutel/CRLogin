@@ -2,7 +2,7 @@
 
 /**
  *
- * PDODatabase: abstract; A data access layer class
+ * PDODatabase: abstract; A data access layer class built around PHPs data object 
  * 
  * 
  * @package CRLogin
