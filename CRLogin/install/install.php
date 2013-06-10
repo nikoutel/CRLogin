@@ -1,4 +1,24 @@
 <?php
+/**
+ *
+ * This is a TEMPORARY SCRIPT. Its just a quick install solution.
+ * A new, more dynamic and configurable application is on its way.
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage install
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 /*
  * Prevents the direct access of this file 
  */
@@ -169,8 +189,8 @@ if (!$requirementsTrue) {
                         <option  value="en">English</option>
                         <option value="de">Deutsch</option>
                     </select>
-                        <br />
-                        <br />
+                    <br />
+                    <br />
                     <h2>Pre-Installation checks</h2>
                     <p>Checks are done to ensure that you are able to install and run 'Das Board'.</p>
                 </div>
@@ -180,7 +200,7 @@ if (!$requirementsTrue) {
                             <td><?php echo $phpVersionTxt ?></td>
                             <td>
                                 <span class="<?php echo $phpVersionCheck['cssClass'] ?>">
-                                    <?php echo $phpVersionCheck['flag'] ?>
+<?php echo $phpVersionCheck['flag'] ?>
                                 </span>
                             </td>
                             <td><?php echo $phpVersionCheck['msg'] ?></td>
@@ -198,7 +218,7 @@ if (!$requirementsTrue) {
                             <td><?php echo $configFileTxt ?></td>
                             <td>
                                 <span class="<?php echo $configExists['cssClass'] ?>">
-                                    <?php echo $configExists['flag'] ?>
+<?php echo $configExists['flag'] ?>
                                 </span>
                             </td>
                             <td><?php echo $configExists['msg'] ?></td>
@@ -207,7 +227,7 @@ if (!$requirementsTrue) {
                             <td><?php echo $configFileWritableTxt ?></td>
                             <td>
                                 <span class="<?php echo $configWritable['cssClass'] ?>">
-                                    <?php echo $configWritable['flag'] ?>
+<?php echo $configWritable['flag'] ?>
                                 </span>                    
                             </td>
                             <td><?php echo $configWritable['msg'] ?></td>
@@ -216,7 +236,7 @@ if (!$requirementsTrue) {
                             <td><?php echo $dbExtensionTxt ?></td>
                             <td>
                                 <span class="<?php echo $dbAvailable['cssClass'] ?>">
-                                    <?php echo $dbAvailable['flag'] ?>
+<?php echo $dbAvailable['flag'] ?>
                                 </span>                  
                             </td>
                             <td><?php echo $dbAvailable['msg'] ?></td>
@@ -225,7 +245,7 @@ if (!$requirementsTrue) {
                             <td><?php echo $dbChooseTxt ?></td>
                             <td>
                                 <select name="choosedb" id ="choosedb">
-                                    <?php echo $dbotions ?>
+<?php echo $dbotions ?>
                                 </select>
                             </td>
                             <td><span id="choosedbmsg" class="yellow"></span></td>

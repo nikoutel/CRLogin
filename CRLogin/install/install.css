@@ -1,4 +1,24 @@
 
+/**
+ *
+ * This is a TEMPORARY SCRIPT. Its just a quick install solution.
+ * A new, more dynamic and configurable application is on its way.
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage install
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 body{
 
     font-family: Arial, Helvetica, sans-serif;
@@ -19,24 +39,24 @@ body{
 }
 
 .greenb {
-    
+
     color: green;
     font-weight: bold;
 }
 
 .green {
-    
+
     color: green;;
 }
 
 .redb {
-    
+
     color: red;
     font-weight: bold;
 }
 
 .red {
-    
+
     color: red;
 }
 .yellow{
@@ -44,28 +64,28 @@ body{
 }
 
 h1{
-    
+
     font-size: 20px;
     margin: 0 0 0 30px;
     color:#1E1E1E;
 }
 
 h2{
-    
+
     font-size: 14px;
     margin-left: 30px;
     margin-bottom: 5px;
 }
 
 #container{
-    
+
     margin-top: 50px;
     margin-bottom: 20px;
     text-align:left;
 }
 
 table#check{
-    
+
     border-style:none;
     border-collapse:separate;
     border-spacing:15px;
@@ -73,14 +93,14 @@ table#check{
 }
 
 table#check > tbody > tr > td{
-    
+
     height: 20px;
     min-width: 60px;
     text-align: left;
 }
 
 table#check > tbody > tr > td:first-child{
-    
+
     text-align: left;
     border-right:solid #000;
     border-width: 1px;
@@ -88,7 +108,7 @@ table#check > tbody > tr > td:first-child{
 }
 
 table#installformt{
-    
+
     border-style:none;
     border-collapse:separate;
     border-spacing:45px 15px;
@@ -97,39 +117,39 @@ table#installformt{
 }
 
 table#installformt > tbody > tr > td{
-    
+
     height: 20px;
     vertical-align: top;
     min-width: 130px;
 }
 
 table#installformt > tbody > tr > td:first-child+td+td{
-    
+
     color: red;
 }
 
 #forma{
-    
+
     margin: 0 0 20px 0;
 }
 #msg{
-    
+
     padding: 20px 0 0 0;
 }
 #errormsg{
-    
+
     padding: 0 0 40px 0;
 }
 #returnlink{
-    
+
     padding: 0 0 40px 0;
 }
 .text{
-    
+
     text-align: left;
 }
 .text p{
-    
+
     margin: 0 0 0 30px;
 }
 #lang {
