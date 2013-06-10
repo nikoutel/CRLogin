@@ -1,4 +1,27 @@
 <?php
+/**
+ *
+ * changepassword.php
+ * A demonstration change password form 
+ * 
+ * 
+ * @package CRLogin
+ * @subpackage demo-views
+ * @author Nikos Koutelidis nikoutel@gmail.com
+ * @copyright 2013 Nikos Koutelidis 
+ * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
+ * @link https://github.com/nikoutel/CRLogin 
+ * 
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
+/*
+ * Prevents the direct access of this file 
+ */
 if (count(get_included_files()) == 1) {
     header("location: /index.php?s=changepassword");
     die();
@@ -14,24 +37,24 @@ require $base . '/CRLogin/inc/members_area.inc.php';
         <title><?php echo $l['CHANGE_PASS_LINK'] ?></title>
         <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
-        <?php require $base . '/CRLogin/inc/head.inc.php'; ?>
+<?php require $base . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>
 
         <div id ="login">
             <a href="index.php?s=main">Main</a> | 
-            <?php
-            if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
-                echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
-            } else {
-                echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
-                echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
-            }
-            ?>
+<?php
+if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
+    echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
+} else {
+    echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
+    echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
+}
+?>
         </div>
         <div id="top">
             <div id="noscript">
-                <?php echo $l['NO_SCRIPT'] ?> 
+<?php echo $l['NO_SCRIPT'] ?> 
             </div>
 
             <div id="lgerror"></div> 
