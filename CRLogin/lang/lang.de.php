@@ -21,14 +21,40 @@
  */
 
 $lang = array(
+    'HELLO' =>  'Hallo',
     'USERNAME' =>  'Benutzername',
     'PASSWORD' =>  'Password',
+    'PASSWORD2' =>  'Passwort erneut eingeben',
     'LOGIN' =>  'Anmelden',
-    'NO_SCRIPT' =>  'Please enable JavaScript to login',
-    'EMPTY_USERNAME' =>  'Geben Sie Ihren Username ein.',
-    'LOGIN_FAIL' =>  'Username oder Passwort ungültig.',
-    'FIREBUG_DELAY' => 'It seems that you are using Firebug. This will slow down the process. <br />
-        If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' 
+    'REGISTER' =>  'Registrieren',
+    'OLD_PASS' =>  'Altes password',
+    'NEW_PASS' =>  'Neues password',
+    'NEW_PASS_2' =>  'Neues password erneut eingeben',
+    'CHANGE_PASS' =>  'Ändern',
+    'LOGIN_CONFIRM_FAIL' =>  'Ungültiges Passwort',
+    'CHANGE_PASS_SUCCESS' =>  'Das Passwort wurde erfolgreich geändert',
+    'REGISTER_SUCCESS' =>  'Benutzer wurde erfolgreich erstellt - <a href="index.php?s=login">Anmelden</a>', // FIXME
+    'USER_EXISTS' =>  'Dieser Benutzer existiert bereits',
+    'WRONG_USERNAME_FORM' =>  'Nur Buchstaben, Zahlen, und Unterstriche sind zulässig', // FIXME
+    'PASS_FORMAT_MSG' =>  'Das Passwort muss mindestens 6 Zeichen lang sein',
+    'NO_SCRIPT' =>  'Bitte aktivieren Sie JavaScript, um sich anmelden zu können',
+    'EMPTY_USERNAME' =>  'Benutzernamen eingeben',
+    'EMPTY_PASSWORD' =>  'Passwort eingeben',
+    'PASSWORDS_NOT_MATCH' =>  'Die Passwörter stimmen nicht überein',
+    'PASSWORD_TO_SHORT' =>  'Muss mindestens 6 Zeichen lang sein',
+    'LOGIN_FAIL' =>  'Benutzername oder Passwort ungültig',
+    'FIREBUG_DELAY' => 'Es scheint, Sie benutzen Firebug.Dies wird den Prozess verlangsamen. <br />Wenn der Vorgang fehlschlägt, erhöhen Sie den Wert <i>challengeTimedelay</i> in config.php.' ,
+    // Demo specific
+    'DEMO_MAIN_H1' => 'This is main',
+    'DEMO_MAIN_TXT' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    'DEMO_MEMBERS_H1' => 'Welcome to the members section.',
+    'DEMO_MEMBERS_TXT' => 'Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat',
+    'LOGIN_LINK' => 'Anmelden',
+    'LOGOUT_LINK' => 'Abmelden',
+    'CHANGE_PASS_LINK' => 'Password ändern',
+    'MEMBERS_LINK' => 'Members area',
+    'MAIN_LINK' => 'Main',
+    'REGISTER_LINK' => 'Neuen Benutzer Registrieren',
 );
 return $lang;
 ?>
