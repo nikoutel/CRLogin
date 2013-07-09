@@ -23,19 +23,21 @@ If you want all data protected, use TLS/SSL encryption.
 * The passwords are stored in the database salted and hashed with bcrypt.
 
 ## Requirements ##
-*   PHP 4.3.0 (min)
+*   PHP 5.3.0 (min)
 *   MySQL 5.1 (min)
 *   jQuery 1.7.1 (min) - is included
 
 
 ## Installation ##
 Just copy the files in your document root directory,
-run the installation script, located in the `install` directory, in your browser and follow the instructions.
+run the installation script, located in the `install` directory, in your browser, choose your language and follow the instructions.  
+(This intsall script is temporary. It's just a quick install solution.
+A new, more dynamic and configurable application is on its way.)
 
 ### Manual installation ###
 
 If for any strange reason the above method does not work you have to do the installation manually.  
-Create a file `db_config.php` according to the demo file `db_config_demo.php`.  
+Create a file `install_config.php` according to the demo file `install_config_demo.php`.  
 If you want you can create a new database or use a existing one.   
 The user defined in the configuration file must have access to this database.  
 Create the table in the database. Have a look at the `install_lib.php` file to see the details.  
@@ -51,6 +53,7 @@ This software is licensed under the [MPL](http://www.mozilla.org/MPL/2.0/) 2.0:
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ```
+
 ## Acknowledgements ##
 This project is using the following JavaScript Libraries:  
   
