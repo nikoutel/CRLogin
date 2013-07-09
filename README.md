@@ -12,7 +12,7 @@ The server sends a unique challenge to the client. The client computes a unique 
 The server computes the same thing and compares it with the received response. If they are identical, the user is authenticated.  
 The response is never the same. So if someone manages to steal it, it will be of no use.
 
-CRLogin is not 100% secure (NO AUTHENTICATION SYSTEM IS 100% SECURE). It has its weaknesses, but sending your password in plain text over a unsecure, untrusted network (e.g. public WiFi ) is much worse.
+
 
 ## Notes ##
 * **This project is still under development! There may be security measures that are not yet implemented.**
