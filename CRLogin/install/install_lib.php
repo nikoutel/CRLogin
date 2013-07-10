@@ -168,7 +168,7 @@ function insertUser($connect) {
     $count = mysql_num_rows($result);
     Debugr::edbgLog($count, '$count');
 
-    if ($count !== NULL) {
+    if ($count == 0) {
 
 
         $query = "INSERT INTO user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
