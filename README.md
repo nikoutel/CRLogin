@@ -35,7 +35,7 @@ If you want all data protected, use TLS/SSL encryption.
 Just copy the files in your document root directory,
 run the installation script, located in the `install` directory, in your browser, choose your language and follow the instructions.  
 (This intsall script is temporary. It's just a quick install solution.
-A new, more dynamic and configurable application is on its way.)
+A new, more dynamic and configurable application is on its way).
 
 #### Manual installation ####
 
@@ -60,7 +60,7 @@ Besides the `install_config.php` which is created automatically by the install s
 * Administration/configuration page 
 * Email verification
 * Translate to more languages   
-and many more
+and many more...
 
 ## Licence ##
 This software is licensed under the [MPL](http://www.mozilla.org/MPL/2.0/) 2.0:
