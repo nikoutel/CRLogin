@@ -45,10 +45,10 @@ $lang = array(
     'LOGIN_FAIL' =>  'Invalid username or password',
     'FIREBUG_DELAY' => 'It seems that you are using Firebug. This will slow down the process. <br />If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' ,
     // Demo specific
-    'DEMO_MAIN_H1' => 'This is main',
-    'DEMO_MAIN_TXT' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore',
+    'DEMO_MAIN_H1' => 'Welcome to CRLogin',
+    'DEMO_MAIN_TXT' => 'A challenge-response authentication system for web applications',
     'DEMO_MEMBERS_H1' => 'Welcome to the members section.',
-    'DEMO_MEMBERS_TXT' => 'Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat',
+    'DEMO_MEMBERS_TXT' => 'An example of the member section. Only authenticated users can access this area of the website /web application.',
     'LOGIN_LINK' => 'Login',
     'LOGOUT_LINK' => 'Logout',
     'CHANGE_PASS_LINK' => 'Change Password',
