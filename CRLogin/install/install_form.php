@@ -19,7 +19,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-require 'Debugr/DebugrLoad.php';
 if (isset($_POST['lang'])) {
     session_start();
     $_SESSION['lang'] = $_POST['lang'];

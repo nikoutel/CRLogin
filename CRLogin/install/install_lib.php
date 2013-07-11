@@ -19,7 +19,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
 /*
  * Prevents the direct access of this file 
  */
@@ -115,7 +114,7 @@ function createUser($connect, $db, $user, $dbpass, $atHost) {
  * @return boolean
  */
 function createTables($connect) {
-    require 'Debugr/DebugrLoad.php';
+
     $query = "CREATE TABLE IF NOT EXISTS user (
                 userid int(11) unsigned NOT NULL auto_increment,
                 username varchar(64) NOT NULL default '',
@@ -163,19 +162,15 @@ function insertUser($connect) {
     $usersalt = '$2y$10$HLmNt5jH6ElynYSSe.fZSA$';
 
     $result = mysql_query("SELECT userid FROM user WHERE username = '" . $username . "'", $connect);
-    Debugr::edbgLog($result, '$result');
 
     $count = mysql_num_rows($result);
-    Debugr::edbgLog($count, '$count');
 
     if ($count == 0) {
 
 
         $query = "INSERT INTO user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
-        Debugr::edbgLog($query, '$query');
 
         $result = mysql_query($query, $connect);
-        Debugr::edbgLog($result, '$result');
 
         if ($result) {
             return TRUE;

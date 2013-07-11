@@ -24,7 +24,6 @@ use CRLogin\core\DIC;
 use CRLogin\core\Crypt;
 
 require $base . '/CRLoginAutoloader.php';
-require 'Debugr/DebugrLoad.php';
 $dic = new DIC;
 $l = $dic->getLanguageFile();
 $session = $dic->startSession();

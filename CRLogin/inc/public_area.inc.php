@@ -22,7 +22,6 @@
 use CRLogin\core\DIC;
 use CRLogin\core\Crypt;
 
-require 'Debugr/DebugrLoad.php';
 require $base . '/CRLoginAutoloader.php';
 
 
