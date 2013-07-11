@@ -1,4 +1,5 @@
 test*.php
+test/
 0*.php
 *0.php
 _info*
