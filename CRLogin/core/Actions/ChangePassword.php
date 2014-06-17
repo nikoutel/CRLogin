@@ -23,14 +23,10 @@ namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
 use CRLogin\core\Crypt;
-use CRLogin\core\DIC;
+use CRLogin\core\Login;
 
 class ChangePassword implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * @var string 
@@ -46,15 +42,37 @@ class ChangePassword implements Actions {
      * @var array 
      */
     private $_l;
+    
+    /**
+     * @var Login 
+     */
+    private $_login;
 
     /**
-     * @param DIC $container
+     * @var Crypt
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_l = $this->_container->getLanguageFile();
+    private $_crypt;
+    
+    /**
+     * @var User
+     */
+    private $_user;
+    
+    /**
+     * @param type $languageFile
+     * @param \CRLogin\core\Login $login
+     * @param \CRLogin\core\Crypt $crypt
+     * @param \CRLogin\core\User $user
+     */
+    public function __construct($languageFile, Login $login, Crypt $crypt, User $user) {
+
+        $this->_l = $languageFile;
         $this->_username = $_POST['username'];
         $this->_newPassword = $_POST['newpassword'];
+        $this->_login = $login;
+        $this->_crypt = $crypt;
+        $this->_user = $user;
+        
     }
 
     /**
@@ -64,8 +82,8 @@ class ChangePassword implements Actions {
      * @return array
      */
     public function executeAction() {
-        $login = new Login($this->_container);
-        $loginResponse = $login->executeAction();
+
+        $loginResponse = $this->_login->executeAction();
         if (isset($loginResponse['error']) && $loginResponse['error'] == TRUE) {
             return array(
                 'error' => TRUE,
@@ -82,13 +100,12 @@ class ChangePassword implements Actions {
      * @return array
      */
     private function _changePassword() {
-        $crypt = new Crypt($this->_container);
-        $newSalt = $crypt->getNewSalt();
-        $spass = $crypt->encrypt($this->_newPassword, $newSalt);
 
-        $user = new User($this->_container);
-        $user->setUserName($this->_username);
-        $update = $user->updateUserPass($spass, $newSalt);
+        $newSalt = $this->_crypt->getNewSalt();
+        $spass = $this->_crypt->encrypt($this->_newPassword, $newSalt);
+
+        $this->_user->setUserName($this->_username);
+        $update = $this->_user->updateUserPass($spass, $newSalt);
 
         session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;
