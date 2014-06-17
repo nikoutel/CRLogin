@@ -34,15 +34,16 @@ class Crypt {
     private $_random;
     
     /**
-     * @var DIC 
+     * @var array 
      */
-    private $_container;
+    private $_configArray;
     
     /**
-     * @param DIC $container
+     * @param array $configArray
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
+    public function __construct($configArray) {
+        
+        $this->_configArray = $configArray['general'];
     }
 
     /**
@@ -67,7 +68,7 @@ class Crypt {
      * Generates salt for bCrypt hashing
      */
     private function _generateSalt() {
-        $configuration = $this->_container->getConfiguration('general');
+        $configuration = $this->_configArray['general'];
         $costParameter = $configuration['cryptCostParameter'];
         if (version_compare(PHP_VERSION, '5.3.7', '>')) {
             $prefix = '$2y$';
