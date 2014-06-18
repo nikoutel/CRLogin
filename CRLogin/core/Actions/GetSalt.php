@@ -22,21 +22,23 @@
 namespace CRLogin\core\Actions;
 
 use CRLogin\core\Crypt;
-use CRLogin\core\DIC;
 
 class GetSalt implements Actions {
 
     /**
-     * @var DIC 
+     * @var Crypt 
      */
-    private $_container;
+    private $_crypt;
 
     /**
-     * @param DIC $container
+     * 
+     * @param type $languageFile
+     * @param Crypt $crypt
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_l = $this->_container->getLanguageFile();
+    public function __construct($languageFile, Crypt $crypt) {
+        
+        $this->_l = $languageFile;
+        $this->_crypt = $crypt;
     }
 
     /**
@@ -46,8 +48,8 @@ class GetSalt implements Actions {
      * @return array
      */
     public function executeAction() {
-        $crypt = new Crypt($this->_container);
-        $newSalt = $crypt->getNewSalt();
+
+        $newSalt = $this->_crypt->getNewSalt();
         if ($newSalt === FALSE) {
             return array(
                 'error' => TRUE,
