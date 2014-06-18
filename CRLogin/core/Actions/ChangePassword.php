@@ -59,7 +59,7 @@ class ChangePassword implements Actions {
     private $_user;
     
     /**
-     * @param type $languageFile
+     * @param array $languageFile
      * @param \CRLogin\core\Login $login
      * @param \CRLogin\core\Crypt $crypt
      * @param \CRLogin\core\User $user

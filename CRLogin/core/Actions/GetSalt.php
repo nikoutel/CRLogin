@@ -31,8 +31,7 @@ class GetSalt implements Actions {
     private $_crypt;
 
     /**
-     * 
-     * @param type $languageFile
+     * @param array $languageFile
      * @param Crypt $crypt
      */
     public function __construct($languageFile, Crypt $crypt) {
