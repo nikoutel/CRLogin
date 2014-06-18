@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core\Actions;
+namespace CRLogin\core;
 
 use CRLogin\core\User;
 use CRLogin\core\Challenge;

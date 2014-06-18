@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core\Actions;
+namespace CRLogin\core;
 
 
 class Logout implements Actions {
