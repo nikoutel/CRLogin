@@ -35,7 +35,7 @@ if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
 }
 
 function getToken($dic) {
-    $crypt = new Crypt($dic);
+    $crypt = $dic->getObject('Crypt');
     $token = $crypt->getRandom('challenge');
     $_SESSION['token'] = $token;
     return $token;

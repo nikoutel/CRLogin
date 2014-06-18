@@ -120,6 +120,50 @@ class DIC {
         return $this->_utils;
     }
 
+    private function _getClassParameters($class) {
+
+        // @todo try catch
+        $reflectionClass = new \ReflectionClass($class);
+        $constructor = $reflectionClass->getConstructor();
+
+        if ($constructor !== NULL) {
+            $constructor_parameters = $constructor->getParameters();
+        } else {
+            $constructor_parameters = array();
+        }
+
+        return $constructor_parameters;
+    }
+
+    public function getObject($class) {
+
+        $parameters = $this->_getClassParameters($class);
+
+        if (!empty($parameters)) {
+
+            foreach ($parameters as $param) {
+                $paramName = $param->name;
+                $className = ucfirst($paramName);
+
+                $fName = 'get' . $className;
+
+                if (function_exists($fName)) {
+                    $arguments[] = call_user_func($fName);
+                } elseif (class_exists($className)) {
+                    $arguments[] = $this->getObject($paramName);
+                } // @todo else throw exception
+            }
+        } else {
+            $arguments = array();
+        }
+        
+        // @todo try catch
+        $reflector = new \ReflectionClass($class);
+        $obj = $reflector->newInstanceArgs($arguments);
+
+        return $obj;
+    }
+
 }
 
 ?>

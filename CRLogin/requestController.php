@@ -33,7 +33,7 @@ if (isset($_POST['action'])) {
         try {
             $action = strtolower($_POST['action']);
             $className = 'CRLogin\core\\' . implode("", array_map('ucfirst', explode('_', $action)));
-            $controller = new $className($dic);
+            $controller = $dic->getObject($className);
             echo json_encode($controller->executeAction());
         } catch (Exception $e) {
             header('404 Not Found');
