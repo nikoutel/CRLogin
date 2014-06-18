@@ -33,17 +33,23 @@ class Crypt {
      */
     private $_random;
     
+     /**
+     * @var Confuguration 
+     */
+    private $_confuguration;   
+    
     /**
      * @var array 
      */
     private $_configArray;
     
     /**
-     * @param array $configArray
+     * @param \Confuguration $configuration
      */
-    public function __construct($configArray) {
+    public function __construct(Confuguration $configuration) {
         
-        $this->_configArray = $configArray['general'];
+        $this->_confuguration = $configuration;
+        $this->_configArray = $this->_confuguration->getConfigArray('general');
     }
 
     /**

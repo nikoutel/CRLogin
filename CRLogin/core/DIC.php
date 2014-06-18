@@ -58,9 +58,9 @@ class DIC {
      * @param string $cat
      * @return array
      */
-    public function getConfiguration($cat) {
+    public function getConfiguration() {
         $this->_configuration = new Configuration();
-        return $this->_configuration->getConfigArray($cat);
+        return $this->_configuration;
     }
 
     /**
@@ -69,7 +69,7 @@ class DIC {
      * @return array
      */
     public function getLanguageFile() {
-        $config = $this->getConfiguration('general');
+        $config = $this->getConfiguration()->getConfigArray('general');
         $langCode = $config['language'];
         $this->_languageFile = new LanguageFile;
         return $this->_languageFile->getLanguageArray($langCode);
@@ -82,9 +82,9 @@ class DIC {
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
-            $config = $this->getConfiguration('general');
+            $config = $this->getConfiguration()->getConfigArray('general');
             if ($config['datastore'] == 'database') {
-                $dbConfig = $this->getConfiguration('db');
+                $dbConfig = $this->getConfiguration()->getConfigArray('db');
                 $utility = $this->getUtility();
                 $database = 'CRLogin\core\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
@@ -102,7 +102,7 @@ class DIC {
         if (!isset($this->_session)) {
             $utility = $this->getUtility();
             $ds = $this->getDataStore();
-            $config = $this->getConfiguration('general');
+            $config = $this->getConfiguration()->getConfigArray('general');
             $this->_session = new Session($ds, $config, $utility);
         }
         return $this->_session;
