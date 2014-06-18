@@ -21,21 +21,15 @@
 
 namespace CRLogin\core\Actions;
 
-use CRLogin\core\DIC;
 
 class Logout implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * 
-     * @param DIC $container
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
+    public function __construct() {
+        
     }
 
     /**
