@@ -25,14 +25,9 @@ use CRLogin\core\User;
 use CRLogin\core\Challenge;
 use CRLogin\core\Response;
 use CRLogin\core\Authentication;
-use CRLogin\core\DIC;
 
 class Login implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * @var string 
@@ -48,16 +43,50 @@ class Login implements Actions {
      * @var array 
      */
     private $_l;
+    
+    /**
+     * @var Authentication 
+     */
+    private $_authentication;
+    
+    /**
+     * @var User
+     */
+    private $_user;
+    
+    /**
+     * @var Challenge
+     */
+    private $_challenge;
+    
+    /**
+     * @var Response
+     */
+    private $_response;
 
     /**
-     * 
-     * @param DIC $container
+     * @param array $languageFile
+     * @param Authentication $authentication
+     * @param User $user
+     * @param Challemge $challenge
+     * @param Response $response
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_l = $this->_container->getLanguageFile();
+    public function __construct(
+        $languageFile, 
+        Authentication $authentication, 
+        User $user, 
+        Challemge $challenge, 
+        Response $response
+    ) {
+        
+        $this->_l = $languageFile;
         $this->_username = $_POST['username'];
         $this->_clienResponse = $_POST['response'];
+        $this->_authentication = $authentication;
+        $this->_user = $user;
+        $this->_challenge = $challenge;
+        $this->_response = $response;
+        
     }
 
     /**
@@ -70,8 +99,9 @@ class Login implements Actions {
         $saltedPassword = $this->_returnSaltedPass();
         $challenge = $this->_returnChallenge();
         $serverResponse = $this->_returnResponse($saltedPassword, $challenge);
-        $authentication = new Authentication($this->_clienResponse, $serverResponse);
-        if ($authentication->isAuthenticated()) {
+        $this->_authentication->authenticate($this->_clienResponse, $serverResponse);
+        
+        if ($this->_authentication->isAuthenticated()) {
             return $this->_isLoggedIn($this->_username);
         } else {
             return $this->_isNotLoggedIn();
@@ -83,9 +113,9 @@ class Login implements Actions {
      * @return mixed
      */
     private function _returnSaltedPass() {
-        $user = new User($this->_container);
-        $user->setUserName($this->_username);
-        return $user->getSaltedPass();
+
+        $this->_user->setUserName($this->_username);
+        return $this->_user->getSaltedPass();
     }
 
     /**
@@ -93,9 +123,9 @@ class Login implements Actions {
      * @return mixed
      */
     private function _returnChallenge() {
-        $challenge = new Challenge($this->_container);
-        if ($challenge->fechChallenge()) {
-            return $challenge->getChallenge();
+
+        if ($this->_challenge->fechChallenge()) {
+            return $this->_challenge->getChallenge();
         }
     }
 
@@ -106,9 +136,9 @@ class Login implements Actions {
      * @return mixed
      */
     private function _returnResponse($saltedPassword, $challenge) {
-        $serverResponse = new Response();
-        $serverResponse->calculateResponse($saltedPassword, $challenge);
-        return $serverResponse->getResponse();
+
+        $this->_response->calculateResponse($saltedPassword, $challenge);
+        return $this->_response->getResponse();
     }
 
     /**
