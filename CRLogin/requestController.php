@@ -27,7 +27,7 @@ require '../CRLoginAutoloader.php';
 
 
 $dic = new DIC;
-$session = $dic->startSession();
+$session = $dic->getSession();
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {

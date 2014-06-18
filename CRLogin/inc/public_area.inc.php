@@ -27,7 +27,7 @@ require $base . '/CRLoginAutoloader.php';
 
 $dic = new DIC;
 $l = $dic->getLanguageFile();
-$session = $dic->startSession();
+$session = $dic->getSession();
 $_SESSION ['members'] = FALSE;
 
 $redirectURL = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];

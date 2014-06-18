@@ -98,7 +98,7 @@ class DIC {
      * 
      * @return resource
      */
-    public function startSession() {
+    public function getSession() {
         if (!isset($this->_session)) {
             $utility = $this->getUtility();
             $ds = $this->getDataStore();
