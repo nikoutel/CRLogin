@@ -71,7 +71,7 @@ class DIC {
     public function getLanguageFile() {
         $config = $this->getConfiguration()->getConfigArray('general');
         $langCode = $config['language'];
-        $this->_languageFile = new LanguageFile;
+        $this->_languageFile = new LanguageFile(new ConfigReader);
         return $this->_languageFile->getLanguageArray($langCode);
     }
 
@@ -137,29 +137,29 @@ class DIC {
 
     public function getObject($class) {
 
-        $parameters = $this->_getClassParameters($class);
 
-        if (!empty($parameters)) {
+        $className = ucfirst($class);
+        $fName = 'get' . $className;
 
-            foreach ($parameters as $param) {
-                $paramName = $param->name;
-                $className = ucfirst($paramName);
+        if (method_exists($this, $fName)) {
+            $obj = call_user_func(array($this, $fName));
+        } elseif (class_exists($className)) {
+            $parameters = $this->_getClassParameters($className);
+            if (!empty($parameters)) {
 
-                $fName = 'get' . $className;
-
-                if (function_exists($fName)) {
-                    $arguments[] = call_user_func($fName);
-                } elseif (class_exists($className)) {
-                    $arguments[] = $this->getObject($paramName);
-                } // @todo else throw exception
+                foreach ($parameters as $param) {
+                    $paramName = $param->name;
+                    $className = ucfirst($paramName);
+                    $arguments[] = $this->getObject($className);
+                }
+            } else {
+                $arguments = array();
             }
-        } else {
-            $arguments = array();
-        }
-        
-        // @todo try catch
-        $reflector = new \ReflectionClass($class);
-        $obj = $reflector->newInstanceArgs($arguments);
+            
+            // @todo try catch
+            $reflector = new \ReflectionClass($class);
+            $obj = $reflector->newInstanceArgs($arguments);
+        }// @todo else throw exception
 
         return $obj;
     }
