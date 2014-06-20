@@ -21,6 +21,8 @@
 
 namespace CRLogin\core;
 
+use CRLogin\core\lib\Configuration;
+
 class Challenge {
 
     /**
