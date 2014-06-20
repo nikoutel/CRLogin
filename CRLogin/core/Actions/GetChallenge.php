@@ -77,7 +77,7 @@ class GetChallenge implements Actions {
      */
     public function executeAction() {
         $username = trim($this->_username);
-        if (empty($username)) {
+        if (!isset($username)) {
             $returnArray = array(
                 'error' => TRUE,
                 'errorMsg' => $this->_l['EMPTY_USERNAME']
