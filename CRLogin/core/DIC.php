@@ -159,7 +159,7 @@ class DIC {
             $reflector = new \ReflectionClass($className);
             $obj = $reflector->newInstanceArgs($arguments);
         } else {
-           // @todo else throw exception
+           throw new \Exception;
         }
 
         return $obj;

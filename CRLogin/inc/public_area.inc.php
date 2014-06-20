@@ -40,10 +40,14 @@ if (strpos($redirectURL, 's=login') === false) {
 }
 
 function getToken($dic) {
-    //@todo try catch
-    $crypt = $dic->getObject('Crypt');
-    $token = $crypt->getRandom('challenge');
-    $_SESSION['token'] = $token;
+    try {
+        $crypt = $dic->getObject('Crypt');
+        $token = $crypt->getRandom('challenge');
+        $_SESSION['token'] = $token;
+    } catch (\Exception $e) {
+        $token = '';
+    }
+
     return $token;
 }
 

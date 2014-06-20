@@ -27,6 +27,7 @@ require '../CRLoginAutoloader.php';
 
 $dic = new DIC;
 $session = $dic->getSession();
+$l = $dic->getLanguageFile();
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {
@@ -34,13 +35,16 @@ if (isset($_POST['action'])) {
             $className = implode("", array_map('ucfirst', explode('_', $action)));
 
             $controller = $dic->getObject($className);
-
-            // if obj
             echo json_encode($controller->executeAction());
-        } catch (Exception $e) {
-            header('404 Not Found');
+            
+        } catch (\Exception $e) {
+            header('HTTP/1.0 404 Not Found');
+            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
             exit;
         }
+    } else {
+        echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
+        exit;
     }
 }
 ?>

@@ -19,7 +19,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
 use CRLogin\core\DIC;
 use CRLogin\core\Crypt;
 
@@ -35,9 +34,14 @@ if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
 }
 
 function getToken($dic) {
-    $crypt = $dic->getObject('Crypt');
-    $token = $crypt->getRandom('challenge');
-    $_SESSION['token'] = $token;
+    try {
+        $crypt = $dic->getObject('Crypt');
+        $token = $crypt->getRandom('challenge');
+        $_SESSION['token'] = $token;
+    } catch (\Exception $e) {
+        $token ='';
+    }
+
     return $token;
 }
 
