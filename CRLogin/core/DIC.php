@@ -122,7 +122,6 @@ class DIC {
 
     private function _getClassParameters($class) {
 
-        // @todo try catch
         $reflectionClass = new \ReflectionClass($class);
         $constructor = $reflectionClass->getConstructor();
 
@@ -137,31 +136,50 @@ class DIC {
 
     public function getObject($class) {
 
-
         $className = ucfirst($class);
         $fName = 'get' . $className;
 
         if (method_exists($this, $fName)) {
             $obj = call_user_func(array($this, $fName));
-        } elseif (class_exists($className)) {
+        } elseif ($className = $this->_isClass($className)) {
+
             $parameters = $this->_getClassParameters($className);
             if (!empty($parameters)) {
 
                 foreach ($parameters as $param) {
                     $paramName = $param->name;
-                    $className = ucfirst($paramName);
-                    $arguments[] = $this->getObject($className);
+                    $paramClassName = ucfirst($paramName);
+                    $arguments[] = $this->getObject($paramClassName);
                 }
             } else {
                 $arguments = array();
             }
-            
+
             // @todo try catch
-            $reflector = new \ReflectionClass($class);
+            $reflector = new \ReflectionClass($className);
             $obj = $reflector->newInstanceArgs($arguments);
-        }// @todo else throw exception
+        } else {
+           // @todo else throw exception
+        }
 
         return $obj;
+    }
+
+    private function _isClass($className) {
+
+        $subNamespaces = array(
+            '\CRLogin\core\\',
+            '\CRLogin\core\Actions\\'
+        );
+
+        foreach ($subNamespaces as $nspace) {
+
+            $class = $nspace . $className;
+            if (class_exists($class)) {
+                return $class;
+            }
+        }
+        return FALSE;
     }
 
 }

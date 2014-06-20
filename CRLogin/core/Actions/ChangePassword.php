@@ -19,11 +19,10 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
 use CRLogin\core\Crypt;
-use CRLogin\core\Login;
 
 class ChangePassword implements Actions {
 
@@ -60,7 +59,7 @@ class ChangePassword implements Actions {
     
     /**
      * @param array $languageFile
-     * @param \CRLogin\core\Login $login
+     * @param \CRLogin\core\Actions\Login $login
      * @param \CRLogin\core\Crypt $crypt
      * @param \CRLogin\core\User $user
      */

@@ -34,9 +34,9 @@ class Challenge {
     private $_dataStore;
 
     /**
-     * @var Confuguration 
+     * @var Configuration 
      */
-    private $_confuguration;
+    private $_configuration;
     
     /**
      * @var array
@@ -51,14 +51,14 @@ class Challenge {
     /**
      * 
      * @param rescource $dataStore
-     * @param Confuguration $configuration
+     * @param Configuration $configuration
      * @param \CRLogin\core\Crypt $crypt
      */
-    public function __construct($dataStore, Confuguration $configuration, Crypt $crypt) {
+    public function __construct($dataStore, Configuration $configuration, Crypt $crypt) {
 
         $this->_dataStore = $dataStore;
-        $this->_confuguration = $configuration;
-        $this->_configArray = $this->_confuguration->getConfigArray('general');
+        $this->_configuration = $configuration;
+        $this->_configArray = $this->_configuration->getConfigArray('general');
         $this->_crypt = $crypt;
     }
 
@@ -109,7 +109,7 @@ class Challenge {
         $values = array(
             'challenge' => $challenge,
             'sessionid' => session_id(),
-            'timestamp' => (time() + $this->_confuguration['challengeTimedelay'])
+            'timestamp' => (time() + $this->_configArray['challengeTimedelay'])
         );
         return $this->_dataStore->create($values, $dataset);
     }

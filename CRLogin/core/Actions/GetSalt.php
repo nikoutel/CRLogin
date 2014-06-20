@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\Actions;
 
 use CRLogin\core\Crypt;
 

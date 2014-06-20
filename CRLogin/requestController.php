@@ -25,15 +25,17 @@ use CRLogin\core\DIC;
 
 require '../CRLoginAutoloader.php';
 
-
 $dic = new DIC;
 $session = $dic->getSession();
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {
             $action = strtolower($_POST['action']);
-            $className = 'CRLogin\core\\' . implode("", array_map('ucfirst', explode('_', $action)));
+            $className = implode("", array_map('ucfirst', explode('_', $action)));
+
             $controller = $dic->getObject($className);
+
+            // if obj
             echo json_encode($controller->executeAction());
         } catch (Exception $e) {
             header('404 Not Found');

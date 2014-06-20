@@ -40,7 +40,7 @@ if (strpos($redirectURL, 's=login') === false) {
 }
 
 function getToken($dic) {
-    $crypt = new Crypt($dic);
+    //@todo try catch
     $crypt = $dic->getObject('Crypt');
     $token = $crypt->getRandom('challenge');
     $_SESSION['token'] = $token;

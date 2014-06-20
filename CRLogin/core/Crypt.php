@@ -34,9 +34,9 @@ class Crypt {
     private $_random;
     
      /**
-     * @var Confuguration 
+     * @var Configuration 
      */
-    private $_confuguration;   
+    private $_configuration;   
     
     /**
      * @var array 
@@ -44,12 +44,12 @@ class Crypt {
     private $_configArray;
     
     /**
-     * @param \Confuguration $configuration
+     * @param \Configuration $configuration
      */
-    public function __construct(Confuguration $configuration) {
+    public function __construct(Configuration $configuration) {
         
-        $this->_confuguration = $configuration;
-        $this->_configArray = $this->_confuguration->getConfigArray('general');
+        $this->_configuration = $configuration;
+        $this->_configArray = $this->_configuration->getConfigArray('general');
     }
 
     /**
@@ -74,8 +74,8 @@ class Crypt {
      * Generates salt for bCrypt hashing
      */
     private function _generateSalt() {
-        $configuration = $this->_configArray['general'];
-        $costParameter = $configuration['cryptCostParameter'];
+
+        $costParameter = $this->_configArray['cryptCostParameter'];
         if (version_compare(PHP_VERSION, '5.3.7', '>')) {
             $prefix = '$2y$';
         } else {
@@ -121,7 +121,7 @@ class Crypt {
             if (defined('MCRYPT_DEV_URANDOM')) {
                 $source = MCRYPT_DEV_URANDOM;
             } else {
-                $source = MCRYPT_RAND; //
+                $source = MCRYPT_RAND;
             }
 
             $this->_random = mcrypt_create_iv($size, $source);

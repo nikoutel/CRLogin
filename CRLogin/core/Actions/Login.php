@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
 use CRLogin\core\Challenge;
@@ -75,7 +75,7 @@ class Login implements Actions {
         $languageFile, 
         Authentication $authentication, 
         User $user, 
-        Challemge $challenge, 
+        Challenge $challenge, 
         Response $response
     ) {
         
