@@ -44,7 +44,7 @@ class Authentication {
      * @param string $clientResponse
      * @param string $serverResponse
      */
-    public function __construct($clientResponse, $serverResponse) {
+    public function authenticate($clientResponse, $serverResponse) {
 
         $this->_clientResponse = $clientResponse;
         $this->_serverResponse = $serverResponse;

@@ -39,11 +39,6 @@ class User {
     private $_userSalt;
 
     /**
-     * @var DIC 
-     */
-    private $_container;
-
-    /**
      * @var resource 
      */
     private $_dataStore;
@@ -54,11 +49,11 @@ class User {
     private $_userId;
 
     /**
-     * @param DIC $container
+     * @param rescource $dataStore
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_dataStore = $this->_container->getDataStore();
+    public function __construct($dataStore) {
+
+        $this->_dataStore = $dataStore;
     }
 
     /**

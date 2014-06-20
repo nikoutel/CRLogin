@@ -20,17 +20,16 @@
  * 
  */
 use CRLogin\core\DIC;
-use CRLogin\core\Crypt;
 
 require $base . '/CRLoginAutoloader.php';
 
 
 $dic = new DIC;
 $l = $dic->getLanguageFile();
-$session = $dic->startSession();
+$session = $dic->getSession();
 $_SESSION ['members'] = FALSE;
 
-$redirectURL = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$redirectURL = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; //@todo not safe
 if (strpos($redirectURL, 's=login') === false) {
     $_SESSION['redirectURL'] = $redirectURL;
 } else {
@@ -40,9 +39,14 @@ if (strpos($redirectURL, 's=login') === false) {
 }
 
 function getToken($dic) {
-    $crypt = new Crypt($dic);
-    $token = $crypt->getRandom('challenge');
-    $_SESSION['token'] = $token;
+    try {
+        $crypt = $dic->getObject('Crypt');
+        $token = $crypt->getRandom('challenge');
+        $_SESSION['token'] = $token;
+    } catch (\Exception $e) {
+        $token = '';
+    }
+
     return $token;
 }
 

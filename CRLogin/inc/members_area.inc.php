@@ -19,25 +19,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
 use CRLogin\core\DIC;
-use CRLogin\core\Crypt;
 
 require $base . '/CRLoginAutoloader.php';
 $dic = new DIC;
 $l = $dic->getLanguageFile();
-$session = $dic->startSession();
+$session = $dic->getSession();
 $_SESSION ['members'] = TRUE;
-$_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; //@todo not safe
 if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
     header('Location:index.php?s=login');
     die();
 }
 
 function getToken($dic) {
-    $crypt = new Crypt($dic);
-    $token = $crypt->getRandom('challenge');
-    $_SESSION['token'] = $token;
+    try {
+        $crypt = $dic->getObject('Crypt');
+        $token = $crypt->getRandom('challenge');
+        $_SESSION['token'] = $token;
+    } catch (\Exception $e) {
+        $token ='';
+    }
+
     return $token;
 }
 

@@ -44,6 +44,7 @@ $lang = array(
     'PASSWORD_TO_SHORT' =>  'Must be at least 6 charakters long',
     'LOGIN_FAIL' =>  'Invalid username or password',
     'FIREBUG_DELAY' => 'It seems that you are using Firebug. This will slow down the process. <br />If the process fails, increase the <i>challengeTimedelay</i> value in config.php.' ,
+    'GENERIC_ERROR' => 'An error has occurred',
     // Demo specific
     'DEMO_MAIN_H1' => 'Welcome to CRLogin',
     'DEMO_MAIN_TXT' => 'A challenge-response authentication system for web applications',

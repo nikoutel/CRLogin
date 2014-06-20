@@ -58,9 +58,9 @@ class DIC {
      * @param string $cat
      * @return array
      */
-    public function getConfiguration($cat) {
+    public function getConfiguration() {
         $this->_configuration = new Configuration();
-        return $this->_configuration->getConfigArray($cat);
+        return $this->_configuration;
     }
 
     /**
@@ -69,9 +69,9 @@ class DIC {
      * @return array
      */
     public function getLanguageFile() {
-        $config = $this->getConfiguration('general');
+        $config = $this->getConfiguration()->getConfigArray('general');
         $langCode = $config['language'];
-        $this->_languageFile = new LanguageFile;
+        $this->_languageFile = new LanguageFile(new ConfigReader);
         return $this->_languageFile->getLanguageArray($langCode);
     }
 
@@ -82,9 +82,9 @@ class DIC {
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
-            $config = $this->getConfiguration('general');
+            $config = $this->getConfiguration()->getConfigArray('general');
             if ($config['datastore'] == 'database') {
-                $dbConfig = $this->getConfiguration('db');
+                $dbConfig = $this->getConfiguration()->getConfigArray('db');
                 $utility = $this->getUtility();
                 $database = 'CRLogin\core\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
@@ -98,11 +98,11 @@ class DIC {
      * 
      * @return resource
      */
-    public function startSession() {
+    public function getSession() {
         if (!isset($this->_session)) {
             $utility = $this->getUtility();
             $ds = $this->getDataStore();
-            $config = $this->getConfiguration('general');
+            $config = $this->getConfiguration()->getConfigArray('general');
             $this->_session = new Session($ds, $config, $utility);
         }
         return $this->_session;
@@ -118,6 +118,68 @@ class DIC {
             $this->_utils = new Utils();
         }
         return $this->_utils;
+    }
+
+    private function _getClassParameters($class) {
+
+        $reflectionClass = new \ReflectionClass($class);
+        $constructor = $reflectionClass->getConstructor();
+
+        if ($constructor !== NULL) {
+            $constructor_parameters = $constructor->getParameters();
+        } else {
+            $constructor_parameters = array();
+        }
+
+        return $constructor_parameters;
+    }
+
+    public function getObject($class) {
+
+        $className = ucfirst($class);
+        $fName = 'get' . $className;
+
+        if (method_exists($this, $fName)) {
+            $obj = call_user_func(array($this, $fName));
+        } elseif ($className = $this->_isClass($className)) {
+
+            $parameters = $this->_getClassParameters($className);
+            if (!empty($parameters)) {
+
+                foreach ($parameters as $param) {
+                    $paramName = $param->name;
+                    $paramClassName = ucfirst($paramName);
+                    $arguments[] = $this->getObject($paramClassName);
+                }
+            } else {
+                $arguments = array();
+            }
+
+            // @todo try catch
+            $reflector = new \ReflectionClass($className);
+            $obj = $reflector->newInstanceArgs($arguments);
+        } else {
+           throw new \Exception;
+        }
+
+        return $obj;
+    }
+
+    private function _isClass($className) {
+
+        $subNamespaces = array(
+            '\CRLogin\core\\',
+            '\CRLogin\core\Actions\\'
+        );
+
+        foreach ($subNamespaces as $nspace) {
+
+            $class = $nspace . $className;
+            if (class_exists($class)) {
+                return $class;
+            }
+        }
+        return FALSE;
     }
 
 }

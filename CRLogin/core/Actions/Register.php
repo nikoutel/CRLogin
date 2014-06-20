@@ -22,14 +22,9 @@
 namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
-use CRLogin\core\DIC;
 
 class Register implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * @var string 
@@ -40,16 +35,23 @@ class Register implements Actions {
      * @var string 
      */
     private $_saltedPassword;
+    
+    /**
+     * @var User
+     */
+    private $_user;
 
     /**
      * 
-     * @param DIC $container
+     * @param array $languageFile
+     * @param User $user
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_l = $this->_container->getLanguageFile();
+    public function __construct($languageFile, User $user) {
+
+        $this->_l = $languageFile;
         $this->_username = $_POST['username'];
         $this->_saltedPassword = $_POST['cpass'];
+        $this->_user = $user;
     }
 
     /**
@@ -66,10 +68,10 @@ class Register implements Actions {
                 'errorMsg' => $this->_l['WRONG_USERNAME_FORM']
             );
         }
-        $user = new User($this->_container);
-        $user->setUserName($this->_username);
-        if (!$user->userExists()) {
-            $create = $user->createUser($this->_username, $this->_saltedPassword, $salt);
+
+        $this->_user->setUserName($this->_username);
+        if (!$this->_user->userExists()) {
+            $create = $this->_user->createUser($this->_username, $this->_saltedPassword, $salt);
             if ($create === FALSE) {
                 return array(
                     'error' => TRUE,

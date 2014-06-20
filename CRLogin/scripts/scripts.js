@@ -63,7 +63,12 @@ $(document).ready(function() {
                     $('#changemsg').html(data.msgtxt);
                 }
             }
-        }, "json");
+        }, "json")
+        .error(
+            function(data) { 
+                $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
+                $('#msg').html(''); 
+            });
     }
     function getresponse(cpass) {
         $str = cpass + challenge;
@@ -98,7 +103,12 @@ $(document).ready(function() {
                     $('#changemsg').html(data.msgtxt);
                 }
             }
-        }, "json");
+        }, "json")
+        .error(
+            function(data) { 
+                $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
+                $('#msg').html(''); 
+            });
 
     }
     formaction = 'CRLogin/requestController.php';
@@ -133,10 +143,16 @@ $(document).ready(function() {
                         cryptpass(password, data.usersalt);
                     } else {
                         $('#lgerror').html(data.errorMsg);
+                        $('#msg').html('');
                         return false;
                     }
                 }
-            }, "json");
+            }, "json")
+            .error(
+                function(data) { 
+                    $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
+                    $('#msg').html(''); 
+                });
 
             return false;
         });
@@ -197,7 +213,12 @@ $(document).ready(function() {
                             return false;
                         }
                     }
-                }, "json");
+                }, "json")
+                .error(
+                    function(data) { 
+                        $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
+                        $('#msg').html(''); 
+                    });
             }
 
             return false;
@@ -254,10 +275,16 @@ $(document).ready(function() {
                             cryptpass(password, data.newsalt);
                         } else {
                             $('#lgerror').html(data.errorMsg);
+                            $('#msg').html('');
                             return false;
                         }
                     }
-                }, "json");
+                }, "json")
+                .error(
+                    function(data) { 
+                        $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
+                        $('#msg').html(''); 
+                    });
             }
 
             return false;

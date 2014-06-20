@@ -29,29 +29,37 @@ class Challenge {
     private $_challenge;
 
     /**
-     * @var DIC 
-     */
-    private $_container;
-
-    /**
      * @var resource 
      */
     private $_dataStore;
 
     /**
-     * @var array 
+     * @var Configuration 
+     */
+    private $_configuration;
+    
+    /**
+     * @var array
      */
     private $_configArray;
-
+    
+    /**
+     * @var Crypt 
+     */
+    private $_crypt;
+    
     /**
      * 
-     * @param DIC $container
+     * @param rescource $dataStore
+     * @param Configuration $configuration
+     * @param \CRLogin\core\Crypt $crypt
      */
-    public function __construct(DIC $container) {
+    public function __construct($dataStore, Configuration $configuration, Crypt $crypt) {
 
-        $this->_container = $container;
-        $this->_dataStore = $this->_container->getDataStore();
-        $this->_configArray = $this->_container->getConfiguration('general');
+        $this->_dataStore = $dataStore;
+        $this->_configuration = $configuration;
+        $this->_configArray = $this->_configuration->getConfigArray('general');
+        $this->_crypt = $crypt;
     }
 
     /**
@@ -72,9 +80,7 @@ class Challenge {
      */
     public function createChallenge() {
 
-        $crypt = new Crypt($this->_container);
-
-        $challenge = $crypt->getRandom('challenge');
+        $challenge = $this->_crypt->getRandom('challenge');
 
         if ($challenge !== FALSE) {
 
