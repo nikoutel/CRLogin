@@ -20,14 +20,13 @@
  * 
  */
 use CRLogin\core\DIC;
-use CRLogin\core\Crypt;
 
 require $base . '/CRLoginAutoloader.php';
 $dic = new DIC;
 $l = $dic->getLanguageFile();
 $session = $dic->getSession();
 $_SESSION ['members'] = TRUE;
-$_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$_SESSION['redirectURL'] = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; //@todo not safe
 if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
     header('Location:index.php?s=login');
     die();
