@@ -21,6 +21,12 @@
 
 namespace CRLogin\core;
 
+use CRLogin\core\lib\ConfigReader;
+use CRLogin\core\lib\Configuration;
+use CRLogin\core\lib\LanguageFile;
+use CRLogin\core\lib\Session;
+use CRLogin\core\lib\Utils;
+
 class DIC {
 
     /**
