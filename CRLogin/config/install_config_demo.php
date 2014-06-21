@@ -20,7 +20,7 @@
  *
  */
 
-use CRLogin\core\DataAccess\DatabaseDrivers;
+use CRLogin\DataAccess\DatabaseDrivers;
 
 $db_config = array(
     'db' => array(
