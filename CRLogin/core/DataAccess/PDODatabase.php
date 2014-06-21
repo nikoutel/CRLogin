@@ -175,7 +175,7 @@ abstract class PDODatabase implements DataAccessor {
      * to associate the array values to the field values
      * in order of the fields/columns when the dataset/table was created
      * 
-     * @param string $tables The dataset/table to store the values
+     * @param string $table The dataset/table to store the values
      */
     public function create(array $values, $table) {
         if ($this->_utils->isAssociative($values)) {
@@ -245,7 +245,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Updates entries from the database
+     * Updates entries in the database
      * 
      * @param array $values
      *  If an associative array is given the keys will be the fields/columns, 

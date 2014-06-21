@@ -63,7 +63,7 @@ interface DataAccessor {
     public function read(array $fields, $dataset, array $conditions);
 
     /**
-     * Reads entries from the data store
+     * Updates entries in the data store
      * 
      * @param array $values
      *  If an associative array is given the keys will be the fields, 
