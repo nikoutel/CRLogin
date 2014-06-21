@@ -24,10 +24,7 @@ $(document).ready(function() {
         return passcr;
     }
     function cryptpass(password, usersalt) {
-        if (window.console && (window.console.firebug || window.console.exception)) {
-            var mesg = msg.FIREBUG_DELAY;
-            $('#msg').html('<img src="CRLogin/demo-views/images/firebug.gif" width="128" height="64" alt="firebug"/><br />' + mesg);
-        }
+        
         bcrypt = new bCrypt();
         bcrypt.hashpw(password, usersalt, crossRoad);
 
