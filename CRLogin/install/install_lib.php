@@ -200,7 +200,7 @@ function writeConfig($file, $host, $port, $user, $pass, $db) {
 
     $string = "<?php\n";
 
-    $string .='use CRLogin\core\DataAccess\DatabaseDrivers;' . "\n";
+    $string .='use CRLogin\DataAccess\DatabaseDrivers;' . "\n";
     $string .= "\n";
     $string .= '$db_config = array(' . "\n";
     $string .= "'db' => array(\n";

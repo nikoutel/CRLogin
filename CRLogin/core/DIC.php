@@ -92,7 +92,7 @@ class DIC {
             if ($config['datastore'] == 'database') {
                 $dbConfig = $this->getConfiguration()->getConfigArray('db');
                 $utility = $this->getUtility();
-                $database = 'CRLogin\core\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
+                $database = 'CRLogin\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
             }
         }
