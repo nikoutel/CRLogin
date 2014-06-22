@@ -54,9 +54,12 @@ class Session {
                     array($this, "open"), array($this, "close"), array($this, "read"), array($this, "write"), array($this, "destroy"), array($this, "garbageCollector")
             );
         }
-        session_start();
     }
 
+    public function sessionStart() {
+
+        return session_start();
+    }
     /**
      * Wrapper for the open callback
      * 
