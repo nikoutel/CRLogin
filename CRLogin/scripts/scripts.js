@@ -68,9 +68,9 @@ $(document).ready(function() {
             });
     }
     function getresponse(cpass) {
-        $str = cpass + challenge;
+        $str = challenge;
         var shaObj = new jsSHA($str);
-        response = shaObj.getHash("SHA-256", "HEX");
+        response = shaObj.getHMAC(cpass, "ASCII", "SHA-256", "HEX"); // "ASCII -> "TEXT" on updated jsSHA
         send(response);
     }
     function send(response) {
