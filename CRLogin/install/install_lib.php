@@ -178,8 +178,7 @@ function insertUser($connect) {
 
             return FALSE;
         }
-    }
-    else
+    } else
         return -1;
 }
 
@@ -214,7 +213,8 @@ function writeConfig($file, $host, $port, $user, $pass, $db) {
     $string .= " )\n";
     $string .= " ),\n";
     $string .= " 'general' => array(\n";
-    $string .= " 'language' => '" . $_SESSION['lang'] . "'\n";
+    $string .= " 'language' => '" . $_SESSION['lang'] . "',\n";
+    $string .= " 'installUniqueId' => '" . getRandom() . "'\n";
     $string .= ")\n";
     $string .= " );\n";
     $string .= 'return $db_config;' . "\n";
@@ -240,6 +240,36 @@ function ifEmpty($var) {
     } else {
         return FALSE;
     }
+}
+
+function getRandom() {
+
+        $size = 16;
+
+
+    $random = '';
+    if (function_exists('mcrypt_create_iv')) {
+        if (defined('MCRYPT_DEV_URANDOM')) {
+            $source = MCRYPT_DEV_URANDOM;
+        } else {
+            $source = MCRYPT_RAND;
+        }
+
+        $random = mcrypt_create_iv($size, $source);
+    } elseif (function_exists('openssl_random_pseudo_bytes')) {
+
+        $random = openssl_random_pseudo_bytes($size);
+    } elseif (is_readable('/dev/urandom') && ($fp = @fopen('/dev/urandom', 'rb')) !== FALSE) {
+
+        $random .= @fread($fp, $size);
+        @fclose($fp);
+    } else {
+
+        $random = sha1(uniqid(mt_rand()));
+    }
+    
+    return substr(strtr(base64_encode($random), '+', '.'), 0, 22);
+
 }
 
 ?>

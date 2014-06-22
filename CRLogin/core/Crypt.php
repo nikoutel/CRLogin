@@ -24,32 +24,42 @@ namespace CRLogin\core;
 use CRLogin\core\lib\Configuration;
 
 class Crypt {
-    
+
     /**
      * @var string 
      */
     private $_salt;
-    
+
+    /**
+     * @var string 
+     */
+    private $_dummySalt;
+
+    /**
+     * @var string
+     */
+    private $_dummyUserName;
+
     /**
      * @var string 
      */
     private $_random;
-    
-     /**
+
+    /**
      * @var Configuration 
      */
-    private $_configuration;   
-    
+    private $_configuration;
+
     /**
      * @var array 
      */
     private $_configArray;
-    
+
     /**
      * @param \Configuration $configuration
      */
     public function __construct(Configuration $configuration) {
-        
+
         $this->_configuration = $configuration;
         $this->_configArray = $this->_configuration->getConfigArray('general');
     }
@@ -87,9 +97,38 @@ class Crypt {
 
         if ($innerSalt !== FALSE) {
             $this->_salt = $prefix . $costParameter . '$' . $innerSalt . '$';
-        }
-        else
+        } else {
             $this->_salt = FALSE;
+        }
+    }
+
+    private function _generateDummySalt() {
+        $installUniqueId = $this->_configArray['installUniqueId'];
+        $dummyUserName = $this->_dummyUserName;
+        $uid = $installUniqueId . $dummyUserName;
+        $hashedUid = hash('sha256', $uid);
+        $innerSalt = $this->_encode($hashedUid, 'salt');
+        $costParameter = $this->_configArray['cryptCostParameter'];
+        if (version_compare(PHP_VERSION, '5.3.7', '>')) {
+            $prefix = '$2y$';
+        } else {
+            $prefix = '$2a$';
+        }
+        if ($innerSalt !== FALSE) {
+            $this->_dummySalt = $prefix . $costParameter . '$' . $innerSalt . '$';
+        } else {
+            $this->_dummySalt = FALSE;
+        }
+    }
+
+    public function getDummySalt($userName) {
+
+        $this->_dummyUserName = $userName;
+
+        if (empty($this->_dummySalt)) {
+            $this->_generateDummySalt();
+        }
+        return $this->_dummySalt;
     }
 
     /**

@@ -108,7 +108,7 @@ class GetChallenge implements Actions {
         $this->_user->setUserName($this->_username);
         $salt = $this->_user->getUserSalt();
         if ($salt === FALSE) {
-            $salt = $this->_crypt->getNewSalt();
+            $salt = $this->_crypt->getDummySalt($this->_username);
         }
         return $salt;
     }
