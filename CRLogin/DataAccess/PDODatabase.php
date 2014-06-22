@@ -145,7 +145,7 @@ abstract class PDODatabase implements DataAccessor {
     public function connect($dsn, $username, $passwd, $options) {
         try {
             $this->pdo = new PDO($dsn, $username, $passwd, $options);
-        } catch (PDOException $exc) {
+        } catch (\PDOException $exc) {
             $this->errorMessage = $exc->getMessage();
             $this->errorTraceAsString = $exc->getTraceAsString();
             echo $this->errorMessage; // delme
@@ -362,7 +362,7 @@ abstract class PDODatabase implements DataAccessor {
                 }
                 else
                     return FALSE;
-            } catch (PDOException $exc) {
+            } catch (\PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
                 echo $this->errorMessage; // delme
@@ -400,7 +400,7 @@ abstract class PDODatabase implements DataAccessor {
                 } else {
                     return $this->pdo->exec($query);
                 }
-            } catch (PDOException $exc) {
+            } catch (\PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
                 echo $this->errorMessage; // delme
