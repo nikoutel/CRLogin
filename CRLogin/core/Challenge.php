@@ -22,6 +22,7 @@
 namespace CRLogin\core;
 
 use CRLogin\core\lib\Configuration;
+use CRLogin\DataAccess\DataAccessor;
 
 class Challenge {
 
@@ -31,7 +32,7 @@ class Challenge {
     private $_challenge;
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_dataStore;
 
@@ -52,11 +53,11 @@ class Challenge {
     
     /**
      * 
-     * @param rescource $dataStore
+     * @param DataAccessor $dataStore
      * @param Configuration $configuration
      * @param \CRLogin\core\Crypt $crypt
      */
-    public function __construct($dataStore, Configuration $configuration, Crypt $crypt) {
+    public function __construct(DataAccessor $dataStore, Configuration $configuration, Crypt $crypt) {
 
         $this->_dataStore = $dataStore;
         $this->_configuration = $configuration;

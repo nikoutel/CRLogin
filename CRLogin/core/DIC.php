@@ -30,7 +30,7 @@ use CRLogin\core\lib\Utils;
 class DIC {
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_dataStore;
 
@@ -40,7 +40,7 @@ class DIC {
     private $_utils;
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_session;
 
@@ -84,7 +84,7 @@ class DIC {
     /**
      * Returns the data store
      * 
-     * @return resource
+     * @return DataAccessor
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
@@ -100,9 +100,9 @@ class DIC {
     }
 
     /**
-     * Initializes the session and returns the session resource
+     * Initializes the session and returns the session object
      * 
-     * @return resource
+     * @return Session
      */
     public function getSession() {
         if (!isset($this->_session)) {

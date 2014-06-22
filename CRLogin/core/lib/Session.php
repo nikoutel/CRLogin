@@ -21,10 +21,12 @@
 
 namespace CRLogin\core\lib;
 
+use CRLogin\DataAccess\DataAccessor;
+
 class Session {
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     protected $_dataStore;
 
@@ -38,11 +40,11 @@ class Session {
      * user-level session storage functions are called for storing sessionn 
      * data in data store.
      * 
-     * @param resource $dataStore
+     * @param DataAccessor $dataStore
      * @param array $configuration
      * @param Utils $utils
      */
-    public function __construct($dataStore, $configuration, $utils) {
+    public function __construct(DataAccessor $dataStore, $configuration, $utils) {
         $this->_dataStore = $dataStore;
         $this->_utils = $utils;
         if ($configuration['sessionInDataStore']) {

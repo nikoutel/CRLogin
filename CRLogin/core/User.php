@@ -21,6 +21,8 @@
 
 namespace CRLogin\core;
 
+use CRLogin\DataAccess\DataAccessor;
+
 class User {
 
     /**
@@ -39,7 +41,7 @@ class User {
     private $_userSalt;
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_dataStore;
 
@@ -49,9 +51,9 @@ class User {
     private $_userId;
 
     /**
-     * @param rescource $dataStore
+     * @param DataAccessor $dataStore
      */
-    public function __construct($dataStore) {
+    public function __construct(DataAccessor $dataStore) {
 
         $this->_dataStore = $dataStore;
     }
