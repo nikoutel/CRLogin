@@ -34,7 +34,7 @@ require BASE_DIR . '/CRLogin/inc/members_area.inc.php';
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['REGISTER_LINK'] ?></title>
-        <link href="CRLogin/demo/login.css" rel="stylesheet" type="text/css" />
+        <link href="demo/login.css" rel="stylesheet" type="text/css" />
         <?php require BASE_DIR . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>

@@ -29,24 +29,24 @@ if (!defined('SUB_DIR')) define('SUB_DIR', $subDir);
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include BASE_DIR . '/CRLogin/demo/login.php';
+            include BASE_DIR . '/demo/login.php';
             break;
         case 'logout':
             //  js handles logout
             break;
         case 'members':
-            include BASE_DIR . '/CRLogin/demo/members_area.php';
+            include BASE_DIR . '/demo/members_area.php';
             break;
         case 'changepassword':
-            include BASE_DIR . '/CRLogin/demo/changepassword.php';
+            include BASE_DIR . '/demo/changepassword.php';
             break;
         case 'register':
-            include BASE_DIR . '/CRLogin/demo/register.php';
+            include BASE_DIR . '/demo/register.php';
             break;
         default:
-            include BASE_DIR . '/CRLogin/demo/main.php';
+            include BASE_DIR . '/demo/main.php';
     }
 } else {
-    include BASE_DIR . '/CRLogin/demo/main.php';
+    include BASE_DIR . '/demo/main.php';
 }
 ?>
