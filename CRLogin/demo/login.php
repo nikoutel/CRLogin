@@ -6,7 +6,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage demo-views
+ * @subpackage demo
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -32,7 +32,7 @@ require BASE_DIR . '/CRLogin/inc/public_area.inc.php';
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['LOGIN_LINK'] ?></title>
-        <link href="CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
+        <link href="CRLogin/demo/login.css" rel="stylesheet" type="text/css" />
 <?php require BASE_DIR . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>

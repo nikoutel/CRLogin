@@ -31,7 +31,7 @@ $session->sessionStart();
 $_SESSION ['members'] = FALSE;
 
 $redirectURL = '//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; //@todo not safe
-if (strpos($redirectURL, 's=login') === false) {
+if (strpos($redirectURL, 's=login') === false) { //@todo decouple from demo
     $_SESSION['redirectURL'] = $redirectURL;
 } else {
     if (!isset($_SESSION['redirectURL'])) {
