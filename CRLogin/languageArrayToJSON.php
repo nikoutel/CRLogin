@@ -23,6 +23,7 @@ namespace CRLogin;
 
 use CRLogin\core\DIC;
 
+if (!defined('BASE_DIR')) define('BASE_DIR', dirname(__FILE__).'/..');
 require '../CRLoginAutoloader.php';
 
 $dic = new DIC;

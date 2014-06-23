@@ -27,17 +27,16 @@ if (count(get_included_files()) == 1) {
     die();
 }
 
-$base = realpath($_SERVER["DOCUMENT_ROOT"]);
-require $base . '/CRLogin/inc/members_area.inc.php';
+require BASE_DIR . '/CRLogin/inc/members_area.inc.php';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['CHANGE_PASS_LINK'] ?></title>
-        <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
+        <link href="CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
-<?php require $base . '/CRLogin/inc/head.inc.php'; ?>
+<?php require BASE_DIR . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>
 

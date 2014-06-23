@@ -20,27 +20,33 @@
  * 
  */
 
+$docRoot = $_SERVER['DOCUMENT_ROOT'];
+$baseDir = realpath(dirname(__FILE__));
+$subDir = str_replace($docRoot, '', $baseDir);
+if (!defined('BASE_DIR')) define('BASE_DIR', $baseDir);
+if (!defined('SUB_DIR')) define('SUB_DIR', $subDir);
+
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include 'CRLogin/demo-views/login.php';
+            include BASE_DIR . '/CRLogin/demo-views/login.php';
             break;
         case 'logout':
             //  js handles logout
             break;
         case 'members':
-            include 'CRLogin/demo-views/members_area.php';
+            include BASE_DIR . '/CRLogin/demo-views/members_area.php';
             break;
         case 'changepassword':
-            include 'CRLogin/demo-views/changepassword.php';
+            include BASE_DIR . '/CRLogin/demo-views/changepassword.php';
             break;
         case 'register':
-            include 'CRLogin/demo-views/register.php';
+            include BASE_DIR . '/CRLogin/demo-views/register.php';
             break;
         default:
-            include 'CRLogin/demo-views/main.php';
+            include BASE_DIR . '/CRLogin/demo-views/main.php';
     }
 } else {
-    include 'CRLogin/demo-views/main.php';
+    include BASE_DIR . '/CRLogin/demo-views/main.php';
 }
 ?>

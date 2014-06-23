@@ -69,7 +69,7 @@ class Configuration {
      * Initialization
      */
     public function __construct() {
-        $this->_configFile = realpath($_SERVER["DOCUMENT_ROOT"] . '/CRLogin/' . $this->_configFileScript);
+        $this->_configFile = realpath(BASE_DIR . '/CRLogin/' . $this->_configFileScript);
         $this->_configReader = new ConfigReader();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
