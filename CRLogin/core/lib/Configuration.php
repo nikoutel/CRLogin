@@ -86,8 +86,11 @@ class Configuration {
      */
     public function getDbConfigFromFile($configFile) {
 
-        $this->_installConfigFileArray = $this->_configReader->readFile($configFile);
-        return $this->_installConfigFileArray;
+        if ($this->_installConfigFileArray = $this->_configReader->readFile($configFile)){
+            return $this->_installConfigFileArray;
+        } else {
+            throw new \Exception('Configuration file not found');
+        }
     }
 
     /**
@@ -98,8 +101,11 @@ class Configuration {
      */
     public function getConfigFromFile($configFile) {
 
-        $this->_configFileArray = $this->_configReader->readFile($configFile);
-        return $this->_configFileArray;
+        if ($this->_configFileArray = $this->_configReader->readFile($configFile)){
+            return $this->_configFileArray;
+        } else {
+            throw new \Exception('Configuration file not found');
+        }
     }
 
     /**

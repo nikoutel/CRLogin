@@ -65,8 +65,17 @@ class DIC {
      * @return array
      */
     public function getConfiguration() {
-        $this->_configuration = new Configuration();
-        return $this->_configuration;
+        try {
+            $this->_configuration = new Configuration();
+            return $this->_configuration;
+        } catch (\Exception $ex) {
+            session_start();
+            $_SESSION['error'] = $ex->getMessage();
+            $_SESSION['reinstall'] = TRUE;
+            $url = SUB_DIR . '/CRLogin/error.php';
+            header('Location:'. $url);
+            die();
+        }
     }
 
     /**
@@ -165,7 +174,7 @@ class DIC {
             $reflector = new \ReflectionClass($className);
             $obj = $reflector->newInstanceArgs($arguments);
         } else {
-           throw new \Exception;
+            throw new \Exception;
         }
 
         return $obj;
