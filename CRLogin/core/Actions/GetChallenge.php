@@ -24,14 +24,9 @@ namespace CRLogin\core\Actions;
 use CRLogin\core\User;
 use CRLogin\core\Crypt;
 use CRLogin\core\Challenge;
-use CRLogin\core\DIC;
 
 class GetChallenge implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * @var string 
@@ -42,14 +37,35 @@ class GetChallenge implements Actions {
      * @var array 
      */
     private $_l;
+    
+    /**
+     * @var User
+     */
+    private $_user;
+    
+    /**
+     * @var Crypt
+     */
+    private $_crypt;
+    
+    /**
+     * @var Challenge
+     */
+    private $_challenge;
 
     /**
-     * @param DIC $container
+     * @param array $languageFile
+     * @param \CRLogin\core\User $user
+     * @param \CRLogin\core\Crypt $crypt
+     * @param \CRLogin\core\Challenge $challenge
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_l = $this->_container->getLanguageFile();
+    public function __construct($languageFile, User $user, Crypt $crypt, Challenge $challenge) {
+
+        $this->_l = $languageFile;
         $this->_username = $_POST['username'];
+        $this->_user = $user;
+        $this->_crypt = $crypt;
+        $this->_challenge = $challenge;
     }
 
     /**
@@ -60,7 +76,7 @@ class GetChallenge implements Actions {
      */
     public function executeAction() {
         $username = trim($this->_username);
-        if (empty($username)) {
+        if (!isset($username)) {
             $returnArray = array(
                 'error' => TRUE,
                 'errorMsg' => $this->_l['EMPTY_USERNAME']
@@ -83,28 +99,29 @@ class GetChallenge implements Actions {
     }
 
     /**
-     * 
+     * Returns Salt
+     *
      * @return mixed
      */
     private function _returnSalt() {
-        $user = new User($this->_container);
-        $user->setUserName($this->_username);
-        $salt = $user->getUserSalt();
+        
+        $this->_user->setUserName($this->_username);
+        $salt = $this->_user->getUserSalt();
         if ($salt === FALSE) {
-            $crypt = new Crypt($this->_container);
-            $salt = $crypt->getNewSalt();
+            $salt = $this->_crypt->getDummySalt($this->_username);
         }
         return $salt;
     }
 
     /**
-     * 
+     * Returns Challenge
+     *
      * @return mixed
      */
     private function _returnChallenge() {
-        $challenge = new Challenge($this->_container);
-        if ($challenge->createChallenge()) {
-            return $challenge->getChallenge();
+
+        if ($this->_challenge->createChallenge()) {
+            return $this->_challenge->getChallenge();
         } else {
             return FALSE;
         }

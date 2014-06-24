@@ -6,7 +6,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage core/Data Access
+ * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core\DataAccess;
+namespace CRLogin\DataAccess;
 
 use \PDO;
 
@@ -134,7 +134,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Instantiates a PHP Data Object and connects to the databasae
+     * Instantiates a PHP Data Object and connects to the database
      * 
      * @param string $dsn
      * @param string $username
@@ -145,7 +145,7 @@ abstract class PDODatabase implements DataAccessor {
     public function connect($dsn, $username, $passwd, $options) {
         try {
             $this->pdo = new PDO($dsn, $username, $passwd, $options);
-        } catch (PDOException $exc) {
+        } catch (\PDOException $exc) {
             $this->errorMessage = $exc->getMessage();
             $this->errorTraceAsString = $exc->getTraceAsString();
             echo $this->errorMessage; // delme
@@ -154,13 +154,13 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Abstract method for geting the database tables
+     * Abstract method for getting the database tables
      * Database driver specific
      */
     abstract protected function _getTables();
 
     /**
-     * Abstract method for geting the database columns
+     * Abstract method for getting the database columns
      * Database driver specific
      */
     abstract protected function _getColumns($tableName, $withPrimaryKey);
@@ -175,7 +175,7 @@ abstract class PDODatabase implements DataAccessor {
      * to associate the array values to the field values
      * in order of the fields/columns when the dataset/table was created
      * 
-     * @param string $tables The dataset/table to store the values
+     * @param string $table The dataset/table to store the values
      */
     public function create(array $values, $table) {
         if ($this->_utils->isAssociative($values)) {
@@ -188,7 +188,7 @@ abstract class PDODatabase implements DataAccessor {
                 return FALSE;
         }
         $columns_str = '(' . implode(",", $columns) . ')';
-        $sql = 'INSERT INTO ' . $table . ' ' . $columns_str;
+        $sql = 'INSERT INTO ' . $table . ' ' . $columns_str; // @todo whitelisting
         $sql .= 'VALUES (';
         $n = count($values);
         for ($index = 1; $index <= $n; $index++) {
@@ -230,7 +230,7 @@ abstract class PDODatabase implements DataAccessor {
             $columns_str = '*';
         }
         $bind = array();
-        $sql = 'SELECT ' . $columns_str . ' FROM ' . $table;
+        $sql = 'SELECT ' . $columns_str . ' FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
             $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
@@ -245,7 +245,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Updates entries from the database
+     * Updates entries in the database
      * 
      * @param array $values
      *  If an associative array is given the keys will be the fields/columns, 
@@ -276,7 +276,7 @@ abstract class PDODatabase implements DataAccessor {
 
         $columns = array_keys($values);
         $bindSet = array_values($values);
-        $sql = 'UPDATE ' . $table . ' SET ';
+        $sql = 'UPDATE ' . $table . ' SET '; // @todo whitelisting
 
         foreach ($columns as $key => $value) {
             $sql .= $value . '=?';
@@ -321,7 +321,7 @@ abstract class PDODatabase implements DataAccessor {
      */
     public function delete($table, array $conditions = array()) {
         $bind = array();
-        $sql = 'DELETE FROM ' . $table;
+        $sql = 'DELETE FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
             $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
@@ -336,14 +336,14 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Executes the prepared statemend $sql with $bind parameters
+     * Executes the prepared statement $sql with $bind parameters
      * 
-     * Returns the values requested (in a two dimensinal array) for data 
+     * Returns the values requested (in a two dimensional array) for data
      * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
      * the affected rows for all others,
      * or false on failure
      * 
-     * @param string $sql The sql statemend 
+     * @param string $sql The sql statement
      * @param array $bind The bind parameters array
      * @return mixed
      */
@@ -362,7 +362,7 @@ abstract class PDODatabase implements DataAccessor {
                 }
                 else
                     return FALSE;
-            } catch (PDOException $exc) {
+            } catch (\PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
                 echo $this->errorMessage; // delme
@@ -379,7 +379,7 @@ abstract class PDODatabase implements DataAccessor {
      * This method does not add security measures, like escaping
      * The caller should make sure that the query is safe
      * 
-     * Returns the values requested (in a two dimensinal array) for data
+     * Returns the values requested (in a two dimensional array) for data
      * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
      * the affected rows for all others,
      * or false on failure
@@ -400,7 +400,7 @@ abstract class PDODatabase implements DataAccessor {
                 } else {
                     return $this->pdo->exec($query);
                 }
-            } catch (PDOException $exc) {
+            } catch (\PDOException $exc) {
                 $this->errorMessage = $exc->getMessage();
                 $this->errorTraceAsString = $exc->getTraceAsString();
                 echo $this->errorMessage; // delme
@@ -465,8 +465,8 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Checks if an oparation  is data retrieval i.e. if sql statements 
-     * start with one of {SELEC, SHOW, DESCRIBE, PRAGMA}
+     * Checks if an operation  is data retrieval i.e. if sql statements
+     * start with one of {SELECT, SHOW, DESCRIBE, PRAGMA}
      * 
      * @param string $query
      * @return boolean

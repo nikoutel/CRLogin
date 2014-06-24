@@ -21,6 +21,8 @@
 
 namespace CRLogin\core;
 
+use CRLogin\DataAccess\DataAccessor;
+
 class User {
 
     /**
@@ -39,12 +41,7 @@ class User {
     private $_userSalt;
 
     /**
-     * @var DIC 
-     */
-    private $_container;
-
-    /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_dataStore;
 
@@ -54,11 +51,11 @@ class User {
     private $_userId;
 
     /**
-     * @param DIC $container
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
-        $this->_dataStore = $this->_container->getDataStore();
+    public function __construct(DataAccessor $dataStore) {
+
+        $this->_dataStore = $dataStore;
     }
 
     /**

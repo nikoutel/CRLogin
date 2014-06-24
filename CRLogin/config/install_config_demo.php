@@ -20,7 +20,7 @@
  *
  */
 
-use CRLogin\core\DataAccess\DatabaseDrivers;
+use CRLogin\DataAccess\DatabaseDrivers;
 
 $db_config = array(
     'db' => array(
@@ -34,7 +34,8 @@ $db_config = array(
         )
     ),
     'general' => array(
-        'language' => 'en'
+        'language' => 'en',
+        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ' // CHANGE THIS
     )
 );
 
@@ -50,7 +51,8 @@ $db_config = array(
         )
     ),
     'general' => array(
-        'language' => 'en'
+        'language' => 'en',
+        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ' // CHANGE THIS
     )
 );
  

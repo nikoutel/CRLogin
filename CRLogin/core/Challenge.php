@@ -21,6 +21,9 @@
 
 namespace CRLogin\core;
 
+use CRLogin\core\lib\Configuration;
+use CRLogin\DataAccess\DataAccessor;
+
 class Challenge {
 
     /**
@@ -29,29 +32,36 @@ class Challenge {
     private $_challenge;
 
     /**
-     * @var DIC 
-     */
-    private $_container;
-
-    /**
-     * @var resource 
+     * @var DataAccessor 
      */
     private $_dataStore;
 
     /**
-     * @var array 
+     * @var Configuration 
+     */
+    private $_configuration;
+    
+    /**
+     * @var array
      */
     private $_configArray;
-
+    
     /**
-     * 
-     * @param DIC $container
+     * @var Crypt 
      */
-    public function __construct(DIC $container) {
+    private $_crypt;
+    
+    /**
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
+     * @param \CRLogin\core\lib\Configuration $configuration
+     * @param \CRLogin\core\Crypt $crypt
+     */
+    public function __construct(DataAccessor $dataStore, Configuration $configuration, Crypt $crypt) {
 
-        $this->_container = $container;
-        $this->_dataStore = $this->_container->getDataStore();
-        $this->_configArray = $this->_container->getConfiguration('general');
+        $this->_dataStore = $dataStore;
+        $this->_configuration = $configuration;
+        $this->_configArray = $this->_configuration->getConfigArray('general');
+        $this->_crypt = $crypt;
     }
 
     /**
@@ -72,9 +82,7 @@ class Challenge {
      */
     public function createChallenge() {
 
-        $crypt = new Crypt($this->_container);
-
-        $challenge = $crypt->getRandom('challenge');
+        $challenge = $this->_crypt->getRandom('challenge');
 
         if ($challenge !== FALSE) {
 
@@ -110,7 +118,7 @@ class Challenge {
 
     /**
      * Deletes expired challenges from the data store
-     * Returns number of entries delted or false on error
+     * Returns number of entries deleted or false on error
      * 
      * @return mixed
      */
@@ -125,12 +133,12 @@ class Challenge {
     }
 
     /**
-     * Feches a Challenge from the datastore and set the _challenge property
+     * Fetches a Challenge from the data store and set the _challenge property
      * Returns true on success false on failure
      * 
      * @return boolean
      */
-    public function fechChallenge() {
+    public function fetchChallenge() {
         $field = 'challenge';
         $dataset = 'challenge';
         $conditions = array(

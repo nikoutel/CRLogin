@@ -46,9 +46,9 @@ class Response {
      */
     public function calculateResponse($saltedPassword, $challenge) {
 
-        $data = $saltedPassword . $challenge;
-        $this->_response = hash('sha256', $data);
-    }
+        $this->_response = hash_hmac('sha256', $challenge, $saltedPassword);
+
+        }
 
     /**
      * Returns the response

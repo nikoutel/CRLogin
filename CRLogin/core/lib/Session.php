@@ -6,7 +6,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage core
+ * @subpackage core\lib
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -19,12 +19,14 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\lib;
+
+use CRLogin\DataAccess\DataAccessor;
 
 class Session {
 
     /**
-     * @var resource 
+     * @var DataAccessor 
      */
     protected $_dataStore;
 
@@ -35,14 +37,14 @@ class Session {
 
     /**
      * Initializes the session. If sessionInDataStore is true,
-     * user-level session storage functions are called for storing sessionn 
+     * user-level session storage functions are called for storing session
      * data in data store.
      * 
-     * @param resource $dataStore
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
      * @param array $configuration
      * @param Utils $utils
      */
-    public function __construct($dataStore, $configuration, $utils) {
+    public function __construct(DataAccessor $dataStore, $configuration, $utils) {
         $this->_dataStore = $dataStore;
         $this->_utils = $utils;
         if ($configuration['sessionInDataStore']) {
@@ -52,9 +54,12 @@ class Session {
                     array($this, "open"), array($this, "close"), array($this, "read"), array($this, "write"), array($this, "destroy"), array($this, "garbageCollector")
             );
         }
-        session_start();
     }
 
+    public function sessionStart() {
+
+        return session_start();
+    }
     /**
      * Wrapper for the open callback
      * 

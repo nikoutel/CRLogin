@@ -2,8 +2,8 @@
 
 /**
  *
- * languageArrayToJSON.php
- * Returns the language array in JSON format to an ajax call
+ * error.php
+ * Error page
  * 
  * 
  * @package CRLogin
@@ -19,15 +19,21 @@
  * 
  */
 
-namespace CRLogin;
-
-use CRLogin\core\DIC;
-
-if (!defined('BASE_DIR')) define('BASE_DIR', dirname(__FILE__).'/..');
-require '../CRLoginAutoloader.php';
-
-$dic = new DIC;
-$l = $dic->getLanguageFile();
-header('Content-Type: application/json');
-echo json_encode($l);
-?>
+session_start();
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+} else {
+    $error = '';
+}
+$str = <<<ERROR
+    An error has occurred <br />\n
+    Guru meditation:<br />\n<br />\n
+    $error
+    <br />\n<br />\n
+ERROR;
+echo $str;
+if (isset($_SESSION['reinstall']) && ($_SESSION['reinstall'] === TRUE)){
+    echo 'Please try to re-<a href = "install/index.php">install</a>';
+        
+}
+session_destroy();

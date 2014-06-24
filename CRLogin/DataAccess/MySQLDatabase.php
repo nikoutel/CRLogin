@@ -7,7 +7,7 @@
  *
  *
  * @package CRLogin
- * @subpackage core/Data Access
+ * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -20,7 +20,7 @@
  *
  */
 
-namespace CRLogin\core\DataAccess;
+namespace CRLogin\DataAccess;
 
 class MySQLDatabase extends PDODatabase {
 

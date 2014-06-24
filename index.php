@@ -7,7 +7,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage demo-views
+ * @subpackage demo
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -20,27 +20,33 @@
  * 
  */
 
+$docRoot = $_SERVER['DOCUMENT_ROOT'];
+$baseDir = realpath(dirname(__FILE__));
+$subDir = str_replace($docRoot, '', $baseDir);
+if (!defined('BASE_DIR')) define('BASE_DIR', $baseDir);
+if (!defined('SUB_DIR')) define('SUB_DIR', $subDir);
+
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include 'CRLogin/demo-views/login.php';
+            include BASE_DIR . '/demo/login.php';
             break;
         case 'logout':
             //  js handles logout
             break;
         case 'members':
-            include 'CRLogin/demo-views/members_area.php';
+            include BASE_DIR . '/demo/members_area.php';
             break;
         case 'changepassword':
-            include 'CRLogin/demo-views/changepassword.php';
+            include BASE_DIR . '/demo/changepassword.php';
             break;
         case 'register':
-            include 'CRLogin/demo-views/register.php';
+            include BASE_DIR . '/demo/register.php';
             break;
         default:
-            include 'CRLogin/demo-views/main.php';
+            include BASE_DIR . '/demo/main.php';
     }
 } else {
-    include 'CRLogin/demo-views/main.php';
+    include BASE_DIR . '/demo/main.php';
 }
 ?>

@@ -6,7 +6,7 @@
  *  
  * 
  * @package CRLogin
- * @subpackage core
+ * @subpackage core\lib
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\lib;
 
 class Configuration {
 
@@ -69,7 +69,7 @@ class Configuration {
      * Initialization
      */
     public function __construct() {
-        $this->_configFile = realpath($_SERVER["DOCUMENT_ROOT"] . '/CRLogin/' . $this->_configFileScript);
+        $this->_configFile = realpath(BASE_DIR . '/CRLogin/' . $this->_configFileScript);
         $this->_configReader = new ConfigReader();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
@@ -86,8 +86,11 @@ class Configuration {
      */
     public function getDbConfigFromFile($configFile) {
 
-        $this->_installConfigFileArray = $this->_configReader->readFile($configFile);
-        return $this->_installConfigFileArray;
+        if ($this->_installConfigFileArray = $this->_configReader->readFile($configFile)){
+            return $this->_installConfigFileArray;
+        } else {
+            throw new \Exception('Configuration file not found');
+        }
     }
 
     /**
@@ -98,8 +101,11 @@ class Configuration {
      */
     public function getConfigFromFile($configFile) {
 
-        $this->_configFileArray = $this->_configReader->readFile($configFile);
-        return $this->_configFileArray;
+        if ($this->_configFileArray = $this->_configReader->readFile($configFile)){
+            return $this->_configFileArray;
+        } else {
+            throw new \Exception('Configuration file not found');
+        }
     }
 
     /**

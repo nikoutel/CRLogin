@@ -6,7 +6,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage core
+ * @subpackage core\lib
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core;
+namespace CRLogin\core\lib;
 
 
 class ConfigReader {
@@ -28,7 +28,7 @@ class ConfigReader {
      * Returns a configuration array from a configuration file
      * or false on failure
      * 
-     * @param type $file
+     * @param string $file
      * @return mixed
      */
     public function readFile($file) {

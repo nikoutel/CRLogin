@@ -6,7 +6,7 @@
  * 
  * 
  * @package CRLogin
- * @subpackage core/Data Access
+ * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -19,7 +19,7 @@
  * 
  */
 
-namespace CRLogin\core\DataAccess;
+namespace CRLogin\DataAccess;
 
 interface DataAccessor {
 
@@ -63,7 +63,7 @@ interface DataAccessor {
     public function read(array $fields, $dataset, array $conditions);
 
     /**
-     * Reads entries from the data store
+     * Updates entries in the data store
      * 
      * @param array $values
      *  If an associative array is given the keys will be the fields, 

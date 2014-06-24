@@ -5,9 +5,10 @@
  * main.php
  * A demonstration public area page 
  * 
+ * This is a TEMPORARY SCRIPT for demonstration and development purposes only
  * 
  * @package CRLogin
- * @subpackage demo-views
+ * @subpackage demo
  * @author Nikos Koutelidis nikoutel@gmail.com
  * @copyright 2013 Nikos Koutelidis 
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
@@ -27,16 +28,15 @@ if (count(get_included_files()) == 1) {
     header("location: /index.php?s=main");
     die();
 }
-$base = realpath($_SERVER["DOCUMENT_ROOT"]);
-require $base . '/CRLogin/inc/public_area.inc.php';
+require BASE_DIR . '/CRLogin/inc/public_area.inc.php';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['MAIN_LINK'] ?></title>
-        <link href="/CRLogin/demo-views/login.css" rel="stylesheet" type="text/css" />
-        <?php require $base . '/CRLogin/inc/head.inc.php'; ?>
+        <link href="demo/login.css" rel="stylesheet" type="text/css" />
+        <?php require BASE_DIR . '/CRLogin/inc/head.inc.php'; ?>
     </head>
     <body>
 

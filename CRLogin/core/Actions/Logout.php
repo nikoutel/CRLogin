@@ -21,21 +21,15 @@
 
 namespace CRLogin\core\Actions;
 
-use CRLogin\core\DIC;
 
 class Logout implements Actions {
 
-    /**
-     * @var DIC 
-     */
-    private $_container;
 
     /**
      * 
-     * @param DIC $container
      */
-    public function __construct(DIC $container) {
-        $this->_container = $container;
+    public function __construct() {
+        
     }
 
     /**
@@ -49,7 +43,7 @@ class Logout implements Actions {
             $redirectURL = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectURL = '/index.php';
+            $redirectURL = SUB_DIR .'/index.php';
         }
 
         $_SESSION = array();
