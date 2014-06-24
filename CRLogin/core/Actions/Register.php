@@ -41,10 +41,9 @@ class Register implements Actions {
      */
     private $_user;
 
-    /**
-     * 
+    /** 
      * @param array $languageFile
-     * @param User $user
+     * @param \CRLogin\core\User $user
      */
     public function __construct($languageFile, User $user) {
 

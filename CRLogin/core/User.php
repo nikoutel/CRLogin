@@ -51,7 +51,7 @@ class User {
     private $_userId;
 
     /**
-     * @param DataAccessor $dataStore
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
      */
     public function __construct(DataAccessor $dataStore) {
 

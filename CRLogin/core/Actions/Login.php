@@ -66,10 +66,10 @@ class Login implements Actions {
 
     /**
      * @param array $languageFile
-     * @param Authentication $authentication
-     * @param User $user
-     * @param Challemge $challenge
-     * @param Response $response
+     * @param \CRLogin\core\Authentication $authentication
+     * @param \CRLogin\core\User $user
+     * @param \CRLogin\core\Challenge $challenge
+     * @param \CRLogin\core\Response $response
      */
     public function __construct(
         $languageFile, 
@@ -109,7 +109,8 @@ class Login implements Actions {
     }
 
     /**
-     * 
+     * Returns salted Pass
+     *
      * @return mixed
      */
     private function _returnSaltedPass() {
@@ -119,17 +120,19 @@ class Login implements Actions {
     }
 
     /**
-     * 
+     * Returns Challenge
+     *
      * @return mixed
      */
     private function _returnChallenge() {
 
-        if ($this->_challenge->fechChallenge()) {
+        if ($this->_challenge->fetchChallenge()) {
             return $this->_challenge->getChallenge();
         }
     }
 
     /**
+     * Returns Response
      * 
      * @param string $saltedPassword
      * @param string $challenge

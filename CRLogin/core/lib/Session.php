@@ -37,10 +37,10 @@ class Session {
 
     /**
      * Initializes the session. If sessionInDataStore is true,
-     * user-level session storage functions are called for storing sessionn 
+     * user-level session storage functions are called for storing session
      * data in data store.
      * 
-     * @param DataAccessor $dataStore
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
      * @param array $configuration
      * @param Utils $utils
      */

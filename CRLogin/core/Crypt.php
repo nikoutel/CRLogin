@@ -2,7 +2,7 @@
 
 /**
  *
- * Crypt: Performs cryptographical actions
+ * Crypt: Performs cryptographic actions
  * 
  * 
  * @package CRLogin
@@ -56,7 +56,7 @@ class Crypt {
     private $_configArray;
 
     /**
-     * @param \Configuration $configuration
+     * @param \CRLogin\core\lib\Configuration $configuration
      */
     public function __construct(Configuration $configuration) {
 
@@ -66,7 +66,7 @@ class Crypt {
 
     /**
      * Hashes the $string using $salt
-     * The hash algorithmous depends on the form of $salt
+     * The hash algorithm depends on the form of $salt
      * 
      * @param string $string
      * @param string $salt
@@ -80,6 +80,18 @@ class Crypt {
             return $hash;
         else
             return false;
+    }
+
+    /**
+     * Returns a new salt
+     *
+     * @return string
+     */
+    public function getNewSalt() {
+        if (empty($this->_salt)) {
+            $this->_generateSalt();
+        }
+        return $this->_salt;
     }
 
     /**
@@ -102,6 +114,25 @@ class Crypt {
         }
     }
 
+    /**
+     * Returns a dummy salt for a non existing user
+     * 
+     * @param string $userName
+     * @return string
+     */
+    public function getDummySalt($userName) {
+
+        $this->_dummyUserName = $userName;
+
+        if (empty($this->_dummySalt)) {
+            $this->_generateDummySalt();
+        }
+        return $this->_dummySalt;
+    }
+
+    /**
+     * Generates a dummy salt
+     */
     private function _generateDummySalt() {
         $installUniqueId = $this->_configArray['installUniqueId'];
         $dummyUserName = $this->_dummyUserName;
@@ -119,28 +150,6 @@ class Crypt {
         } else {
             $this->_dummySalt = FALSE;
         }
-    }
-
-    public function getDummySalt($userName) {
-
-        $this->_dummyUserName = $userName;
-
-        if (empty($this->_dummySalt)) {
-            $this->_generateDummySalt();
-        }
-        return $this->_dummySalt;
-    }
-
-    /**
-     * Returns a new salt
-     * 
-     * @return string
-     */
-    public function getNewSalt() {
-        if (empty($this->_salt)) {
-            $this->_generateSalt();
-        }
-        return $this->_salt;
     }
 
     /**

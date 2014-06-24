@@ -5,6 +5,7 @@
  * login.php
  * A demonstration register new users form 
  * 
+ * This is a TEMPORARY SCRIPT for demonstration and development purposes only
  * 
  * @package CRLogin
  * @subpackage demo

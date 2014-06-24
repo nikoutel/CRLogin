@@ -28,7 +28,7 @@ class ConfigReader {
      * Returns a configuration array from a configuration file
      * or false on failure
      * 
-     * @param type $file
+     * @param string $file
      * @return mixed
      */
     public function readFile($file) {

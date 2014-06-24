@@ -59,10 +59,9 @@ class DIC {
     }
 
     /**
-     * Returns configuratin array with catagory $cat
-     * 
-     * @param string $cat
-     * @return array
+     * Returns Configuration object
+     *
+     * @return \CRLogin\core\lib\Configuration
      */
     public function getConfiguration() {
         try {
@@ -93,7 +92,7 @@ class DIC {
     /**
      * Returns the data store
      * 
-     * @return DataAccessor
+     * @return \CRLogin\DataAccess\DataAccessor
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
@@ -109,9 +108,9 @@ class DIC {
     }
 
     /**
-     * Initializes the session and returns the session object
+     * Returns the session object
      * 
-     * @return Session
+     * @return \CRLogin\core\lib\Session
      */
     public function getSession() {
         if (!isset($this->_session)) {
@@ -126,7 +125,7 @@ class DIC {
     /**
      * Returns the Utility object
      * 
-     * @return Utils
+     * @return \CRLogin\core\lib\Utils
      */
     public function getUtility() {
         if (!isset($this->_utils)) {
@@ -135,20 +134,13 @@ class DIC {
         return $this->_utils;
     }
 
-    private function _getClassParameters($class) {
-
-        $reflectionClass = new \ReflectionClass($class);
-        $constructor = $reflectionClass->getConstructor();
-
-        if ($constructor !== NULL) {
-            $constructor_parameters = $constructor->getParameters();
-        } else {
-            $constructor_parameters = array();
-        }
-
-        return $constructor_parameters;
-    }
-
+    /**
+     * Returns an instance of $class, resolves all needed dependencies
+     *
+     * @param string $class
+     * @return object
+     * @throws \Exception
+     */
     public function getObject($class) {
 
         $className = ucfirst($class);
@@ -180,8 +172,36 @@ class DIC {
         return $obj;
     }
 
+    /**
+     * Returns an array with the parameters of $class
+     *
+     * @param string $class
+     * @return array
+     */
+    private function _getClassParameters($class) {
+
+        $reflectionClass = new \ReflectionClass($class);
+        $constructor = $reflectionClass->getConstructor();
+
+        if ($constructor !== NULL) {
+            $constructor_parameters = $constructor->getParameters();
+        } else {
+            $constructor_parameters = array();
+        }
+
+        return $constructor_parameters;
+    }
+
+    /**
+     * Returns the fully qualified class name if the class exists,
+     * and FALSE if class does not exist
+     *
+     * @param string $className
+     * @return string|boolean
+     */
     private function _isClass($className) {
 
+        // whitelisting
         $subNamespaces = array(
             '\CRLogin\core\\',
             '\CRLogin\core\Actions\\'

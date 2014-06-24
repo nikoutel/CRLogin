@@ -52,9 +52,8 @@ class Challenge {
     private $_crypt;
     
     /**
-     * 
-     * @param DataAccessor $dataStore
-     * @param Configuration $configuration
+     * @param \CRLogin\DataAccess\DataAccessor $dataStore
+     * @param \CRLogin\core\lib\Configuration $configuration
      * @param \CRLogin\core\Crypt $crypt
      */
     public function __construct(DataAccessor $dataStore, Configuration $configuration, Crypt $crypt) {
@@ -119,7 +118,7 @@ class Challenge {
 
     /**
      * Deletes expired challenges from the data store
-     * Returns number of entries delted or false on error
+     * Returns number of entries deleted or false on error
      * 
      * @return mixed
      */
@@ -134,12 +133,12 @@ class Challenge {
     }
 
     /**
-     * Feches a Challenge from the datastore and set the _challenge property
+     * Fetches a Challenge from the data store and set the _challenge property
      * Returns true on success false on failure
      * 
      * @return boolean
      */
-    public function fechChallenge() {
+    public function fetchChallenge() {
         $field = 'challenge';
         $dataset = 'challenge';
         $conditions = array(

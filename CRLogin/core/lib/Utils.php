@@ -47,8 +47,8 @@ class Utils {
     /**
      * Checks the array $heystack recursively for $needle
      * 
-     * @param type $needle
-     * @param type $haystack
+     * @param mixed $needle
+     * @param mixed $haystack
      * @return boolean
      */
     public function in_array_recursive($needle, $haystack) {

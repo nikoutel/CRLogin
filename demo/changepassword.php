@@ -2,8 +2,9 @@
 /**
  *
  * changepassword.php
- * A demonstration change password form 
- * 
+ * A demonstration change password form.
+ *
+ * This is a TEMPORARY SCRIPT for demonstration and development purposes only
  * 
  * @package CRLogin
  * @subpackage demo

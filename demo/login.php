@@ -3,7 +3,8 @@
  *
  * login.php
  * A demonstration login form 
- * 
+ *
+ * This is a TEMPORARY SCRIPT for demonstration and development purposes only
  * 
  * @package CRLogin
  * @subpackage demo

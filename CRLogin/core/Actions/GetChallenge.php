@@ -54,11 +54,10 @@ class GetChallenge implements Actions {
     private $_challenge;
 
     /**
-     * 
      * @param array $languageFile
-     * @param User $user
-     * @param Crypt $crypt
-     * @param Challenge $challenge
+     * @param \CRLogin\core\User $user
+     * @param \CRLogin\core\Crypt $crypt
+     * @param \CRLogin\core\Challenge $challenge
      */
     public function __construct($languageFile, User $user, Crypt $crypt, Challenge $challenge) {
 
@@ -100,7 +99,8 @@ class GetChallenge implements Actions {
     }
 
     /**
-     * 
+     * Returns Salt
+     *
      * @return mixed
      */
     private function _returnSalt() {
@@ -114,7 +114,8 @@ class GetChallenge implements Actions {
     }
 
     /**
-     * 
+     * Returns Challenge
+     *
      * @return mixed
      */
     private function _returnChallenge() {

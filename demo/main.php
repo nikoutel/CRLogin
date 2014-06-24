@@ -5,6 +5,7 @@
  * main.php
  * A demonstration public area page 
  * 
+ * This is a TEMPORARY SCRIPT for demonstration and development purposes only
  * 
  * @package CRLogin
  * @subpackage demo

@@ -32,7 +32,7 @@ class GetSalt implements Actions {
 
     /**
      * @param array $languageFile
-     * @param Crypt $crypt
+     * @param \CRLogin\core\Crypt $crypt
      */
     public function __construct($languageFile, Crypt $crypt) {
         

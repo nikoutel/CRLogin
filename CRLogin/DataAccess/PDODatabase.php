@@ -134,7 +134,7 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Instantiates a PHP Data Object and connects to the databasae
+     * Instantiates a PHP Data Object and connects to the database
      * 
      * @param string $dsn
      * @param string $username
@@ -154,13 +154,13 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Abstract method for geting the database tables
+     * Abstract method for getting the database tables
      * Database driver specific
      */
     abstract protected function _getTables();
 
     /**
-     * Abstract method for geting the database columns
+     * Abstract method for getting the database columns
      * Database driver specific
      */
     abstract protected function _getColumns($tableName, $withPrimaryKey);
@@ -336,14 +336,14 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Executes the prepared statemend $sql with $bind parameters
+     * Executes the prepared statement $sql with $bind parameters
      * 
-     * Returns the values requested (in a two dimensinal array) for data 
+     * Returns the values requested (in a two dimensional array) for data
      * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
      * the affected rows for all others,
      * or false on failure
      * 
-     * @param string $sql The sql statemend 
+     * @param string $sql The sql statement
      * @param array $bind The bind parameters array
      * @return mixed
      */
@@ -379,7 +379,7 @@ abstract class PDODatabase implements DataAccessor {
      * This method does not add security measures, like escaping
      * The caller should make sure that the query is safe
      * 
-     * Returns the values requested (in a two dimensinal array) for data
+     * Returns the values requested (in a two dimensional array) for data
      * retrieval operation (SELECT, SHOW, DESCRIBE, PRAGMA), 
      * the affected rows for all others,
      * or false on failure
@@ -465,8 +465,8 @@ abstract class PDODatabase implements DataAccessor {
     }
 
     /**
-     * Checks if an oparation  is data retrieval i.e. if sql statements 
-     * start with one of {SELEC, SHOW, DESCRIBE, PRAGMA}
+     * Checks if an operation  is data retrieval i.e. if sql statements
+     * start with one of {SELECT, SHOW, DESCRIBE, PRAGMA}
      * 
      * @param string $query
      * @return boolean

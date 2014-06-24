@@ -34,7 +34,7 @@ class LanguageFile {
     private $_languageArray;
 
     /**
-     * @param \CRLogin\core\ConfigReader $configReader
+     * @param \CRLogin\core\lib\ConfigReader $configReader
      */
     public function __construct(ConfigReader $configReader) {
         $this->_configReader = $configReader;
