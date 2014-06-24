@@ -188,7 +188,7 @@ abstract class PDODatabase implements DataAccessor {
                 return FALSE;
         }
         $columns_str = '(' . implode(",", $columns) . ')';
-        $sql = 'INSERT INTO ' . $table . ' ' . $columns_str;
+        $sql = 'INSERT INTO ' . $table . ' ' . $columns_str; // @todo whitelisting
         $sql .= 'VALUES (';
         $n = count($values);
         for ($index = 1; $index <= $n; $index++) {
@@ -230,7 +230,7 @@ abstract class PDODatabase implements DataAccessor {
             $columns_str = '*';
         }
         $bind = array();
-        $sql = 'SELECT ' . $columns_str . ' FROM ' . $table;
+        $sql = 'SELECT ' . $columns_str . ' FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
             $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
@@ -276,7 +276,7 @@ abstract class PDODatabase implements DataAccessor {
 
         $columns = array_keys($values);
         $bindSet = array_values($values);
-        $sql = 'UPDATE ' . $table . ' SET ';
+        $sql = 'UPDATE ' . $table . ' SET '; // @todo whitelisting
 
         foreach ($columns as $key => $value) {
             $sql .= $value . '=?';
@@ -321,7 +321,7 @@ abstract class PDODatabase implements DataAccessor {
      */
     public function delete($table, array $conditions = array()) {
         $bind = array();
-        $sql = 'DELETE FROM ' . $table;
+        $sql = 'DELETE FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
             $conditions = $this->_getConditions($conditions);
             $sqlWhere = $conditions['sqlWhere'];
