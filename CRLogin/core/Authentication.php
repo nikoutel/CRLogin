@@ -94,7 +94,7 @@ class Authentication {
      * @param string $actual
      * @return bool
      */
-    private static function _compareStrings($expected, $actual) {
+    private function _compareStrings($expected, $actual) {
         $expected = (string) $expected;
         $actual = (string) $actual;
         $lenExpected = strlen($expected);
