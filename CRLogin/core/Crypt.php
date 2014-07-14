@@ -167,24 +167,36 @@ class Crypt {
         }
 
         $this->_random = '';
-        if (function_exists('mcrypt_create_iv')) {
-            if (defined('MCRYPT_DEV_URANDOM')) {
-                $source = MCRYPT_DEV_URANDOM;
-            } else {
-                $source = MCRYPT_RAND;
+        $next = TRUE;
+        if (function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM')) {
+
+            $source = MCRYPT_DEV_URANDOM;
+            $this->_random = mcrypt_create_iv($size, $source);
+            if ($this->_random) {
+                $next = FALSE;
             }
 
-            $this->_random = mcrypt_create_iv($size, $source);
-        } elseif (function_exists('openssl_random_pseudo_bytes')) {
+        }
+        if (function_exists('openssl_random_pseudo_bytes') && ($next)) {
 
-            $this->_random = openssl_random_pseudo_bytes($size);
-        } elseif (is_readable('/dev/urandom') && ($fp = @fopen('/dev/urandom', 'rb')) !== FALSE) {
+            $this->_random = openssl_random_pseudo_bytes($size, $cstrong);
+            if ($this->_random && $cstrong) {
+                $next = FALSE;
+            }
 
-            $this->_random .= @fread($fp, $size);
+        }
+        if (is_readable('/dev/urandom') && ($fp = @fopen('/dev/urandom', 'rb')) !== FALSE && ($next)) {
+
+            $this->_random = @fread($fp, $size);
             @fclose($fp);
-        } else {
+            if ($this->_random) {
+                $next = FALSE;
+            }
+        }
+        if ($next) {
 
-            $this->_random = sha1(uniqid(mt_rand()));
+            mt_srand(microtime(true) * 100000 + memory_get_usage(true));
+            $this->_random = substr(hash('sha256', uniqid(mt_rand(), true)), 0, $size);
         }
         if (!$encode)
             return $this->_random;
