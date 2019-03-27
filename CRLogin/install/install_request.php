@@ -139,9 +139,9 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
             echo $error;
         die();
     } else {
-        $db_selected = mysql_select_db($databaseName, $connection);
+        $db_selected = mysqli_select_db($connection, $databaseName);
         if (!$db_selected) {
-            die(mysql_error());
+            die(mysqli_error($connection));
         }
         $msg = 'The database <i>"' . $databaseName . '"</i> has been created <br />';
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
@@ -174,7 +174,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
          */
         $checkN = checkMySQLConnection($host, $port, $user, $userPass);
         if ($checkN !== FALSE) {
-            $selectNdb = mysql_select_db($databaseName, $checkN);
+            $selectNdb = mysqli_select_db($checkN, $databaseName);
             if ($selectNdb) {
                 $msg = 'The user <i>"' . $user . '"</i> has been created <br />';
                 if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
@@ -273,6 +273,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
      * Writes all gathered database information to the configuration file
      * Provides the appropriate response
      */
+    $pass = mysqli_real_escape_string($connection, $userPass);
     $wconf = writeConfig($_SESSION['configFile'], $host, $port, $user, $userPass, $databaseName);
     if ($wconf === FALSE) {
 
