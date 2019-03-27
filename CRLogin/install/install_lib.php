@@ -55,7 +55,7 @@ function createConfigFile($filename) {
  * @return boolean
  */
 function checkMySQLConnection($host, $port, $rootUser, $rootPass) {
-    $connect = @mysql_connect($host . ':' . $port, $rootUser, $rootPass);
+    $connect = @mysqli_connect($host . ':' . $port, $rootUser, $rootPass);
     if (!$connect) {
 
         return FALSE;
@@ -71,9 +71,9 @@ function checkMySQLConnection($host, $port, $rootUser, $rootPass) {
  * @return boolean
  */
 function createDb($connect, $db) {
-    $db_esc = mysql_real_escape_string($db);
+    $db_esc = mysqli_real_escape_string($connect, $db);
     $query = "CREATE DATABASE IF NOT EXISTS " . $db_esc;
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
     if ($result) {
         return TRUE;
     } else {
@@ -94,11 +94,12 @@ function createDb($connect, $db) {
  */
 function createUser($connect, $db, $user, $dbpass, $atHost) {
 
-    $db_esc = mysql_real_escape_string($db);
-    $user_esc = mysql_real_escape_string($user);
-    $dbpass_esc = mysql_real_escape_string($dbpass);
+
+    $db_esc = mysqli_real_escape_string($connect, $db);
+    $user_esc = mysqli_real_escape_string($connect, $user);
+    $dbpass_esc = mysqli_real_escape_string($connect, $dbpass);
     $query = "GRANT ALL ON " . $db_esc . ".* to  " . $user_esc . "@'" . $atHost . "' identified by '" . $dbpass_esc . "'";
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
     if ($result) {
         return TRUE;
     } else {
@@ -123,7 +124,7 @@ function createTables($connect) {
                 PRIMARY KEY  (userid)
                 ) ENGINE=MyISAM";
 
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
 
     $query2 = "CREATE TABLE IF NOT EXISTS challenge  (
 	  	 challenge varchar(64) NOT NULL default '',
@@ -131,7 +132,7 @@ function createTables($connect) {
   		 timestamp int(11) NOT NULL default '0'
 		 ) ENGINE=MyISAM";
 
-    $result2 = mysql_query($query2, $connect);
+    $result2 = mysqli_query($connect, $query2);
 
     $query3 = "CREATE TABLE IF NOT EXISTS sessions (
                 id varchar(32) NOT NULL default '',
@@ -140,7 +141,7 @@ function createTables($connect) {
                 PRIMARY KEY (id)
                 ) ENGINE=MyISAM";
 
-    $result3 = mysql_query($query3, $connect);
+    $result3 = mysqli_query($connect, $query3);
 
     if ($result && $result2 && $result3) {
         return TRUE;
@@ -161,16 +162,16 @@ function insertUser($connect) {
     $spass = '$2y$10$HLmNt5jH6ElynYSSe.fZS.Q/.dq4Jy6K/39kvoyg7rsnMEtYlIYH2';
     $usersalt = '$2y$10$HLmNt5jH6ElynYSSe.fZSA$';
 
-    $result = mysql_query("SELECT userid FROM user WHERE username = '" . $username . "'", $connect);
+    $result = mysqli_query($connect, "SELECT userid FROM user WHERE username = '" . $username . "'");
 
-    $count = mysql_num_rows($result);
+    $count = mysqli_num_rows($result);
 
     if ($count == 0) {
 
 
         $query = "INSERT INTO user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
 
-        $result = mysql_query($query, $connect);
+        $result = mysqli_query($connect, $query);
 
         if ($result) {
             return TRUE;
@@ -195,7 +196,6 @@ function insertUser($connect) {
  */
 function writeConfig($file, $host, $port, $user, $pass, $db) {
 
-    $pass = mysql_real_escape_string($pass);
 
     $string = "<?php\n";
 

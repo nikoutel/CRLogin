@@ -39,6 +39,8 @@ $requirements = array(
     'configFile' => $dir . DIRECTORY_SEPARATOR . $file,
     'dbExtension' => array(
         'mysqlExtension' => 'mysql',
+        'mysqliExtension' => 'mysqli',
+        'pdomysqlExtension' => 'pdo_mysql',
         'sqliteExtension' => 'sqlite3'
     )
 );

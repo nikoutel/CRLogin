@@ -28,6 +28,12 @@ if (isset($_POST['db'])) {
         case 'mysql':
             include 'install_form_mysql.php';
             break;
+        case 'mysqli':
+            include 'install_form_mysql.php';
+            break;
+        case 'pdo_mysql':
+            include 'install_form_mysql.php';
+            break;
         case 'sqlite3':
             include 'install_form_sqlite3.php';
             break;
