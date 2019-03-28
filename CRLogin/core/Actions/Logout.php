@@ -43,7 +43,7 @@ class Logout implements Actions {
             $redirectURL = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectURL = SUB_DIR .'/index.php';
+            $redirectURL = '/index.php';
         }
 
         $_SESSION = array();
