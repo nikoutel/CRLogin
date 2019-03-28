@@ -112,9 +112,9 @@ class Session {
         if ($this->_utils->in_array_recursive($id, $id_arr)) {
 
             $conditions = array('', 'id', '=', $id);
-            return $this->_dataStore->update($values, 'sessions', $conditions);
+            return (bool) $this->_dataStore->update($values, 'sessions', $conditions);
         } else {
-            return $this->_dataStore->create($values, 'sessions');
+            return (bool) $this->_dataStore->create($values, 'sessions');
         }
     }
 
@@ -126,7 +126,7 @@ class Session {
      */
     function destroy($id) {
         $conditions = array('', 'id', '=', $id);
-        return $this->_dataStore->delete('sessions', $conditions);
+        return (bool) $this->_dataStore->delete('sessions', $conditions);
     }
 
     /**
@@ -138,7 +138,7 @@ class Session {
     function garbageCollector($maxlifetime) {
         $old = time() - $maxlifetime;
         $conditions = array('', 'access', '<', $old);
-        return $this->_dataStore->delete('sessions', $conditions);
+        return (bool) $this->_dataStore->delete('sessions', $conditions);
     }
 
 }
