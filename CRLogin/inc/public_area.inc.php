@@ -21,7 +21,7 @@
  */
 use CRLogin\core\DIC;
 
-require BASE_DIR . '/CRLoginAutoloader.php';
+require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLoginAutoloader.php';
 
 
 $dic = new DIC;

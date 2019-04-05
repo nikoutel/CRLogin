@@ -71,7 +71,7 @@ class DIC {
             session_start();
             $_SESSION['error'] = $ex->getMessage();
             $_SESSION['reinstall'] = TRUE;
-            $url = '/CRLogin/error.php'; //@todo convert to url!!
+            $url = CRL_APP_DIR . '/error.php'; //@todo convert to url!!
             header('Location:'. $url);
             die();
         }
@@ -100,7 +100,7 @@ class DIC {
             if ($config['datastore'] == 'database') {
                 $dbConfig = $this->getConfiguration()->getConfigArray('db');
                 $utility = $this->getUtility();
-                $database = 'CRLogin\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
+                $database = CRL_APP_DIR . '\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
             }
         }
@@ -203,8 +203,8 @@ class DIC {
 
         // whitelisting
         $subNamespaces = array(
-            '\CRLogin\core\\',
-            '\CRLogin\core\Actions\\'
+            CRL_APP_DIR . '\core\\',
+            CRL_APP_DIR . '\core\Actions\\'
         );
 
         foreach ($subNamespaces as $nspace) {
