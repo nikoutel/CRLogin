@@ -71,7 +71,7 @@ class DIC {
             session_start();
             $_SESSION['error'] = $ex->getMessage();
             $_SESSION['reinstall'] = TRUE;
-            $url = CRL_APP_DIR . '/error.php'; //@todo convert to url!!
+            $url =  CRL_BASE_URL . '/error.php';
             header('Location:'. $url);
             die();
         }

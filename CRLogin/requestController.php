@@ -23,13 +23,7 @@ namespace CRLogin;
 
 use CRLogin\core\DIC;
 
-$docRoot = $_SERVER['DOCUMENT_ROOT'];
-$baseDir = realpath(dirname(__FILE__)) . '/..';
-$subDir = str_replace($docRoot, '', $baseDir);
-
-if (!defined('CRL_BASE_DIR')) define('CRL_BASE_DIR', $baseDir);
-if (!defined('SUB_DIR')) define('SUB_DIR', $subDir);
-define('CRL_APP_DIR', 'CRLogin');
+require 'CRLogin.php';
 require 'CRLoginAutoloader.php';
 
 $dic = new DIC;
