@@ -28,7 +28,8 @@ if (count(get_included_files()) == 1) {
     header("location: /index.php?s=main");
     die();
 }
-require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/inc/public_area.inc.php';
+$isMembersArea = false;
+require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php'
 ?>
 <!DOCTYPE html>
 <html>

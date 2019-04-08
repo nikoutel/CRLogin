@@ -22,6 +22,7 @@
 
 define('CRL_BASE_DIR', '.');
 define('CRL_APP_DIR', 'CRLogin');
+$isMembersArea = false;
 require CRL_BASE_DIR . DIRECTORY_SEPARATOR . CRL_APP_DIR . DIRECTORY_SEPARATOR .'CRLogin.php';
 
 if (isset($_GET['s'])) {

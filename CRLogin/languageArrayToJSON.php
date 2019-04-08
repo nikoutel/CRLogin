@@ -21,11 +21,10 @@
 
 namespace CRLogin;
 
-use CRLogin\core\DIC;
+//use CRLogin\core\DIC;
 
 require 'CRLogin.php';
-require 'CRLoginAutoloader.php';
-$dic = new DIC;
+
 $l = $dic->getLanguageFile();
 header('Content-Type: application/json');
 echo json_encode($l);

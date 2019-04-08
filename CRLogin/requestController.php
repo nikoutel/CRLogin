@@ -21,14 +21,10 @@
 
 namespace CRLogin;
 
-use CRLogin\core\DIC;
+//use CRLogin\core\DIC;
 
 require 'CRLogin.php';
-require 'CRLoginAutoloader.php';
 
-$dic = new DIC;
-$session = $dic->getSession();
-$session->sessionStart();
 $l = $dic->getLanguageFile();
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {

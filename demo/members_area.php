@@ -28,7 +28,9 @@ if (count(get_included_files()) == 1) {
     header("location: /index.php?s=members");
     die();
 }
-require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/inc/members_area.inc.php';
+
+$isMembersArea = true;
+require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
