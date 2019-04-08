@@ -21,8 +21,6 @@
 
 namespace CRLogin;
 
-//use CRLogin\core\DIC;
-
 require 'CRLogin.php';
 
 $l = $dic->getLanguageFile();

@@ -31,9 +31,15 @@ if (!defined('CRL_BASE_DIR')) define('CRL_BASE_DIR', $_SERVER['DOCUMENT_ROOT'] .
 if (!defined('CRL_APP_DIR')) define('CRL_APP_DIR', basename(dirname($_SERVER['SCRIPT_NAME'])));
 require_once CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLoginAutoloader.php';
 
-$dic = new DIC;
-$l = $dic->getLanguageFile();
-$session = $dic->getSession();
+if (!isset($dic)) {
+    $dic = new DIC;
+}
+if (!isset($l)) {
+    $l = $dic->getLanguageFile();
+}
+if (!isset($session)) {
+    $session = $dic->getSession();
+}
 if (session_status() == PHP_SESSION_NONE) {
     $session->sessionStart();
 }
