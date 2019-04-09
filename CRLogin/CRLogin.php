@@ -77,16 +77,3 @@ if (!isAjax()) {
         }
     }
 }
-if (!function_exists('getToken')) {
-    function getToken($dic) {
-        try {
-            $crypt = $dic->getObject('Crypt');
-            $token = $crypt->getRandom('challenge');
-            $_SESSION['token'] = $token;
-        } catch (\Exception $e) {
-            $token = '';
-        }
-
-        return $token;
-    }
-}
