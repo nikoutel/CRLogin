@@ -22,6 +22,7 @@
 
 define('CRL_BASE_DIR', '.');
 define('CRL_APP_DIR', 'CRLogin');
+define('LOGIN_FORM_REQUEST_URI', '/index.php?s=login');
 $isMembersArea = false;
 require CRL_BASE_DIR . DIRECTORY_SEPARATOR . CRL_APP_DIR . DIRECTORY_SEPARATOR .'CRLogin.php';
 
