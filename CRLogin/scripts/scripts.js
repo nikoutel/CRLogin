@@ -17,7 +17,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
+var currentScript = function () {
 
+    var scripts = document.querySelectorAll( 'script[src]' );
+    var currentScript = scripts[ scripts.length - 1 ].src;
+    var currentScriptChunks = currentScript.split( '/' );
+    var currentScriptFile = currentScriptChunks[ currentScriptChunks.length - 1 ];
+
+    return currentScript.replace( currentScriptFile, '' ).replace(/\/$/, "");
+}
 $(document).ready(function() {
     function cr(passw) {
         passcr = passw;
@@ -108,10 +116,15 @@ $(document).ready(function() {
             });
 
     }
-    formaction = 'CRLogin/requestController.php';
+    currentScriptBase = currentScript();
+    var currentScriptBase = currentScriptBase.split('/');
+    currentScriptBase.pop();
+    currentScriptBase = currentScriptBase.join('/');
+
+    formaction = currentScriptBase + '/requestController.php';
     $('#noscript').hide();
     $('#lgsubmit').removeAttr('disabled');
-    $.getJSON('CRLogin/languageArrayToJSON.php', function(data) {
+    $.getJSON(currentScriptBase + '/languageArrayToJSON.php', function(data) {
         msg = data;
         $('#lgsubmit').click(function() {
             $('#lgerror').html('');

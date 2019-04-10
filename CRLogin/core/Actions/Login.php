@@ -155,7 +155,7 @@ class Login implements Actions {
             $redirectUrl = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectUrl = 'index0.php';
+            $redirectUrl = '/';
         }
         session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;

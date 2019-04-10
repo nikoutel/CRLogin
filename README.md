@@ -26,7 +26,7 @@ If you want all data protected, use TLS/SSL encryption.
 `CRLogin` comes with a data access layer built around PHP's data object (current database driver options are MySQL and SQLite) but the project is data store agnostic. You can use any other data store that uses the CRUD operation described by the `DataAccessor` interface.
 
 ## Requirements ##
-*   PHP 5.3.0 (min)
+*   PHP 5.4.0 (min)
 *   MySQL 5.1 (min)
 *   jQuery 1.7.1 (min) - is included
 

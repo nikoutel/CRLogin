@@ -21,12 +21,8 @@
 
 namespace CRLogin;
 
-use CRLogin\core\DIC;
+require 'CRLogin.php';
 
-if (!defined('BASE_DIR')) define('BASE_DIR', dirname(__FILE__).'/..');
-require '../CRLoginAutoloader.php';
-
-$dic = new DIC;
 $l = $dic->getLanguageFile();
 header('Content-Type: application/json');
 echo json_encode($l);

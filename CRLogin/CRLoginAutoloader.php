@@ -37,8 +37,8 @@ function CRLoginAutoloader($className) {
     if (true === file_exists($fileName)) {
         require_once($fileName);
         return true;
-    } elseif (true === file_exists($basedir . DIRECTORY_SEPARATOR . $fileName)) {
-        require_once($basedir . DIRECTORY_SEPARATOR . $fileName);
+    } elseif (true === file_exists(__DIR__.  DIRECTORY_SEPARATOR . $fileName)) {
+        require_once(__DIR__. DIRECTORY_SEPARATOR .  $fileName);
         return true;
     }
 }
