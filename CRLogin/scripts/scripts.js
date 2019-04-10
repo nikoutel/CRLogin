@@ -123,7 +123,7 @@ $(document).ready(function() {
 
     formaction = currentScriptBase + '/requestController.php';
     $('#noscript').hide();
-    $('#lgsubmit').removeAttr('disabled');
+    $('#lgsubmit').prop("disabled", false);
     $.getJSON(currentScriptBase + '/languageArrayToJSON.php', function(data) {
         msg = data;
         $('#lgsubmit').click(function() {
