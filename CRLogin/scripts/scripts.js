@@ -126,7 +126,7 @@ $(document).ready(function() {
     $('#lgsubmit').prop("disabled", false);
     $.getJSON(currentScriptBase + '/languageArrayToJSON.php', function(data) {
         msg = data;
-        $('#lgsubmit').click(function() {
+        $('body').on('click', '#lgsubmit', function(e) {
             $('#lgerror').html('');
             username = $('#username').val();
             password = $('#password').val();
@@ -166,8 +166,7 @@ $(document).ready(function() {
 
             return false;
         });
-
-        $("#changesubmit").click(function() {
+        $('body').on('click', '#changesubmit', function(e) {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
@@ -225,17 +224,16 @@ $(document).ready(function() {
                     }
                 }, "json")
                 .error(
-                    function(data) { 
+                    function(data) {
                         $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
-                        $('#msg').html(''); 
+                        $('#msg').html('');
                     });
             }
 
             return false;
         });
 
-        $("#registersubmit").click(function() {
-
+        $('body').on('click', '#registersubmit', function(e) {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
@@ -299,7 +297,7 @@ $(document).ready(function() {
 
             return false;
         });
-        $('a[href$="logout"]').click(function() {
+        $('body').on('click', 'a[href$="logout', function(e) {
             action = 'logout';
             $.post(
                     formaction,
