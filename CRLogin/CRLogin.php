@@ -35,6 +35,7 @@ if (!isAjax()) {
     if (!defined('LOGIN_FORM_REQUEST_URI')){
         exit("Error: LOGIN_FORM_REQUEST_URI not set!");
     }
+    if (!defined('LOGIN_SUCCESS_DEFAULT_URI')) define('LOGIN_SUCCESS_DEFAULT_URI', '/');
 } else {
     if (!defined('CRL_BASE_DIR')) define('CRL_BASE_DIR', $_SERVER['DOCUMENT_ROOT'] . '/' . dirname(dirname($_SERVER['SCRIPT_NAME'])));
     if (!defined('CRL_APP_DIR')) define('CRL_APP_DIR', basename(dirname($_SERVER['SCRIPT_NAME'])));
@@ -75,7 +76,7 @@ if (!isAjax()) {
             $_SESSION['redirectURL'] = $redirectURL;
         } else {
             if (!isset($_SESSION['redirectURL'])) {
-                $_SESSION['redirectURL'] = '/';
+                $_SESSION['redirectURL'] = LOGIN_SUCCESS_DEFAULT_URI;
             }
         }
     }
