@@ -36,11 +36,16 @@ if (isset($_POST['action'])) {
         } catch (\Exception $e) {
             header('HTTP/1.0 404 Not Found');
             echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
-            exit;
+            die();
         }
     } else {
-        echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
-        exit;
+        if ((!empty($_SESSION['dummyToken'])) && ($_SESSION['dummyToken'] == true)) {
+            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['LOGIN_FAIL']));
+            die();
+        } else {
+            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
+            die();
+        }
     }
 }
 ?>
