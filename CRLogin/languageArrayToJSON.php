@@ -22,7 +22,9 @@
 namespace CRLogin;
 
 require 'CRLogin.php';
-
+if (!isAjax()) {
+    die();
+}
 $l = $dic->getLanguageFile();
 header('Content-Type: application/json');
 echo json_encode($l);
