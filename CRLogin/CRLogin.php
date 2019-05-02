@@ -30,10 +30,21 @@ if (!isset($dic)) {
     $dic = new DIC;
 }
 if (!isset($l)) {
-    $l = $dic->getLanguageFile();
+    try {
+        $l = $dic->getLanguageFile();
+    } catch (\Exception $ex) {
+        header('Location:'. CRL_APP_DIR .'/error.php');
+        die();
+    }
+
 }
 if (!isset($session)) {
-    $session = $dic->getSession();
+    try {
+        $session = $dic->getSession();
+    } catch (\Exception $ex) {
+        header('Location:'. CRL_APP_DIR .'/error.php');
+        die();
+    }
 }
 if (session_status() == PHP_SESSION_NONE) {
     $session->sessionStart();

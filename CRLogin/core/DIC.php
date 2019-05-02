@@ -62,6 +62,7 @@ class DIC {
      * Returns Configuration object
      *
      * @return \CRLogin\core\lib\Configuration
+     * @throws \Exception
      */
     public function getConfiguration() {
         try {
@@ -71,9 +72,7 @@ class DIC {
             session_start();
             $_SESSION['error'] = $ex->getMessage();
             $_SESSION['reinstall'] = TRUE;
-//            $url =  CRL_BASE_DIR . '/' . CRL_APP_DIR . '/error.php';
-//            header('Location:'. $url);
-            die();
+            throw new \Exception ($ex->getMessage());
         }
     }
 
@@ -81,6 +80,7 @@ class DIC {
      * Returns the language array
      * 
      * @return array
+     * @throws \Exception
      */
     public function getLanguageFile() {
         $config = $this->getConfiguration()->getConfigArray('general');
@@ -93,6 +93,7 @@ class DIC {
      * Returns the data store
      * 
      * @return \CRLogin\DataAccess\DataAccessor
+     * @throws \Exception
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
@@ -111,6 +112,7 @@ class DIC {
      * Returns the session object
      * 
      * @return \CRLogin\core\lib\Session
+     * @throws \Exception
      */
     public function getSession() {
         if (!isset($this->_session)) {
@@ -140,6 +142,7 @@ class DIC {
      * @param string $class
      * @return object
      * @throws \Exception
+     * @throws \ReflectionException
      */
     public function getObject($class) {
 
@@ -177,6 +180,7 @@ class DIC {
      *
      * @param string $class
      * @return array
+     * @throws \ReflectionException
      */
     private function _getClassParameters($class) {
 
