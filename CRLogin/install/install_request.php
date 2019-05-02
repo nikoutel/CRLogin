@@ -102,9 +102,9 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
      * Checks if a connection to the database with the given information is possible 
      * Provides the appropriate response
      */
-    $check = checkMySQLConnection($host, $port, $rootUser, $rootPass);
-    if ($check === FALSE) {
-        $error = 'There was an error connecting to the database: ' . mysql_error();
+    $connection = checkMySQLConnection($host, $port, $rootUser, $rootPass);
+    if ($connection === FALSE) {
+        $error = 'There was an error connecting to the database: ' . mysqli_error($connection);
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
@@ -114,7 +114,6 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
             echo $error;
         die();
     } else {
-        $connection = $check;
         $msg = 'Database connection has been established <br />';
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['msg'] = $msg;
@@ -129,7 +128,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
      */
     $db = createDb($connection, $databaseName);
     if ($db === FALSE) {
-        $error = 'There was an error creating the database: ' . mysql_error();
+        $error = 'There was an error creating the database: ' . mysqli_error($connection);
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
@@ -159,7 +158,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
     $cuser = createUser($connection, $databaseName, $user, $userPass, '%');
     if ($cuser === FALSE) {
 
-        $error = 'There was an error creating the user: ' . mysql_error();
+        $error = 'There was an error creating the user: ' . mysqli_error($connection);
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
@@ -226,7 +225,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
     $tables = createTables($connection);
     if ($tables === FALSE) {
 
-        $error = 'There was an error creating the required tables: ' . mysql_error();
+        $error = 'There was an error creating the required tables: ' . mysqli_error($connection);
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
@@ -251,7 +250,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
     $iuser = insertUser($connection);
     if ($iuser === FALSE) {
 
-        $error = 'There was an error creating initial user: ' . mysql_error();
+        $error = 'There was an error creating initial user: ' . mysqli_error($connection);
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
