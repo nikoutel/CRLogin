@@ -47,12 +47,12 @@ class LanguageFile {
      * @return array
      */
     public function getLanguageArray($langCode) {
-        $langFile = CRL_BASE_DIR . '/' . CRL_APP_DIR . '/lang/lang.' . $langCode . '.php';
+        $langFile = CRL_BASE_DIR . '/lang/lang.' . $langCode . '.php';
         if (file_exists($langFile)) {
             $this->_languageArray = $this->_configReader->readFile($langFile);
         } else {
             $langCode = 'en';
-            $langFile = CRL_BASE_DIR . '/' . CRL_APP_DIR . '/lang/lang.' . $langCode . '.php';
+            $langFile = CRL_BASE_DIR  . '/lang/lang.' . $langCode . '.php';
             $this->_languageArray = $this->_configReader->readFile($langFile);
         }
         return $this->_languageArray;

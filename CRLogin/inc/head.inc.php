@@ -20,7 +20,7 @@
  * 
  */
 
-$url = htmlspecialchars(CRL_BASE_URL . '/' . CRL_BASE_DIR . '/' . CRL_APP_DIR);
+$url = htmlspecialchars(CRL_APP_URL_PATH . CRL_APP_DIR);
 ?>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
 <script type="text/javascript">

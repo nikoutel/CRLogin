@@ -20,7 +20,6 @@
  */
 
 namespace CRLogin;
-
 require 'CRLogin.php';
 if (!isAjax()) {
     die();

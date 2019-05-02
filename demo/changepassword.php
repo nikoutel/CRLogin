@@ -29,7 +29,7 @@ if (count(get_included_files()) == 1) {
 }
 
 $isMembersArea = true;
-require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php';
+require CRL_BASE_DIR .  '/CRLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,7 +38,7 @@ require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php';
         <title><?php echo $l['CHANGE_PASS_LINK'] ?></title>
         <link href="demo/login.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
-<?php require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/inc/head.inc.php'; ?>
+<?php require CRL_BASE_DIR . '/inc/head.inc.php'; ?>
     </head>
     <body>
 
