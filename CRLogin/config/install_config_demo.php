@@ -35,7 +35,9 @@ $db_config = array(
     ),
     'general' => array(
         'language' => 'en',
-        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ' // CHANGE THIS
+        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ', // CHANGE THIS
+        'loginFormReqURI' => '/index.php?s=login',
+        'loginSuccessDefURI' => '/index.php?s=main'
     )
 );
 
@@ -52,7 +54,9 @@ $db_config = array(
     ),
     'general' => array(
         'language' => 'en',
-        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ' // CHANGE THIS
+        'installUniqueId' => '3u2Sok4VePf5e6SQ5kHXkQ', // CHANGE THIS
+        'loginFormReqURI' => '/index.php?s=login',
+        'loginSuccessDefURI' => '/index.php?s=main'
     )
 );
  

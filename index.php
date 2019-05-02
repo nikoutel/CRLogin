@@ -20,7 +20,6 @@
  * 
  */
 
-define('LOGIN_FORM_REQUEST_URI', '/index.php?s=login');
 $isMembersArea = false;
 require 'CRLogin/CRLogin.php';
 
