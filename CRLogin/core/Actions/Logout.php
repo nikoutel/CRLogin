@@ -43,7 +43,7 @@ class Logout implements Actions {
             $redirectURL = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectURL = '/';
+            $redirectURL = LOGIN_FORM_REQUEST_URI;
         }
 
         $_SESSION = array();
