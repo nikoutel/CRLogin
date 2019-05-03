@@ -19,7 +19,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-
+require dirname($_SERVER['DOCUMENT_ROOT']).'/tools/Debugr/src/Debugr.php';
+use Nikoutel\Debugr\Debugr;
 /*
  * Initialization
  */
@@ -88,7 +89,43 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
 
     $userPass = $_POST['userpass'];
 
+    $loginform = $_POST['loginform'];
+    $error = ifEmpty($loginform) and $error;
 
+    $successredirect = $_POST['successredirect'];
+    $error = ifEmpty($successredirect) and $error;
+
+    $parseURLLoginForm = parse_url($loginform);
+    $parseURLSuccesRedirect = parse_url($successredirect);
+
+    $baseURL = '//' . $parseURLLoginForm['host'];
+    if (!empty($parseURLLoginForm['port'])) {
+        $baseURL .= ':' . $parseURLLoginForm['port'];
+    }
+
+    $loginFormReqURI = $parseURLLoginForm['path'];
+    if (!empty($parseURLLoginForm['query'])) {
+        $loginFormReqURI .= '?' . $parseURLLoginForm['query'];
+    }
+    if (!empty($parseURLLoginForm['fragment'])) {
+        $loginFormReqURI .= '#' . $parseURLLoginForm['fragment'];
+    }
+
+    $loginSuccessDefURI = $parseURLSuccesRedirect['path'];
+    if (!empty($parseURLSuccesRedirect['query'])) {
+        $loginSuccessDefURI .= '?' . $parseURLSuccesRedirect['query'];
+    }
+    if (!empty($parseURLSuccesRedirect['fragment'])) {
+        $loginSuccessDefURI .= '#' . $parseURLSuccesRedirect['fragment'];
+    }
+
+    $appURLPath = dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))) . '/';
+
+Debugr::edbgConsole($baseURL, '$baseURL');
+Debugr::edbgConsole($appURLPath, '$appURLPath');
+Debugr::edbgConsole($loginFormReqURI, '$loginFormReqURI');
+Debugr::edbgConsole($loginSuccessDefURI, '$loginSuccessDefURI');
+$_SESSION['loginFormReqURI'] = $loginFormReqURI;
     if ($error) {
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $errormsg = 'All fields are required <br />';
@@ -97,14 +134,17 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
             die();
         }
     }
+    echo "<div id='bla'>";
 
+
+echo '</div>';
     /*
      * Checks if a connection to the database with the given information is possible 
      * Provides the appropriate response
      */
     $connection = checkMySQLConnection($host, $port, $rootUser, $rootPass);
     if ($connection === FALSE) {
-        $error = 'There was an error connecting to the database: ' . mysqli_error($connection);
+        $error = 'There was an error connecting to the database: ' . mysqli_connect_error();
 
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['errormsg'] = $error;
@@ -273,7 +313,7 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
      * Provides the appropriate response
      */
     $pass = mysqli_real_escape_string($connection, $userPass);
-    $wconf = writeConfig($_SESSION['configFile'], $host, $port, $user, $userPass, $databaseName);
+    $wconf = writeConfig($_SESSION['configFile'], $host, $port, $user, $userPass, $databaseName, $baseURL, $appURLPath, $loginFormReqURI, $loginSuccessDefURI);
     if ($wconf === FALSE) {
 
         $error = 'There was an error creating the configuration file, check your permissions';

@@ -55,7 +55,7 @@ function createConfigFile($filename) {
  * @return boolean
  */
 function checkMySQLConnection($host, $port, $rootUser, $rootPass) {
-    $connect = @mysqli_connect($host . ':' . $port, $rootUser, $rootPass);
+    $connect = mysqli_connect($host . ':' . $port, $rootUser, $rootPass);
     if (!$connect) {
 
         return FALSE;
@@ -194,7 +194,7 @@ function insertUser($connect) {
  * @param string $db
  * @return int|boolean Returns false on error
  */
-function writeConfig($file, $host, $port, $user, $pass, $db) {
+function writeConfig($file, $host, $port, $user, $pass, $db, $baseURL, $appURLPath, $loginFormReqURI, $loginSuccessDefURI) {
 
 
     $string = "<?php\n";
@@ -214,7 +214,11 @@ function writeConfig($file, $host, $port, $user, $pass, $db) {
     $string .= " ),\n";
     $string .= " 'general' => array(\n";
     $string .= " 'language' => '" . $_SESSION['lang'] . "',\n";
-    $string .= " 'installUniqueId' => '" . getRandom() . "'\n";
+    $string .= " 'installUniqueId' => '" . getRandom() . "',\n";
+    $string .= " 'baseURL' => '" . $baseURL . "',\n";
+    $string .= " 'appURLPath' => '" . $appURLPath. "',\n";
+    $string .= " 'loginFormReqURI' => '" . $loginFormReqURI . "',\n";
+    $string .= " 'loginSuccessDefURI' => '" . $loginSuccessDefURI . "'\n";
     $string .= ")\n";
     $string .= " );\n";
     $string .= 'return $db_config;' . "\n";
