@@ -20,33 +20,30 @@
  * 
  */
 
-define('CRL_BASE_DIR', '.');
-define('CRL_APP_DIR', 'CRLogin');
-define('LOGIN_FORM_REQUEST_URI', '/index.php?s=login');
 $isMembersArea = false;
-require CRL_BASE_DIR . DIRECTORY_SEPARATOR . CRL_APP_DIR . DIRECTORY_SEPARATOR .'CRLogin.php';
+require 'CRLogin/CRLogin.php';
 
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {
         case 'login':
-            include CRL_BASE_DIR . '/demo/login.php';
+            include 'demo/login.php';
             break;
         case 'logout':
             //  js handles logout
             break;
         case 'members':
-            include CRL_BASE_DIR . '/demo/members_area.php';
+            include  'demo/members_area.php';
             break;
         case 'changepassword':
-            include CRL_BASE_DIR . '/demo/changepassword.php';
+            include 'demo/changepassword.php';
             break;
         case 'register':
-            include CRL_BASE_DIR . '/demo/register.php';
+            include 'demo/register.php';
             break;
         default:
-            include CRL_BASE_DIR . '/demo/main.php';
+            include 'demo/main.php';
     }
 } else {
-    include CRL_BASE_DIR . '/demo/main.php';
+    include 'demo/main.php';
 }
 ?>

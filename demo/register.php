@@ -29,7 +29,7 @@ if (count(get_included_files()) == 1) {
     die();
 }
 $isMembersArea = true;
-require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php';
+require CRL_BASE_DIR .  '/CRLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,7 @@ require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/CRLogin.php';
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo $l['REGISTER_LINK'] ?></title>
         <link href="demo/login.css" rel="stylesheet" type="text/css" />
-        <?php require CRL_BASE_DIR . '/' . CRL_APP_DIR . '/inc/head.inc.php'; ?>
+        <?php require CRL_BASE_DIR . '/inc/head.inc.php'; ?>
     </head>
     <body>
 
