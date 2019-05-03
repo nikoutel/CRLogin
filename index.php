@@ -21,7 +21,6 @@
  */
 
 $isMembersArea = false;
-require 'CRLogin/CRLogin.php';
 
 if (isset($_GET['s'])) {
     switch (strtolower($_GET['s'])) {

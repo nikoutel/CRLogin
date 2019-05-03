@@ -30,7 +30,7 @@ if (count(get_included_files()) == 1) {
 }
 
 $isMembersArea = true;
-require CRL_BASE_DIR .  '/CRLogin.php';
+require   'CRLogin/CRLogin.php'
 ?>
 <!DOCTYPE html>
 <html>
