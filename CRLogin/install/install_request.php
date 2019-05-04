@@ -119,12 +119,11 @@ if ((isset($_GET['action'])) && ($_GET['action'] == "form")) {
         $loginSuccessDefURI .= '#' . $parseURLSuccesRedirect['fragment'];
     }
 
-    $appURLPath = dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))) . '/';
+    $appURLPath = dirname(dirname(dirname($_SERVER['SCRIPT_NAME']))) ;
+    if ($appURLPath != '/') {
+        $appURLPath .= '/';
+    }
 
-Debugr::edbgConsole($baseURL, '$baseURL');
-Debugr::edbgConsole($appURLPath, '$appURLPath');
-Debugr::edbgConsole($loginFormReqURI, '$loginFormReqURI');
-Debugr::edbgConsole($loginSuccessDefURI, '$loginSuccessDefURI');
 $_SESSION['loginFormReqURI'] = $loginFormReqURI;
     if ($error) {
         if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
