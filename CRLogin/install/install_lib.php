@@ -116,7 +116,7 @@ function createUser($connect, $db, $user, $dbpass, $atHost) {
  */
 function createTables($connect) {
 
-    $query = "CREATE TABLE IF NOT EXISTS user (
+    $query = "CREATE TABLE IF NOT EXISTS crl_user (
                 userid int(11) unsigned NOT NULL auto_increment,
                 username varchar(64) NOT NULL default '',
                 spass varchar(64) NOT NULL default '',
@@ -126,7 +126,7 @@ function createTables($connect) {
 
     $result = mysqli_query($connect, $query);
 
-    $query2 = "CREATE TABLE IF NOT EXISTS challenge  (
+    $query2 = "CREATE TABLE IF NOT EXISTS crl_challenge  (
 	  	 challenge varchar(64) NOT NULL default '',
  		 sessionid varchar(64) NOT NULL default '',
   		 timestamp int(11) NOT NULL default '0'
@@ -134,7 +134,7 @@ function createTables($connect) {
 
     $result2 = mysqli_query($connect, $query2);
 
-    $query3 = "CREATE TABLE IF NOT EXISTS sessions (
+    $query3 = "CREATE TABLE IF NOT EXISTS crl_sessions (
                 id varchar(32) NOT NULL default '',
                 access int(10) unsigned NOT NULL,
                 data text,
@@ -162,14 +162,14 @@ function insertUser($connect) {
     $spass = '$2y$10$HLmNt5jH6ElynYSSe.fZS.Q/.dq4Jy6K/39kvoyg7rsnMEtYlIYH2';
     $usersalt = '$2y$10$HLmNt5jH6ElynYSSe.fZSA$';
 
-    $result = mysqli_query($connect, "SELECT userid FROM user WHERE username = '" . $username . "'");
+    $result = mysqli_query($connect, "SELECT userid FROM crl_user WHERE username = '" . $username . "'");
 
     $count = mysqli_num_rows($result);
 
     if ($count == 0) {
 
 
-        $query = "INSERT INTO user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
+        $query = "INSERT INTO crl_user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
 
         $result = mysqli_query($connect, $query);
 

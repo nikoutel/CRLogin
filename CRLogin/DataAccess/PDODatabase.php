@@ -177,6 +177,7 @@ abstract class PDODatabase implements DataAccessor {
      * @param string $table The dataset/table to store the values
      */
     public function create(array $values, $table) {
+        $table = 'crl_' . $table;
         if ($this->_utils->isAssociative($values)) {
             $columns = array_keys($values);
             $bind = array_values($values);
@@ -224,6 +225,7 @@ abstract class PDODatabase implements DataAccessor {
      * )
      */
     public function read(array $columns, $table, array $conditions = array()) {
+        $table = 'crl_' . $table;
         $columns_str = implode(",", $columns);
         if (strtolower($columns_str) == 'all') {
             $columns_str = '*';
@@ -272,7 +274,7 @@ abstract class PDODatabase implements DataAccessor {
      * )
      */
     public function update(array $values, $table, array $conditions = array()) {
-
+        $table = 'crl_' . $table;
         $columns = array_keys($values);
         $bindSet = array_values($values);
         $sql = 'UPDATE ' . $table . ' SET '; // @todo whitelisting
@@ -319,6 +321,7 @@ abstract class PDODatabase implements DataAccessor {
      * )
      */
     public function delete($table, array $conditions = array()) {
+        $table = 'crl_' . $table;
         $bind = array();
         $sql = 'DELETE FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
