@@ -29,7 +29,7 @@ if (count(get_included_files()) == 1) {
 }
 
 $isMembersArea = true;
-require   'CRLogin/CRLogin.php'
+require   'CRLogin/CRLogin.php';
 ?>
 <!DOCTYPE html>
 <html>
