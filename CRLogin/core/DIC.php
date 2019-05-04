@@ -69,10 +69,8 @@ class DIC {
             $this->_configuration = new Configuration();
             return $this->_configuration;
         } catch (\Exception $ex) {
-            session_start();
-            $_SESSION['error'] = $ex->getMessage();
-            $_SESSION['reinstall'] = TRUE;
-            throw new \Exception ($ex->getMessage());
+            error_log($ex->getFile().':'.$ex->getLine().' - '.$ex->getMessage());
+            throw new \Exception ($ex->getMessage(), 15, $ex);
         }
     }
 

@@ -83,13 +83,14 @@ class Configuration {
      * 
      * @param string $configFile
      * @return array
+     * @throws \Exception
      */
     public function getDbConfigFromFile($configFile) {
 
         if ($this->_installConfigFileArray = $this->_configReader->readFile($configFile)){
             return $this->_installConfigFileArray;
         } else {
-            throw new \Exception('Configuration file not found');
+            throw new \Exception('Install configuration file not found');
         }
     }
 

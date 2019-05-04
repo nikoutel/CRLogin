@@ -140,16 +140,15 @@ abstract class PDODatabase implements DataAccessor {
      * @param string $username
      * @param string $passwd
      * @param array $options
-     * @return boolean
+     * @throws \Exception
      */
     public function connect($dsn, $username, $passwd, $options) {
         try {
             $this->pdo = new PDO($dsn, $username, $passwd, $options);
         } catch (\PDOException $exc) {
-            $this->errorMessage = $exc->getMessage();
-            $this->errorTraceAsString = $exc->getTraceAsString();
-            echo $this->errorMessage; // delme
-            return FALSE;
+            $errorMsg = 'Database Error!';
+            error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+            throw new \Exception($errorMsg, 15, $exc);
         }
     }
 
@@ -346,6 +345,7 @@ abstract class PDODatabase implements DataAccessor {
      * @param string $sql The sql statement
      * @param array $bind The bind parameters array
      * @return mixed
+     * @throws \Exception
      */
     public function execute($sql, array $bind) {
 
@@ -363,10 +363,9 @@ abstract class PDODatabase implements DataAccessor {
                 else
                     return FALSE;
             } catch (\PDOException $exc) {
-                $this->errorMessage = $exc->getMessage();
-                $this->errorTraceAsString = $exc->getTraceAsString();
-                echo $this->errorMessage; // delme
-                return FALSE;
+                $errorMsg = 'Database Error!';
+                error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+                throw new \Exception($errorMsg, 15, $exc);
             }
         }
         else
@@ -385,6 +384,7 @@ abstract class PDODatabase implements DataAccessor {
      * or false on failure
      * 
      * @param string $query The sql query
+     * @throws \Exception
      * @return mixed
      */
     public function runQuery($query) {
@@ -401,10 +401,9 @@ abstract class PDODatabase implements DataAccessor {
                     return $this->pdo->exec($query);
                 }
             } catch (\PDOException $exc) {
-                $this->errorMessage = $exc->getMessage();
-                $this->errorTraceAsString = $exc->getTraceAsString();
-                echo $this->errorMessage; // delme
-                return FALSE;
+                $errorMsg = 'Database Error!';
+                error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+                throw new \Exception($errorMsg, 15, $exc);
             }
         }
         else

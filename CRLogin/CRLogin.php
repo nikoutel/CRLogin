@@ -11,7 +11,13 @@ if (!isset($dic)) {
     $dic = new DIC;
 }
 
-$genaralConfigArray = $dic->getConfiguration()->getGeneralConfigArray();
+if (!isset($genaralConfigArray)) {
+    try {
+        $genaralConfigArray = $dic->getConfiguration()->getGeneralConfigArray();
+    } catch (\Exception $ex) {
+        handleError($ex);
+    }
+}
 if (!defined('CRL_BASE_URL')) define('CRL_BASE_URL', $genaralConfigArray['baseURL']);
 if (!defined('CRL_APP_URL_PATH')) define('CRL_APP_URL_PATH', $genaralConfigArray['appURLPath']);
 if (!defined('LOGIN_FORM_REQUEST_URI')) define('LOGIN_FORM_REQUEST_URI', $genaralConfigArray['loginFormReqURI']);
@@ -21,21 +27,22 @@ if (!isset($l)) {
     try {
         $l = $dic->getLanguageFile();
     } catch (\Exception $ex) {
-        header('Location:'. CRL_APP_DIR .'/error.php');
-        die();
+        handleError($ex);
     }
-
 }
 if (!isset($session)) {
     try {
         $session = $dic->getSession();
     } catch (\Exception $ex) {
-        header('Location:'. CRL_APP_DIR .'/error.php');
-        die();
+        handleError($ex);
     }
 }
 if (session_status() == PHP_SESSION_NONE) {
-    $session->sessionStart();
+    try {
+        $session->sessionStart();
+    } catch (\Exception $ex) {
+        handleError($ex);
+    }
 }
 if (!isAjax()) {
     if (!isset($isMembersArea)) {
@@ -74,4 +81,8 @@ function getToken($dic) {
     }
 
     return $token;
+}
+
+function handleError(\Exception $e) {
+    require CRL_BASE_DIR .'/error.php';
 }

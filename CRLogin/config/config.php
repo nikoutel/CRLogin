@@ -22,7 +22,7 @@
 
 $config = array(
     'general' => array(
-        'disabled' => 'FALSE', // kill switch
+        'disabled' => 'FALSE', // kill switch @todo: still relevant?
         'datastore' => 'database',
         'dbConfigFile' => CRL_BASE_DIR . '/config/install_config.php',
         'challengeTimedelay' => 15, //number of seconds the challenge is stored in the database
