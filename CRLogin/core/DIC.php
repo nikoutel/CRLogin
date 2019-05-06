@@ -26,6 +26,7 @@ use CRLogin\core\lib\Configuration;
 use CRLogin\core\lib\LanguageFile;
 use CRLogin\core\lib\Session;
 use CRLogin\core\lib\Utils;
+use CRLogin\DataAccess\DataAccessor;
 
 class DIC {
 
@@ -50,7 +51,7 @@ class DIC {
     private $_configuration;
 
     /**
-     * @var obj 
+     * @var object
      */
     private $_languageFile;
 
@@ -162,8 +163,6 @@ class DIC {
             } else {
                 $arguments = array();
             }
-
-            // @todo try catch
             $reflector = new \ReflectionClass($className);
             $obj = $reflector->newInstanceArgs($arguments);
         } else {

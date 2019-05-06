@@ -33,6 +33,7 @@ class SQLiteDatabase extends PDODatabase {
      * A SQLite specific method
      * Returns the database tables
      *
+     * @throws \Exception
      * @return array
      */
     protected function _getTables() {
@@ -58,6 +59,7 @@ class SQLiteDatabase extends PDODatabase {
      *
      * @param string $tableName
      * @param boolean $withPrimaryKey
+     * @throws \Exception
      * @return mixed
      */
     protected function _getColumns($tableName, $withPrimaryKey = FALSE) {

@@ -60,7 +60,7 @@ interface DataAccessor {
      *      )
      * )
      */
-    public function read(array $fields, $dataset, array $conditions);
+    public function read(array $fields, $dataset, array $conditions= array());
 
     /**
      * Updates entries in the data store

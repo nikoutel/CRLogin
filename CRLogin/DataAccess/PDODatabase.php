@@ -21,6 +21,7 @@
 
 namespace CRLogin\DataAccess;
 
+use CRLogin\core\lib\Utils;
 use \PDO;
 
 abstract class PDODatabase implements DataAccessor {
@@ -94,8 +95,9 @@ abstract class PDODatabase implements DataAccessor {
      * 
      * @param array $dbParameters
      * @param Utils $utils
+     * @throws \Exception
      */
-    public function __construct(array $dbParameters, $utils) {
+    public function __construct(array $dbParameters, Utils $utils) {
         $this->_utils = $utils;
         $this->setParameters($dbParameters);
 
@@ -161,8 +163,11 @@ abstract class PDODatabase implements DataAccessor {
     /**
      * Abstract method for getting the database columns
      * Database driver specific
+     *
+     * @param string $tableName
+     * @param boolean $withPrimaryKey
      */
-    abstract protected function _getColumns($tableName, $withPrimaryKey);
+    abstract protected function _getColumns($tableName, $withPrimaryKey = FALSE);
 
     /**
      * Creates entries in the database
@@ -175,6 +180,8 @@ abstract class PDODatabase implements DataAccessor {
      * in order of the fields/columns when the dataset/table was created
      * 
      * @param string $table The dataset/table to store the values
+     * @throws \Exception
+     * @return mixed
      */
     public function create(array $values, $table) {
         $table = 'crl_' . $table;
@@ -223,6 +230,9 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function read(array $columns, $table, array $conditions = array()) {
         $table = 'crl_' . $table;
@@ -272,6 +282,9 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function update(array $values, $table, array $conditions = array()) {
         $table = 'crl_' . $table;
@@ -319,6 +332,9 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function delete($table, array $conditions = array()) {
         $table = 'crl_' . $table;

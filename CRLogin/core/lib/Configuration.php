@@ -98,6 +98,7 @@ class Configuration {
      * Returns the configuration array from the main configuration
      * 
      * @param string $configFile
+     * @throws \Exception
      * @return array
      */
     public function getConfigFromFile($configFile) {

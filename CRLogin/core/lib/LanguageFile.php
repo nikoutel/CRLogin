@@ -24,7 +24,7 @@ namespace CRLogin\core\lib;
 class LanguageFile {
 
     /**
-     * @var obj 
+     * @var object
      */
     private $_configReader;
 
