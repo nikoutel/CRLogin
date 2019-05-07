@@ -297,7 +297,7 @@ $(document).ready(function() {
 
             return false;
         });
-        $('body').on('click', 'a[href$="logout', function(e) {
+/*        $('body').on('click', 'a[href$="logout', function(e) {
             action = 'logout';
             $.post(
                     formaction,
@@ -310,7 +310,7 @@ $(document).ready(function() {
                 }
             }, "json");
             return false;
-        });
+        });*/
 
     });
 });

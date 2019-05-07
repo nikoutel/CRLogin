@@ -28,6 +28,7 @@ if (count(get_included_files()) == 1) {
 }
 $isMembersArea = false;
 require   'CRLogin/CRLogin.php';
+CRLogout($dic);
 ?>
 <!DOCTYPE html>
 <html>

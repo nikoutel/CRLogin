@@ -28,7 +28,7 @@ if (isset($_GET['s'])) {
             include 'demo/login.php';
             break;
         case 'logout':
-            //  js handles logout
+            include 'demo/logout.php';
             break;
         case 'members':
             include 'demo/members_area.php';

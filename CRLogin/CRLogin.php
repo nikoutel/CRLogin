@@ -49,22 +49,25 @@ if (!isAjax()) {
         $isMembersArea = false;
     }
     $_SESSION ['members'] = $isMembersArea;
-    if ($_SESSION ['members']) {
-        $_SESSION['redirectURL'] = CRL_BASE_URL . $_SERVER['REQUEST_URI'];
-        if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
-            header('Location:' . LOGIN_FORM_REQUEST_URI);
-            die();
-        }
-    } else {
-        $redirectURL = CRL_BASE_URL . $_SERVER['REQUEST_URI'];
-        if (strpos($redirectURL, LOGIN_FORM_REQUEST_URI) === false) {
-            $_SESSION['redirectURL'] = $redirectURL;
+    if (!isset($logoutAction) || !$logoutAction) {
+        if ($_SESSION ['members']) {
+            $_SESSION['redirectURL'] = CRL_BASE_URL . $_SERVER['REQUEST_URI'];
+            if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
+                header('Location:' . LOGIN_FORM_REQUEST_URI);
+                die();
+            }
         } else {
-            if (!isset($_SESSION['redirectURL'])) {
-                $_SESSION['redirectURL'] = LOGIN_SUCCESS_DEFAULT_URI;
+            $redirectURL = CRL_BASE_URL . $_SERVER['REQUEST_URI'];
+            if (strpos($redirectURL, LOGIN_FORM_REQUEST_URI) === false) {
+                $_SESSION['redirectURL'] = $redirectURL;
+            } else {
+                if (!isset($_SESSION['redirectURL'])) {
+                    $_SESSION['redirectURL'] = LOGIN_SUCCESS_DEFAULT_URI;
+                }
             }
         }
     }
+
 }
 
 function isAjax() {
@@ -85,4 +88,8 @@ function getToken($dic) {
 
 function handleError(\Exception $e) {
     require CRL_BASE_DIR .'/error.php';
+}
+
+function CRLogout($dic) {
+   return $dic->getObject('logout')->executeAction();
 }
