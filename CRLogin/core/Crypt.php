@@ -168,7 +168,15 @@ class Crypt {
 
         $this->_random = '';
         $next = TRUE;
-        if (function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM')) {
+        if (function_exists("random_bytes")) {
+            try {
+                $this->_random = random_bytes($size);
+                $next = FALSE;
+            } catch (\Exception $e) {
+                // DO NOTHING
+            }
+        }
+        if (function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM') && ($next)) {
 
             $source = MCRYPT_DEV_URANDOM;
             $this->_random = mcrypt_create_iv($size, $source);
