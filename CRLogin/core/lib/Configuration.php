@@ -41,9 +41,9 @@ class Configuration {
     private $_installConfigFile;
 
     /**
-     * @var ConfigReader 
+     * @var ConfigFile
      */
-    private $_configReader;
+    private $_configFileObj;
 
     /**
      * @var array 
@@ -67,13 +67,15 @@ class Configuration {
 
     /**
      * Initialization
+     *
+     * @throws \Exception
      */
     public function __construct() {
         $this->_configFile = CRL_BASE_DIR .'/'. $this->_configFileScript;
-        $this->_configReader = new ConfigReader();
+        $this->_configFileObj = new ConfigFile();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
-        $this->getDbConfigFromFile($this->_installConfigFile);
+        $this->getInstallConfigFromFile($this->_installConfigFile);
         $this->setConfigArray();
         $this->setDbConfigArray();
     }
@@ -85,9 +87,9 @@ class Configuration {
      * @return array
      * @throws \Exception
      */
-    public function getDbConfigFromFile($configFile) {
+    public function getInstallConfigFromFile($configFile) {
 
-        if ($this->_installConfigFileArray = $this->_configReader->readFile($configFile)){
+        if ($this->_installConfigFileArray = $this->_configFileObj->readFile($configFile)){
             return $this->_installConfigFileArray;
         } else {
             throw new \Exception('Install configuration file not found');
@@ -103,7 +105,7 @@ class Configuration {
      */
     public function getConfigFromFile($configFile) {
 
-        if ($this->_configFileArray = $this->_configReader->readFile($configFile)){
+        if ($this->_configFileArray = $this->_configFileObj->readFile($configFile)){
             return $this->_configFileArray;
         } else {
             throw new \Exception('Configuration file not found');

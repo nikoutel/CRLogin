@@ -21,7 +21,7 @@
 
 namespace CRLogin\core;
 
-use CRLogin\core\lib\ConfigReader;
+use CRLogin\core\lib\ConfigFile;
 use CRLogin\core\lib\Configuration;
 use CRLogin\core\lib\LanguageFile;
 use CRLogin\core\lib\Session;
@@ -67,7 +67,9 @@ class DIC {
      */
     public function getConfiguration() {
         try {
-            $this->_configuration = new Configuration();
+            if (!isset($this->_configuration)) {
+                $this->_configuration = new Configuration();
+            }
             return $this->_configuration;
         } catch (\Exception $ex) {
             error_log($ex->getFile().':'.$ex->getLine().' - '.$ex->getMessage());
@@ -84,7 +86,7 @@ class DIC {
     public function getLanguageFile() {
         $config = $this->getConfiguration()->getConfigArray('general');
         $langCode = $config['language'];
-        $this->_languageFile = new LanguageFile(new ConfigReader);
+        $this->_languageFile = new LanguageFile(new ConfigFile);
         return $this->_languageFile->getLanguageArray($langCode);
     }
 

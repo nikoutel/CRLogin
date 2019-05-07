@@ -26,7 +26,7 @@ class LanguageFile {
     /**
      * @var object
      */
-    private $_configReader;
+    private $_configFile;
 
     /**
      * @var array 
@@ -34,10 +34,10 @@ class LanguageFile {
     private $_languageArray;
 
     /**
-     * @param \CRLogin\core\lib\ConfigReader $configReader
+     * @param \CRLogin\core\lib\ConfigFile $configFile
      */
-    public function __construct(ConfigReader $configReader) {
-        $this->_configReader = $configReader;
+    public function __construct(ConfigFile $configFile) {
+        $this->_configFile = $configFile;
     }
 
     /**
@@ -49,11 +49,11 @@ class LanguageFile {
     public function getLanguageArray($langCode) {
         $langFile = CRL_BASE_DIR . '/lang/lang.' . $langCode . '.php';
         if (file_exists($langFile)) {
-            $this->_languageArray = $this->_configReader->readFile($langFile);
+            $this->_languageArray = $this->_configFile->readFile($langFile);
         } else {
             $langCode = 'en';
             $langFile = CRL_BASE_DIR  . '/lang/lang.' . $langCode . '.php';
-            $this->_languageArray = $this->_configReader->readFile($langFile);
+            $this->_languageArray = $this->_configFile->readFile($langFile);
         }
         return $this->_languageArray;
     }

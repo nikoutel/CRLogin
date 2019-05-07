@@ -2,7 +2,7 @@
 
 /**
  *
- * ConfigReader: Reads a configuration file and returns its configuration array
+ * ConfigFile: Reads a configuration file and returns its configuration array
  * 
  * 
  * @package CRLogin
@@ -22,7 +22,7 @@
 namespace CRLogin\core\lib;
 
 
-class ConfigReader {
+class ConfigFile {
 
     /**
      * Returns a configuration array from a configuration file
