@@ -62,6 +62,11 @@ class Session {
         }
     }
 
+    /**
+     * Starts the session
+     *
+     * @return bool
+     */
     public function sessionStart() {
 
         return session_start();
