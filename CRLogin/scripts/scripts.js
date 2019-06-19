@@ -124,8 +124,7 @@ $(document).ready(function() {
     formaction = currentScriptBase + '/requestController.php';
     $('#noscript').hide();
     $('#lgsubmit').prop("disabled", false);
-    $.getJSON(currentScriptBase + '/languageArrayToJSON.php', function(data) {
-        msg = data;
+        msg = l;
         $('body').on('click', '#lgsubmit', function(e) {
             $('#lgerror').html('');
             username = $('#username').val();
@@ -312,5 +311,4 @@ $(document).ready(function() {
             return false;
         });*/
 
-    });
 });
