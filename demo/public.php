@@ -35,7 +35,7 @@ require   'CRLogin/CRLogin.php';
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><?php echo $l['MAIN_LINK'] ?></title>
+    <title><?php echo CRLogin::$l['MAIN_LINK'] ?></title>
     <link href="demo/login.css" rel="stylesheet" type="text/css" />
     <?php require CRL_BASE_DIR .  '/inc/head.inc.php'; ?>
 </head>
@@ -45,10 +45,10 @@ require   'CRLogin/CRLogin.php';
     <a href="index.php?s=main">Main</a> |
     <?php
     if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
-        echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
+        echo ' <a href="index.php?s=login">' . CRLogin::$l['LOGIN_LINK'] . '</a>';
     } else {
-        echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
-        echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
+        echo CRLogin::$l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
+        echo ' | <a href="index.php?s=logout">' . CRLogin::$l['LOGOUT_LINK'] . '</a>';
     }
     ?>
 </div>

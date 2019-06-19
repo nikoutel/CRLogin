@@ -20,31 +20,33 @@
  */
 
 namespace CRLogin;
+
+use CRLogin;
+
 require 'CRLogin.php';
-if (!isAjax()) {
+if (!CRLogin::isAjax()) {
     die();
 }
-$l = $dic->getLanguageFile();
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {
             $action = strtolower($_POST['action']);
             $className = implode("", array_map('ucfirst', explode('_', $action)));
 
-            $controller = $dic->getObject($className);
+            $controller = CRLogin::$dic->getObject($className);
             echo json_encode($controller->executeAction());
             
         } catch (\Exception $e) {
             header('HTTP/1.0 404 Not Found');
-            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['GENERIC_ERROR']));
             die();
         }
     } else {
         if ((!empty($_SESSION['dummyToken'])) && ($_SESSION['dummyToken'] == true)) {
-            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['LOGIN_FAIL']));
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['LOGIN_FAIL']));
             die();
         } else {
-            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['GENERIC_ERROR']));
             die();
         }
     }

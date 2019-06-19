@@ -28,7 +28,7 @@ if (count(get_included_files()) == 1) {
 $isMembersArea = false;
 $logoutAction = true;
 require   'CRLogin/CRLogin.php';
-$return = CRLogout($dic);
+$return = CRLogin::CRLogout();
 if ($return['redirect']) {
     header("location: ". $return['redirectURL']);
 }

@@ -35,7 +35,7 @@ require   'CRLogin/CRLogin.php';
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><?php echo $l['MAIN_LINK'] ?></title>
+        <title><?php echo CRLogin::$l['MAIN_LINK'] ?></title>
         <link href="demo/login.css" rel="stylesheet" type="text/css" />
         <?php require CRL_BASE_DIR .  '/inc/head.inc.php'; ?>
     </head>
@@ -45,23 +45,23 @@ require   'CRLogin/CRLogin.php';
             <a href="index.php?s=main">Main</a> | 
             <?php
             if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
-                echo ' <a href="index.php?s=login">' . $l['LOGIN_LINK'] . '</a>';
+                echo ' <a href="index.php?s=login">' . CRLogin::$l['LOGIN_LINK'] . '</a>';
             } else {
-                echo $l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
-                echo ' | <a href="index.php?s=logout">' . $l['LOGOUT_LINK'] . '</a>';
+                echo CRLogin::$l['HELLO'] . ' ' . htmlspecialchars($_SESSION['username'], ENT_QUOTES);
+                echo ' | <a href="index.php?s=logout">' . CRLogin::$l['LOGOUT_LINK'] . '</a>';
             }
             ?>
         </div>
         <div id="top">
 
             <div id="content">
-                <h1><?php echo $l['DEMO_MAIN_H1'] ?></h1>
-                <p><?php echo $l['DEMO_MAIN_TXT'] ?></p>
+                <h1><?php echo CRLogin::$l['DEMO_MAIN_H1'] ?></h1>
+                <p><?php echo CRLogin::$l['DEMO_MAIN_TXT'] ?></p>
                 <ul>
-                    <li><a href="index.php?s=login"><?php echo $l['LOGIN_LINK'] ?></a></li>
-                    <li><a href="index.php?s=members"><?php echo $l['MEMBERS_LINK'] ?></a></li>
-                    <li><a href="index.php?s=register"><?php echo $l['REGISTER_LINK'] ?></a></li>
-                    <li><a href="index.php?s=changepassword"><?php echo $l['CHANGE_PASS_LINK'] ?></a></li>
+                    <li><a href="index.php?s=login"><?php echo CRLogin::$l['LOGIN_LINK'] ?></a></li>
+                    <li><a href="index.php?s=members"><?php echo CRLogin::$l['MEMBERS_LINK'] ?></a></li>
+                    <li><a href="index.php?s=register"><?php echo CRLogin::$l['REGISTER_LINK'] ?></a></li>
+                    <li><a href="index.php?s=changepassword"><?php echo CRLogin::$l['CHANGE_PASS_LINK'] ?></a></li>
                 </ul>
 
             </div>
