@@ -156,7 +156,9 @@ class CRLogin
      * @throws \ReflectionException
      */
     public static function CRLogout() {
-        return self::$dic->getObject('logout')->executeAction();
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+            return self::$dic->getObject('logout')->executeAction();
+        }
     }
 }
 
