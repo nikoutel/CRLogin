@@ -49,10 +49,10 @@ CRLogin::CRLogout();
             <form action="" method="post" id="lg">
                 <fieldset ><br /><br />
                     <label for="username"><?php echo CRLogin::$l['USERNAME'] ?>:</label>
-                    <input type="text" name="username" class="txt" id="username"/><br />
+                    <input type="text" name="username" class="crl_username" id="username"/><br />
                     <label for="password"><?php echo CRLogin::$l['PASSWORD'] ?>:</label>
-                    <input type="password" name="password" class="txt" id="password"/><br />
-                    <input type="hidden" name="token" id="token" value="<?php echo CRLogin::getToken() ?>"/><br />
+                    <input type="password" name="password" class="crl_password" id="password"/><br />
+                    <input type="hidden" name="token" id="crl_token" value="<?php echo CRLogin::getToken() ?>"/><br />
                     <label for="lgsubmit"></label>	
                     <input type="submit" name="submit" value="<?php echo CRLogin::$l['LOGIN'] ?>" class="subm" id="lgsubmit" disabled="disabled"/>
                 </fieldset>	

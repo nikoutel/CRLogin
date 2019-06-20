@@ -66,12 +66,12 @@ if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
                     <table>
                         <tr>
                             <td><label for="oldpass"><?php echo CRLogin::$l['OLD_PASS'] ?>:</label></td>
-                            <td><input type="password" name="oldpass"  id="oldpass"/></td>
+                            <td><input type="password" name="crl_oldpass" class="crl_oldpass" id="oldpass"/></td>
                             <td id="oldpasserror" class="error"></td>
                         </tr>
                         <tr>
                             <td><label for="newpass"><?php echo CRLogin::$l['NEW_PASS'] ?>:</label></td>
-                            <td><input type="password" name="newpass"  id="newpass"/></td>
+                            <td><input type="password" name="newpass" class="crl_newpass" id="newpass"/></td>
                             <td><span id="newpasserror"  class="error"></span></td>
                         </tr>
                         <tr>
@@ -81,17 +81,17 @@ if (!isset($_SESSION['logged']) || ($_SESSION['logged'] === FALSE)) {
                         </tr>
                         <tr>
                             <td><label for="newpass2"><?php echo CRLogin::$l['NEW_PASS_2'] ?>:</label></td>
-                            <td><input type="password" name="newpass2"  id="newpass2"/></td>
+                            <td><input type="password" name="newpass2" class="crl_newpass2" id="newpass2"/></td>
                             <td id="newpasserror2"  class="error"></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="hidden" name="username" class="nkod" id="username" value="<?php echo $_SESSION['username'] ?>"/></td>
+                            <td><input type="hidden" name="username" class="crl_username" id="username" value="<?php echo $_SESSION['username'] ?>"/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="hidden" name="token" class="nkod" id="token" value="<?php echo CRLogin::getToken($dic) ?>"/></td>
+                            <td><input type="hidden" name="token" class="nkod" id="crl_token" value="<?php echo CRLogin::getToken() ?>"/></td>
                             <td></td>
                         </tr>
                         <tr>

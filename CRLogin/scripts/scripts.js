@@ -57,8 +57,8 @@ $(document).ready(function() {
                 },
         function(data) {
             $('#msg').html('');
-            $('#password').val('');
-            $('#password2').val('');
+            $('.crl_password').val('');
+            $('.crl_password2').val('');
 
             if (data !== null) {
                 if (data.error) {
@@ -92,10 +92,10 @@ $(document).ready(function() {
                     token: token
                 },
         function(data) {
-            $('#password').val('');
-            $('#newpass').val('');
-            $('#newpass2').val('');
-            $('#oldpass').val('');
+            $('.crl_password').val('');
+            $('.crl_newpass').val('');
+            $('.crl_newpass2').val('');
+            $('.crl_oldpass').val('');
             $('#msg').html('');
             if (data !== null) {
                 if (data.error) {
@@ -127,9 +127,9 @@ $(document).ready(function() {
         msg = l;
         $('body').on('click', '#lgsubmit', function(e) {
             $('#lgerror').html('');
-            username = $('#username').val();
-            password = $('#password').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            password = $('.crl_password').val();
+            token = $('#crl_token').val();
             if ($.trim(username) === '') {
                 $('#lgerror').html(msg.EMPTY_USERNAME);
                 return false;
@@ -170,11 +170,11 @@ $(document).ready(function() {
             $('#lgerror').html('');
             $("#changemsg").html('');
 
-            username = $('#username').val();
-            newpassword = $('#newpass').val();
-            newpassword2 = $('#newpass2').val();
-            oldpassword = $('#oldpass').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            newpassword = $('.crl_newpass').val();
+            newpassword2 = $('.crl_newpass2').val();
+            oldpassword = $('.crl_oldpass').val();
+            token = $('#crl_token').val();
 
             var hasError = false;
 
@@ -237,10 +237,10 @@ $(document).ready(function() {
             $('#lgerror').html('');
             $("#changemsg").html('');
 
-            username = $('#username').val();
-            password = $('#password').val();
-            password2 = $('#password2').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            password = $('.crl_password').val();
+            password2 = $('.crl_password2').val();
+            token = $('#crl_token').val();
 
             var hasError = false;
 

@@ -65,12 +65,12 @@ require   'CRLogin/CRLogin.php';
                     <table>
                         <tr>
                             <td><label for="username"><?php echo CRLogin::$l['USERNAME'] ?>:</label></td>
-                            <td><input type="text" name="username"  id="username"/></td>
+                            <td><input type="text" name="username" class="crl_username" id="username"/></td>
                             <td id="usernameerror" class="error"></td>
                         </tr>
                         <tr>
                             <td><label for="password"><?php echo CRLogin::$l['PASSWORD'] ?>:</label></td>
-                            <td><input type="password" name="password"  id="password"/></td>
+                            <td><input type="password" name="password" class="crl_password" id="password"/></td>
                             <td><span id="passworderror"  class="error"></span></td>
                         </tr>
                         <tr>
@@ -80,12 +80,12 @@ require   'CRLogin/CRLogin.php';
                         </tr>
                         <tr>
                             <td><label for="password2"><?php echo CRLogin::$l['PASSWORD2'] ?>:</label></td>
-                            <td><input type="password" name="password2"  id="password2"/></td>
+                            <td><input type="password" name="password2" class="crl_password2" id="password2"/></td>
                             <td id="passworderror2"  class="error"></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="hidden" name="token" class="nkod" id="token" value="<?php echo CRLogin::getToken($dic) ?>"/></td>
+                            <td><input type="hidden" name="token" id="crl_token" value="<?php echo CRLogin::getToken() ?>"/></td>
                             <td></td>
                         </tr>
                         <tr>
