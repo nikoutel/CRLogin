@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core/Actions
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -23,7 +23,7 @@ namespace CRLogin\core\Actions;
 
 use CRLogin\core\User;
 use CRLogin\core\Crypt;
-
+use Nikoutel\Debugr\Debugr;
 class ChangePassword implements Actions {
 
 
@@ -105,8 +105,6 @@ class ChangePassword implements Actions {
 
         $this->_user->setUserName($this->_username);
         $update = $this->_user->updateUserPass($spass, $newSalt);
-
-        session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;
         $_SESSION['username'] = $this->_username;
         if ($update !== FALSE) {

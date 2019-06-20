@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -21,6 +21,7 @@
 
 namespace CRLogin\DataAccess;
 
+use CRLogin\core\lib\Utils;
 use \PDO;
 
 abstract class PDODatabase implements DataAccessor {
@@ -94,8 +95,9 @@ abstract class PDODatabase implements DataAccessor {
      * 
      * @param array $dbParameters
      * @param Utils $utils
+     * @throws \Exception
      */
-    public function __construct(array $dbParameters, $utils) {
+    public function __construct(array $dbParameters, Utils $utils) {
         $this->_utils = $utils;
         $this->setParameters($dbParameters);
 
@@ -140,16 +142,15 @@ abstract class PDODatabase implements DataAccessor {
      * @param string $username
      * @param string $passwd
      * @param array $options
-     * @return boolean
+     * @throws \Exception
      */
     public function connect($dsn, $username, $passwd, $options) {
         try {
             $this->pdo = new PDO($dsn, $username, $passwd, $options);
         } catch (\PDOException $exc) {
-            $this->errorMessage = $exc->getMessage();
-            $this->errorTraceAsString = $exc->getTraceAsString();
-            echo $this->errorMessage; // delme
-            return FALSE;
+            $errorMsg = 'Database Error!';
+            error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+            throw new \Exception($errorMsg, 15, $exc);
         }
     }
 
@@ -162,8 +163,11 @@ abstract class PDODatabase implements DataAccessor {
     /**
      * Abstract method for getting the database columns
      * Database driver specific
+     *
+     * @param string $tableName
+     * @param boolean $withPrimaryKey
      */
-    abstract protected function _getColumns($tableName, $withPrimaryKey);
+    abstract protected function _getColumns($tableName, $withPrimaryKey = FALSE);
 
     /**
      * Creates entries in the database
@@ -176,8 +180,11 @@ abstract class PDODatabase implements DataAccessor {
      * in order of the fields/columns when the dataset/table was created
      * 
      * @param string $table The dataset/table to store the values
+     * @throws \Exception
+     * @return mixed
      */
     public function create(array $values, $table) {
+        $table = 'crl_' . $table;
         if ($this->_utils->isAssociative($values)) {
             $columns = array_keys($values);
             $bind = array_values($values);
@@ -223,8 +230,12 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function read(array $columns, $table, array $conditions = array()) {
+        $table = 'crl_' . $table;
         $columns_str = implode(",", $columns);
         if (strtolower($columns_str) == 'all') {
             $columns_str = '*';
@@ -271,9 +282,12 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function update(array $values, $table, array $conditions = array()) {
-
+        $table = 'crl_' . $table;
         $columns = array_keys($values);
         $bindSet = array_values($values);
         $sql = 'UPDATE ' . $table . ' SET '; // @todo whitelisting
@@ -318,8 +332,12 @@ abstract class PDODatabase implements DataAccessor {
      *           )
      *      )
      * )
+     *
+     * @throws \Exception
+     * @return mixed
      */
     public function delete($table, array $conditions = array()) {
+        $table = 'crl_' . $table;
         $bind = array();
         $sql = 'DELETE FROM ' . $table; // @todo whitelisting
         if (!empty($conditions)) {
@@ -346,6 +364,7 @@ abstract class PDODatabase implements DataAccessor {
      * @param string $sql The sql statement
      * @param array $bind The bind parameters array
      * @return mixed
+     * @throws \Exception
      */
     public function execute($sql, array $bind) {
 
@@ -363,10 +382,9 @@ abstract class PDODatabase implements DataAccessor {
                 else
                     return FALSE;
             } catch (\PDOException $exc) {
-                $this->errorMessage = $exc->getMessage();
-                $this->errorTraceAsString = $exc->getTraceAsString();
-                echo $this->errorMessage; // delme
-                return FALSE;
+                $errorMsg = 'Database Error!';
+                error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+                throw new \Exception($errorMsg, 15, $exc);
             }
         }
         else
@@ -385,6 +403,7 @@ abstract class PDODatabase implements DataAccessor {
      * or false on failure
      * 
      * @param string $query The sql query
+     * @throws \Exception
      * @return mixed
      */
     public function runQuery($query) {
@@ -401,10 +420,9 @@ abstract class PDODatabase implements DataAccessor {
                     return $this->pdo->exec($query);
                 }
             } catch (\PDOException $exc) {
-                $this->errorMessage = $exc->getMessage();
-                $this->errorTraceAsString = $exc->getTraceAsString();
-                echo $this->errorMessage; // delme
-                return FALSE;
+                $errorMsg = 'Database Error!';
+                error_log($exc->getFile().':'.$exc->getLine().' - '.$exc->getMessage());
+                throw new \Exception($errorMsg, 15, $exc);
             }
         }
         else

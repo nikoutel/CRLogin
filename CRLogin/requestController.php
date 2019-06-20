@@ -8,7 +8,7 @@
  * 
  * @package CRLogin
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -21,38 +21,34 @@
 
 namespace CRLogin;
 
-use CRLogin\core\DIC;
+use CRLogin;
 
-$docRoot = $_SERVER['DOCUMENT_ROOT'];
-$baseDir = realpath(dirname(__FILE__)) . '/..';
-$subDir = str_replace($docRoot, '', $baseDir);
-
-if (!defined('BASE_DIR')) define('BASE_DIR', $baseDir);
-if (!defined('SUB_DIR')) define('SUB_DIR', $subDir);
-
-require '../CRLoginAutoloader.php';
-
-$dic = new DIC;
-$session = $dic->getSession();
-$session->sessionStart();
-$l = $dic->getLanguageFile();
+require 'CRLogin.php';
+if (!CRLogin::isAjax()) {
+    die();
+}
 if (isset($_POST['action'])) {
     if (((isset($_POST['token'])) && ($_POST['token'] == $_SESSION['token'])) || ($_POST['action']) == 'logout') {
         try {
             $action = strtolower($_POST['action']);
             $className = implode("", array_map('ucfirst', explode('_', $action)));
 
-            $controller = $dic->getObject($className);
+            $controller = CRLogin::$dic->getObject($className);
             echo json_encode($controller->executeAction());
             
         } catch (\Exception $e) {
             header('HTTP/1.0 404 Not Found');
-            echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
-            exit;
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['GENERIC_ERROR']));
+            die();
         }
     } else {
-        echo json_encode(array('error' => TRUE, 'errorMsg' => $l['GENERIC_ERROR']));
-        exit;
+        if ((!empty($_SESSION['dummyToken'])) && ($_SESSION['dummyToken'] == true)) {
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['LOGIN_FAIL']));
+            die();
+        } else {
+            echo json_encode(array('error' => TRUE, 'errorMsg' => CRLogin::$l['GENERIC_ERROR']));
+            die();
+        }
     }
 }
 ?>

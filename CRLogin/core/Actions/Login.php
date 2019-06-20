@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core/Actions
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -155,7 +155,7 @@ class Login implements Actions {
             $redirectUrl = $_SESSION['redirectURL'];
             unset($_SESSION['redirectURL']);
         } else {
-            $redirectUrl = 'index0.php';
+            $redirectUrl = '/';
         }
         session_regenerate_id(true);
         $_SESSION['logged'] = TRUE;

@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -21,11 +21,12 @@
 
 namespace CRLogin\core;
 
-use CRLogin\core\lib\ConfigReader;
+use CRLogin\core\lib\ConfigFile;
 use CRLogin\core\lib\Configuration;
 use CRLogin\core\lib\LanguageFile;
 use CRLogin\core\lib\Session;
 use CRLogin\core\lib\Utils;
+use CRLogin\DataAccess\DataAccessor;
 
 class DIC {
 
@@ -50,7 +51,7 @@ class DIC {
     private $_configuration;
 
     /**
-     * @var obj 
+     * @var object
      */
     private $_languageFile;
 
@@ -62,18 +63,17 @@ class DIC {
      * Returns Configuration object
      *
      * @return \CRLogin\core\lib\Configuration
+     * @throws \Exception
      */
     public function getConfiguration() {
         try {
-            $this->_configuration = new Configuration();
+            if (!isset($this->_configuration)) {
+                $this->_configuration = new Configuration();
+            }
             return $this->_configuration;
         } catch (\Exception $ex) {
-            session_start();
-            $_SESSION['error'] = $ex->getMessage();
-            $_SESSION['reinstall'] = TRUE;
-            $url = SUB_DIR . '/CRLogin/error.php';
-            header('Location:'. $url);
-            die();
+            error_log($ex->getFile().':'.$ex->getLine().' - '.$ex->getMessage());
+            throw new \Exception ($ex->getMessage(), 15, $ex);
         }
     }
 
@@ -81,11 +81,12 @@ class DIC {
      * Returns the language array
      * 
      * @return array
+     * @throws \Exception
      */
     public function getLanguageFile() {
         $config = $this->getConfiguration()->getConfigArray('general');
         $langCode = $config['language'];
-        $this->_languageFile = new LanguageFile(new ConfigReader);
+        $this->_languageFile = new LanguageFile(new ConfigFile);
         return $this->_languageFile->getLanguageArray($langCode);
     }
 
@@ -93,6 +94,7 @@ class DIC {
      * Returns the data store
      * 
      * @return \CRLogin\DataAccess\DataAccessor
+     * @throws \Exception
      */
     public function getDataStore() {
         if (!isset($this->_dataStore)) {
@@ -100,7 +102,7 @@ class DIC {
             if ($config['datastore'] == 'database') {
                 $dbConfig = $this->getConfiguration()->getConfigArray('db');
                 $utility = $this->getUtility();
-                $database = 'CRLogin\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
+                $database = CRL_APP_DIR . '\DataAccess\\' . $dbConfig['databaseDriver'] . 'Database';
                 $this->_dataStore = new $database($dbConfig, $utility);
             }
         }
@@ -111,6 +113,7 @@ class DIC {
      * Returns the session object
      * 
      * @return \CRLogin\core\lib\Session
+     * @throws \Exception
      */
     public function getSession() {
         if (!isset($this->_session)) {
@@ -140,6 +143,7 @@ class DIC {
      * @param string $class
      * @return object
      * @throws \Exception
+     * @throws \ReflectionException
      */
     public function getObject($class) {
 
@@ -161,8 +165,6 @@ class DIC {
             } else {
                 $arguments = array();
             }
-
-            // @todo try catch
             $reflector = new \ReflectionClass($className);
             $obj = $reflector->newInstanceArgs($arguments);
         } else {
@@ -177,6 +179,7 @@ class DIC {
      *
      * @param string $class
      * @return array
+     * @throws \ReflectionException
      */
     private function _getClassParameters($class) {
 
@@ -203,8 +206,8 @@ class DIC {
 
         // whitelisting
         $subNamespaces = array(
-            '\CRLogin\core\\',
-            '\CRLogin\core\Actions\\'
+            CRL_APP_DIR . '\core\\',
+            CRL_APP_DIR . '\core\Actions\\'
         );
 
         foreach ($subNamespaces as $nspace) {

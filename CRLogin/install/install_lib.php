@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage install
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -55,7 +55,7 @@ function createConfigFile($filename) {
  * @return boolean
  */
 function checkMySQLConnection($host, $port, $rootUser, $rootPass) {
-    $connect = @mysql_connect($host . ':' . $port, $rootUser, $rootPass);
+    $connect = mysqli_connect($host . ':' . $port, $rootUser, $rootPass);
     if (!$connect) {
 
         return FALSE;
@@ -71,9 +71,9 @@ function checkMySQLConnection($host, $port, $rootUser, $rootPass) {
  * @return boolean
  */
 function createDb($connect, $db) {
-    $db_esc = mysql_real_escape_string($db);
+    $db_esc = mysqli_real_escape_string($connect, $db);
     $query = "CREATE DATABASE IF NOT EXISTS " . $db_esc;
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
     if ($result) {
         return TRUE;
     } else {
@@ -94,11 +94,12 @@ function createDb($connect, $db) {
  */
 function createUser($connect, $db, $user, $dbpass, $atHost) {
 
-    $db_esc = mysql_real_escape_string($db);
-    $user_esc = mysql_real_escape_string($user);
-    $dbpass_esc = mysql_real_escape_string($dbpass);
+
+    $db_esc = mysqli_real_escape_string($connect, $db);
+    $user_esc = mysqli_real_escape_string($connect, $user);
+    $dbpass_esc = mysqli_real_escape_string($connect, $dbpass);
     $query = "GRANT ALL ON " . $db_esc . ".* to  " . $user_esc . "@'" . $atHost . "' identified by '" . $dbpass_esc . "'";
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
     if ($result) {
         return TRUE;
     } else {
@@ -115,7 +116,7 @@ function createUser($connect, $db, $user, $dbpass, $atHost) {
  */
 function createTables($connect) {
 
-    $query = "CREATE TABLE IF NOT EXISTS user (
+    $query = "CREATE TABLE IF NOT EXISTS crl_user (
                 userid int(11) unsigned NOT NULL auto_increment,
                 username varchar(64) NOT NULL default '',
                 spass varchar(64) NOT NULL default '',
@@ -123,24 +124,24 @@ function createTables($connect) {
                 PRIMARY KEY  (userid)
                 ) ENGINE=MyISAM";
 
-    $result = mysql_query($query, $connect);
+    $result = mysqli_query($connect, $query);
 
-    $query2 = "CREATE TABLE IF NOT EXISTS challenge  (
+    $query2 = "CREATE TABLE IF NOT EXISTS crl_challenge  (
 	  	 challenge varchar(64) NOT NULL default '',
  		 sessionid varchar(64) NOT NULL default '',
   		 timestamp int(11) NOT NULL default '0'
 		 ) ENGINE=MyISAM";
 
-    $result2 = mysql_query($query2, $connect);
+    $result2 = mysqli_query($connect, $query2);
 
-    $query3 = "CREATE TABLE IF NOT EXISTS sessions (
+    $query3 = "CREATE TABLE IF NOT EXISTS crl_sessions (
                 id varchar(32) NOT NULL default '',
                 access int(10) unsigned NOT NULL,
                 data text,
                 PRIMARY KEY (id)
                 ) ENGINE=MyISAM";
 
-    $result3 = mysql_query($query3, $connect);
+    $result3 = mysqli_query($connect, $query3);
 
     if ($result && $result2 && $result3) {
         return TRUE;
@@ -161,16 +162,16 @@ function insertUser($connect) {
     $spass = '$2y$10$HLmNt5jH6ElynYSSe.fZS.Q/.dq4Jy6K/39kvoyg7rsnMEtYlIYH2';
     $usersalt = '$2y$10$HLmNt5jH6ElynYSSe.fZSA$';
 
-    $result = mysql_query("SELECT userid FROM user WHERE username = '" . $username . "'", $connect);
+    $result = mysqli_query($connect, "SELECT userid FROM crl_user WHERE username = '" . $username . "'");
 
-    $count = mysql_num_rows($result);
+    $count = mysqli_num_rows($result);
 
     if ($count == 0) {
 
 
-        $query = "INSERT INTO user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
+        $query = "INSERT INTO crl_user (username,spass,usersalt) VALUES('$username','$spass','$usersalt')";
 
-        $result = mysql_query($query, $connect);
+        $result = mysqli_query($connect, $query);
 
         if ($result) {
             return TRUE;
@@ -193,9 +194,8 @@ function insertUser($connect) {
  * @param string $db
  * @return int|boolean Returns false on error
  */
-function writeConfig($file, $host, $port, $user, $pass, $db) {
+function writeConfig($file, $host, $port, $user, $pass, $db, $baseURL, $appURLPath, $loginFormReqURI, $loginSuccessDefURI) {
 
-    $pass = mysql_real_escape_string($pass);
 
     $string = "<?php\n";
 
@@ -214,7 +214,11 @@ function writeConfig($file, $host, $port, $user, $pass, $db) {
     $string .= " ),\n";
     $string .= " 'general' => array(\n";
     $string .= " 'language' => '" . $_SESSION['lang'] . "',\n";
-    $string .= " 'installUniqueId' => '" . getRandom() . "'\n";
+    $string .= " 'installUniqueId' => '" . getRandom() . "',\n";
+    $string .= " 'baseURL' => '" . $baseURL . "',\n";
+    $string .= " 'appURLPath' => '" . $appURLPath. "',\n";
+    $string .= " 'loginFormReqURI' => '" . $loginFormReqURI . "',\n";
+    $string .= " 'loginSuccessDefURI' => '" . $loginSuccessDefURI . "'\n";
     $string .= ")\n";
     $string .= " );\n";
     $string .= 'return $db_config;' . "\n";

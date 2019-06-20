@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage install
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -100,12 +100,34 @@ $(document).ready(function() {
             $("#wait").html('');
             valerror = true;
         }
+        $("#loginformmsg").html('');
+        if ($.trim($("#loginform").val()) == '') {
+            $("#loginformmsg").html('Should not be empty');
+            $("#wait").html('');
+            valerror = true;
+        } else if (!isUrlValid($("#loginform").val())) {
+            $("#loginformmsg").html('URL is not valid');
+            $("#wait").html('');
+            valerror = true;
+        }
+        $("#successredirectmsg").html('');
+        if ($.trim($("#successredirect").val()) == '') {
+            $("#successredirectmsg").html('Should not be empty');
+            $("#wait").html('');
+            valerror = true;
+        } else if (!isUrlValid($("#successredirect").val())) {
+            $("#successredirectmsg").html('URL is not valid');
+            $("#wait").html('');
+            valerror = true;
+        }
         if (valerror)
             return false;
         var databaseName = $("#database_name").val();
         var user = $("#user").val();
         var userPass = $("#userpass").val();
         var inform = $("#inform").val();
+        var loginform = $("#loginform").val();
+        var successredirect = $("#successredirect").val();
 
         $.post(
                 "install_request.php?action=form",
@@ -116,7 +138,10 @@ $(document).ready(function() {
                     database_name: databaseName,
                     user: user,
                     userpass: userPass,
-                    inform: inform},
+                    inform: inform,
+                    loginform: loginform,
+                    successredirect, successredirect
+                },
         function(data) {
             $("#wait").html('');
             $("#errormsg").html('');
@@ -151,3 +176,6 @@ $(document).ready(function() {
     });
 });
 
+function isUrlValid(url) {
+    return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+}

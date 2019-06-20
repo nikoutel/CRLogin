@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin
  *
@@ -22,14 +22,17 @@
 
 namespace CRLogin\DataAccess;
 
+use CRLogin\core\lib\Utils;
+
 class MySQLDatabase extends PDODatabase {
 
     /**
      *
      * @param array $dbParameters
      * @param Utils $utils
+     * @throws \Exception
      */
-    function __construct(array $dbParameters, $utils) {
+    function __construct(array $dbParameters, Utils $utils) {
         parent::__construct($dbParameters, $utils);
     }
 
@@ -37,6 +40,7 @@ class MySQLDatabase extends PDODatabase {
      * A MySQL specific method
      * Returns the database tables
      *
+     * @throws \Exception
      * @return array
      */
     protected function _getTables() {
@@ -58,6 +62,7 @@ class MySQLDatabase extends PDODatabase {
      *
      * @param string $tableName
      * @param boolean $withPrimaryKey
+     * @throws \Exception
      * @return mixed
      */
     protected function _getColumns($tableName, $withPrimaryKey = FALSE) {

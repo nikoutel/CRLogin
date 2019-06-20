@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage install
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -26,6 +26,12 @@ if (isset($_POST['lang'])) {
 if (isset($_POST['db'])) {
     switch ($_POST['db']) {
         case 'mysql':
+            include 'install_form_mysql.php';
+            break;
+        case 'mysqli':
+            include 'install_form_mysql.php';
+            break;
+        case 'pdo_mysql':
             include 'install_form_mysql.php';
             break;
         case 'sqlite3':

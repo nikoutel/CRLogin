@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core\lib
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -41,9 +41,9 @@ class Configuration {
     private $_installConfigFile;
 
     /**
-     * @var ConfigReader 
+     * @var ConfigFile
      */
-    private $_configReader;
+    private $_configFileObj;
 
     /**
      * @var array 
@@ -67,13 +67,15 @@ class Configuration {
 
     /**
      * Initialization
+     *
+     * @throws \Exception
      */
     public function __construct() {
-        $this->_configFile = realpath(BASE_DIR . '/CRLogin/' . $this->_configFileScript);
-        $this->_configReader = new ConfigReader();
+        $this->_configFile = CRL_BASE_DIR .'/'. $this->_configFileScript;
+        $this->_configFileObj = new ConfigFile();
         $this->getConfigFromFile($this->_configFile);
         $this->_installConfigFile = $this->_configFileArray['general']['dbConfigFile'];
-        $this->getDbConfigFromFile($this->_installConfigFile);
+        $this->getInstallConfigFromFile($this->_installConfigFile);
         $this->setConfigArray();
         $this->setDbConfigArray();
     }
@@ -83,13 +85,14 @@ class Configuration {
      * 
      * @param string $configFile
      * @return array
+     * @throws \Exception
      */
-    public function getDbConfigFromFile($configFile) {
+    public function getInstallConfigFromFile($configFile) {
 
-        if ($this->_installConfigFileArray = $this->_configReader->readFile($configFile)){
+        if ($this->_installConfigFileArray = $this->_configFileObj->readFile($configFile)){
             return $this->_installConfigFileArray;
         } else {
-            throw new \Exception('Configuration file not found');
+            throw new \Exception('Install configuration file not found');
         }
     }
 
@@ -97,11 +100,12 @@ class Configuration {
      * Returns the configuration array from the main configuration
      * 
      * @param string $configFile
+     * @throws \Exception
      * @return array
      */
     public function getConfigFromFile($configFile) {
 
-        if ($this->_configFileArray = $this->_configReader->readFile($configFile)){
+        if ($this->_configFileArray = $this->_configFileObj->readFile($configFile)){
             return $this->_configFileArray;
         } else {
             throw new \Exception('Configuration file not found');

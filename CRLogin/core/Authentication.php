@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -94,7 +94,7 @@ class Authentication {
      * @param string $actual
      * @return bool
      */
-    private static function _compareStrings($expected, $actual) {
+    private function _compareStrings($expected, $actual) {
         $expected = (string) $expected;
         $actual = (string) $actual;
         $lenExpected = strlen($expected);

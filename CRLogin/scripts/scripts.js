@@ -7,7 +7,7 @@
  * @package CRLogin
  * @subpackage scripts
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -17,7 +17,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
+var currentScript = function () {
 
+    var scripts = document.querySelectorAll( 'script[src]' );
+    var currentScript = scripts[ scripts.length - 1 ].src;
+    var currentScriptChunks = currentScript.split( '/' );
+    var currentScriptFile = currentScriptChunks[ currentScriptChunks.length - 1 ];
+
+    return currentScript.replace( currentScriptFile, '' ).replace(/\/$/, "");
+}
 $(document).ready(function() {
     function cr(passw) {
         passcr = passw;
@@ -49,8 +57,8 @@ $(document).ready(function() {
                 },
         function(data) {
             $('#msg').html('');
-            $('#password').val('');
-            $('#password2').val('');
+            $('.crl_password').val('');
+            $('.crl_password2').val('');
 
             if (data !== null) {
                 if (data.error) {
@@ -84,10 +92,10 @@ $(document).ready(function() {
                     token: token
                 },
         function(data) {
-            $('#password').val('');
-            $('#newpass').val('');
-            $('#newpass2').val('');
-            $('#oldpass').val('');
+            $('.crl_password').val('');
+            $('.crl_newpass').val('');
+            $('.crl_newpass2').val('');
+            $('.crl_oldpass').val('');
             $('#msg').html('');
             if (data !== null) {
                 if (data.error) {
@@ -108,16 +116,20 @@ $(document).ready(function() {
             });
 
     }
-    formaction = 'CRLogin/requestController.php';
+    currentScriptBase = currentScript();
+    var currentScriptBase = currentScriptBase.split('/');
+    currentScriptBase.pop();
+    currentScriptBase = currentScriptBase.join('/');
+
+    formaction = currentScriptBase + '/requestController.php';
     $('#noscript').hide();
-    $('#lgsubmit').removeAttr('disabled');
-    $.getJSON('CRLogin/languageArrayToJSON.php', function(data) {
-        msg = data;
-        $('#lgsubmit').click(function() {
+    $('#lgsubmit').prop("disabled", false);
+        msg = l;
+        $('body').on('click', '#lgsubmit', function(e) {
             $('#lgerror').html('');
-            username = $('#username').val();
-            password = $('#password').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            password = $('.crl_password').val();
+            token = $('#crl_token').val();
             if ($.trim(username) === '') {
                 $('#lgerror').html(msg.EMPTY_USERNAME);
                 return false;
@@ -153,17 +165,16 @@ $(document).ready(function() {
 
             return false;
         });
-
-        $("#changesubmit").click(function() {
+        $('body').on('click', '#changesubmit', function(e) {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
 
-            username = $('#username').val();
-            newpassword = $('#newpass').val();
-            newpassword2 = $('#newpass2').val();
-            oldpassword = $('#oldpass').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            newpassword = $('.crl_newpass').val();
+            newpassword2 = $('.crl_newpass2').val();
+            oldpassword = $('.crl_oldpass').val();
+            token = $('#crl_token').val();
 
             var hasError = false;
 
@@ -212,25 +223,24 @@ $(document).ready(function() {
                     }
                 }, "json")
                 .error(
-                    function(data) { 
+                    function(data) {
                         $('#lgerror').html($.parseJSON(data.responseText).errorMsg);
-                        $('#msg').html(''); 
+                        $('#msg').html('');
                     });
             }
 
             return false;
         });
 
-        $("#registersubmit").click(function() {
-
+        $('body').on('click', '#registersubmit', function(e) {
             $(".error").html('');
             $('#lgerror').html('');
             $("#changemsg").html('');
 
-            username = $('#username').val();
-            password = $('#password').val();
-            password2 = $('#password2').val();
-            token = $('#token').val();
+            username = $('.crl_username').val();
+            password = $('.crl_password').val();
+            password2 = $('.crl_password2').val();
+            token = $('#crl_token').val();
 
             var hasError = false;
 
@@ -286,7 +296,7 @@ $(document).ready(function() {
 
             return false;
         });
-        $('a[href$="logout"]').click(function() {
+/*        $('body').on('click', 'a[href$="logout', function(e) {
             action = 'logout';
             $.post(
                     formaction,
@@ -299,7 +309,6 @@ $(document).ready(function() {
                 }
             }, "json");
             return false;
-        });
+        });*/
 
-    });
 });

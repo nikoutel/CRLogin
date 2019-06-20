@@ -8,7 +8,7 @@
  * 
  * @package CRLogin
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -34,11 +34,11 @@ function CRLoginAutoloader($className) {
     $basedir = array_shift($fileName);
     $fileName = implode(DIRECTORY_SEPARATOR, $fileName);
 
-    if (true === file_exists($fileName)) {
+    if (true === file_exists($fileName) && is_file($fileName)) {
         require_once($fileName);
         return true;
-    } elseif (true === file_exists($basedir . DIRECTORY_SEPARATOR . $fileName)) {
-        require_once($basedir . DIRECTORY_SEPARATOR . $fileName);
+    } elseif (true === file_exists(__DIR__.  DIRECTORY_SEPARATOR . $fileName) && is_file(__DIR__.  DIRECTORY_SEPARATOR . $fileName)) {
+        require_once(__DIR__. DIRECTORY_SEPARATOR .  $fileName);
         return true;
     }
 }

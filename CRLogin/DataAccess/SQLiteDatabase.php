@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage DataAccess
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin
  *
@@ -33,6 +33,7 @@ class SQLiteDatabase extends PDODatabase {
      * A SQLite specific method
      * Returns the database tables
      *
+     * @throws \Exception
      * @return array
      */
     protected function _getTables() {
@@ -58,6 +59,7 @@ class SQLiteDatabase extends PDODatabase {
      *
      * @param string $tableName
      * @param boolean $withPrimaryKey
+     * @throws \Exception
      * @return mixed
      */
     protected function _getColumns($tableName, $withPrimaryKey = FALSE) {

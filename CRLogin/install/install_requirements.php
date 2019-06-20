@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage install
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -34,11 +34,13 @@ $dir = realpath(dirname(__FILE__) . '/../config'); // consider putting this outs
 $basedir = basename(realpath(dirname(__FILE__) . '/../config'));
 $file = 'install_config.php';
 $requirements = array(
-    'phpMinVersion' => '5.3.0',
+    'phpMinVersion' => '5.4.0',
     'configFileBase' => $basedir . DIRECTORY_SEPARATOR . $file,
     'configFile' => $dir . DIRECTORY_SEPARATOR . $file,
     'dbExtension' => array(
         'mysqlExtension' => 'mysql',
+        'mysqliExtension' => 'mysqli',
+        'pdomysqlExtension' => 'pdo_mysql',
         'sqliteExtension' => 'sqlite3'
     )
 );

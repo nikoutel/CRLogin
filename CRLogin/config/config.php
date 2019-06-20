@@ -9,7 +9,7 @@
  * @package CRLogin
  * @subpackage config
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin
  *
@@ -22,16 +22,17 @@
 
 $config = array(
     'general' => array(
-        'disabled' => 'FALSE', // kill switch
+        'disabled' => 'FALSE', // kill switch @todo: still relevant?
         'datastore' => 'database',
-        'dbConfigFile' => BASE_DIR .'/CRLogin/config/install_config.php',
+        'dbConfigFile' => CRL_BASE_DIR . '/config/install_config.php',
         'challengeTimedelay' => 15, //number of seconds the challenge is stored in the database
         'sessionInDataStore' => TRUE,
         'cryptCostParameter' => '10'
     ),
     'db' => array(
         'dbOptions' => array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_FOUND_ROWS => true
         )
     )
 );

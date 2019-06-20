@@ -8,7 +8,7 @@
  * 
  * @package CRLogin
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -19,21 +19,36 @@
  * 
  */
 
-session_start();
-if (isset($_SESSION['error'])) {
-    $error = $_SESSION['error'];
+$errormsg = $e->getMessage();
+$errorCode = $e->getCode();
+
+$showMsg = function() use ($errorCode) {$n=1; return($errorCode >> $n-1) & 1;};
+$reinstall = function() use ($errorCode) {$n=2; return($errorCode >> $n-1) & 1;};
+$errorLogged = function() use ($errorCode) {$n=3; return($errorCode >> $n-1) & 1;};
+$breakAfterError = function() use ($errorCode) {$n=4; return($errorCode >> $n-1) & 1;};
+
+if ($showMsg()) {
+    $error = $errormsg;
 } else {
     $error = '';
 }
+
+if ($errorLogged()) {
+    $error .= '<br />(errors have been logged)';
+}
+
 $str = <<<ERROR
-    An error has occurred <br />\n
     Guru meditation:<br />\n<br />\n
+    An error has occurred: <br />\n<br />\n
+    
     $error
     <br />\n<br />\n
 ERROR;
 echo $str;
-if (isset($_SESSION['reinstall']) && ($_SESSION['reinstall'] === TRUE)){
-    echo 'Please try to re-<a href = "install/index.php">install</a>';
+
+if ($reinstall()){
+    echo 'Please try to re-<a href ="' . CRL_APP_DIR . '/install/index.php">install</a>';
         
 }
-session_destroy();
+
+if ($breakAfterError()) die();

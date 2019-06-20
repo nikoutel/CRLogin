@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage install
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -51,8 +51,8 @@ $done = $_SESSION['done'];
             <div id="formdiv">
                 <div class="text">
                     <h1 class="secheader">CRLogin installation</h1>
-                    <h2>Database configuration</h2>
-                    <p>You have everything you need! Now, enter your database connection details below.</p>
+                    <h2>Configuration</h2>
+                    <p>You have everything you need! Now, enter your database connection details and the URL/path data below.</p>
                 </div>
                 <form action="install_request.php?action=form" method="post">
                     <table id="installformt" border="0">
@@ -110,7 +110,7 @@ $done = $_SESSION['done'];
                                 <td>
                                     <b>Username:</b>
                                     <br />
-                                    The username for the account that the board will  use.
+                                    The username for the mysql account that CRLogin will  use.
                                     If the user account does not yet exist, it will be  created.
                                 </td>
                                 <td><input name="user" id="user" type="text" /></td>
@@ -124,6 +124,26 @@ $done = $_SESSION['done'];
                                 </td>
                                 <td><input name="userpass" id="userpass" type="password" /></td>
                                 <td id="userpassmsg"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Login form:</b>
+                                    <br />
+                                    The URL of the login form.<br/>
+                                    (e.g. https://example.com/myapp/index.php?s=login)
+                                </td>
+                                <td><input name="loginform" id="loginform" type="text" /></td>
+                                <td id="loginformmsg"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Succes redirect:</b>
+                                    <br />
+                                    The URL for the successful login redirect. <br/>
+                                    (e.g. https://example.com/myapp/welcome/)
+                                </td>
+                                <td><input name="successredirect" id="successredirect" type="text" /></td>
+                                <td id="successredirectmsg"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -159,7 +179,7 @@ if ($noError && $done) {
     echo 'Please delete the install folder before continuing<br />';
     echo 'A demo account has been created:<br />';
     echo 'username: <b>user</b>,  password: <b>crlogin</b><br />';
-    echo 'You should change the password after <a href="../../index.php?s=login">login</a><br />';
+    echo 'You should change the password after <a href="' . $_SESSION['loginFormReqURI'] . '">login</a><br />';
     unset($_SESSION['done']);
     if (isset($_SESSION['returnScript'])) {
 

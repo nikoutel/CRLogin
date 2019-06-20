@@ -8,7 +8,7 @@
  * @package CRLogin
  * @subpackage core\lib
  * @author Nikos Koutelidis nikoutel@gmail.com
- * @copyright 2013 Nikos Koutelidis 
+ * @copyright 2013-2019 Nikos Koutelidis
  * @license http://www.mozilla.org/MPL/2.0/ Mozilla Public License Version 2.0
  * @link https://github.com/nikoutel/CRLogin 
  * 
@@ -24,9 +24,9 @@ namespace CRLogin\core\lib;
 class LanguageFile {
 
     /**
-     * @var obj 
+     * @var object
      */
-    private $_configReader;
+    private $_configFile;
 
     /**
      * @var array 
@@ -34,10 +34,10 @@ class LanguageFile {
     private $_languageArray;
 
     /**
-     * @param \CRLogin\core\lib\ConfigReader $configReader
+     * @param \CRLogin\core\lib\ConfigFile $configFile
      */
-    public function __construct(ConfigReader $configReader) {
-        $this->_configReader = $configReader;
+    public function __construct(ConfigFile $configFile) {
+        $this->_configFile = $configFile;
     }
 
     /**
@@ -47,13 +47,13 @@ class LanguageFile {
      * @return array
      */
     public function getLanguageArray($langCode) {
-        $langFile = BASE_DIR . '/CRLogin/lang/lang.' . $langCode . '.php';
+        $langFile = CRL_BASE_DIR . '/lang/lang.' . $langCode . '.php';
         if (file_exists($langFile)) {
-            $this->_languageArray = $this->_configReader->readFile($langFile);
+            $this->_languageArray = $this->_configFile->readFile($langFile);
         } else {
             $langCode = 'en';
-            $langFile = BASE_DIR . '/CRLogin/lang/lang.' . $langCode . '.php';
-            $this->_languageArray = $this->_configReader->readFile($langFile);
+            $langFile = CRL_BASE_DIR  . '/lang/lang.' . $langCode . '.php';
+            $this->_languageArray = $this->_configFile->readFile($langFile);
         }
         return $this->_languageArray;
     }
