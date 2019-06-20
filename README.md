@@ -42,7 +42,7 @@ If for any strange reason the above method does not work you have to do the inst
 Create a file `install_config.php` according to the demo file `install_config_demo.php`.  
 Create a new database, or use an existing one.   
 The user, defined in the configuration file, must have access to this database.  
-Create the table in the database. Have a look at the `install_lib.php` file to see the details.  
+Create the table in the database. Have a look at the `sql/` files to see the details.  
 Delete the `install` folder. Done.  
 
 #### Integration ####
