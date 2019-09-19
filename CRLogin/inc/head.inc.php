@@ -24,7 +24,6 @@ $url = htmlspecialchars(CRL_APP_URL_PATH . CRL_APP_DIR);
 ?>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>       
 <script type="text/javascript">
-    var l = <?php echo json_encode(CRLogin::$l); ?>;
     if (typeof jQuery === 'undefined') {
         document.write(unescape("%3Cscript src='<?= $url ?>/scripts/jquery-1.7.1.min.js' type='text/javascript'%3E%3C/script%3E"));
     }
