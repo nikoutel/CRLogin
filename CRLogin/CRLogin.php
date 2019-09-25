@@ -32,6 +32,15 @@ class CRLogin
      */
     public static $dic;
 
+
+    /**
+     * @var boolean
+     */
+    public static $src;
+
+    /**
+     * @var  CRLogin\core\lib\Session
+     */
     private static $session;
 
     /**
@@ -90,7 +99,7 @@ class CRLogin
         }
 
         /** set the redirect URL */
-        if (!self::isAjax()) {
+        if (!self::isAjax() && !self::$src) {
             $_SESSION ['members'] = $isMembersArea;
             if (!isset($logoutAction) || !$logoutAction) {
                 if ($_SESSION ['members']) {
@@ -162,4 +171,5 @@ class CRLogin
     }
 }
 
+CRLogin::$src = isset($src) && $src;
 CRLogin::init(isset($isMembersArea) ? $isMembersArea : false, isset($logoutAction) ? $logoutAction : false);
