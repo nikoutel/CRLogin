@@ -19,8 +19,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
  */
-require dirname($_SERVER['DOCUMENT_ROOT']).'/tools/Debugr/src/Debugr.php';
-use Nikoutel\Debugr\Debugr;
 /*
  * Initialization
  */
